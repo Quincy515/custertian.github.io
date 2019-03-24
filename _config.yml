@@ -41,3 +41,14 @@ links:
 
 # exclude my node related stuff
 exclude: ['package.json', 'src', 'node_modules']
+
+comments: true
+
+comments:
+  gitalk: true
+  gitalk_clientID: '375f13b9eef7a2536214'
+  gitalk_Secret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215'
+  gitalk_repo: 'custertian.github.io'
+  gitalk_owner: 'custertian'
+  gitalk_admin: 'custertian'
+  distractionFreeMode: false
