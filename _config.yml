@@ -1,18 +1,18 @@
 # Site settings
 title: custer的学习记录
 description: custer的学习记录
-baseurl: "/custertian.github.io" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://custer.me" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
 # User settings
 username: Custer
-user_description: Python Developer at Lorem Ipsum Dolor
+user_description: Python Developer
 user_title: 开发界的小学生
 email: custertian@gmail.com
 twitter_username: custer
 github_username:  custertian
-gplus_username:  lorem_ipsum
-disqus_username: lorem_ipsum
+gplus_username:  custer
+disqus_username: custer
 
 # Build settings
 markdown: kramdown
