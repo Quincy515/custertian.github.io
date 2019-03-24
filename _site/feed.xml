@@ -5,9 +5,27 @@
     <description>custer的学习记录</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 24 Mar 2019 19:26:50 +0800</pubDate>
-    <lastBuildDate>Sun, 24 Mar 2019 19:26:50 +0800</lastBuildDate>
+    <pubDate>Sun, 24 Mar 2019 21:33:59 +0800</pubDate>
+    <lastBuildDate>Sun, 24 Mar 2019 21:33:59 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>反转字符串中的单词III</title>
+        <description>&lt;h4 id=&quot;part-1-题目&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 题目&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-解题&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 解题&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#code&quot;&gt;代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#test&quot;&gt;测试&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-3-重构&quot;&gt;&lt;a href=&quot;#rebuild&quot;&gt;Part 3: 重构&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#simple&quot;&gt;简化代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#other&quot;&gt;其他思路&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-4-总结&quot;&gt;&lt;a href=&quot;#think&quot;&gt;Part 4: 总结&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#knowelage&quot;&gt;知识点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#thinking&quot;&gt;思维方法&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h2 id=&quot;题目&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;题目&lt;/h2&gt; &lt;p&gt;给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;示例 1:&lt;/code&gt;&lt;/p&gt; &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;输入&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Let's take LeetCode contest&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;输出&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;s'teL ekat edoCteeL tsetnoc&quot;&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt; &lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;：在字符串中，每个单词由单个空格分隔，并且字符串中不会有任何额外的空格。&lt;/p&gt; &lt;h2 id=&quot;解题&quot;&gt;&lt;a name=&quot;part2&quot;&gt;&lt;/a&gt;解题&lt;/h2&gt; &lt;h3 id=&quot;代码&quot;&gt;&lt;a name=&quot;code&quot;&gt;&lt;/a&gt;代码&lt;/h3&gt; &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 字符串按空格进行分隔，保存数组，数组的元素的先后顺序就是单词的顺序&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;str&lt;/span&gt;&lt;span...</description>
+        <pubDate>Sun, 24 Mar 2019 11:32:44 +0800</pubDate>
+        <link>http://localhost:4000/leetcode-557/</link>
+        <guid isPermaLink="true">http://localhost:4000/leetcode-557/</guid>
+        
+        <category>ARTS</category>
+        
+        <category>leetcode</category>
+        
+        <category>algorithm</category>
+        
+        
+        <category>LeetCode</category>
+        
+      </item>
     
       <item>
         <title>Welcome to Jekyll</title>
