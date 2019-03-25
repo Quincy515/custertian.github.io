@@ -42,7 +42,7 @@ links:
 # exclude my node related stuff
 exclude: ['package.json', 'src', 'node_modules']
 
-comments: true
+# comments: true
 
 comments:
   gitalk: true
