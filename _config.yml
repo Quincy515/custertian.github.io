@@ -49,6 +49,6 @@ comments:
   gitalk_clientID: '375f13b9eef7a2536214'
   gitalk_Secret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215'
   gitalk_repo: 'custertian.github.io'
-  gitalk_owner: 'custertian@gmail.com'
+  gitalk_owner: 'custertian'
   gitalk_admin: ['custertian', 'custertian@gmail.com']
   distractionFreeMode: false
