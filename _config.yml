@@ -51,4 +51,5 @@ comments:
   gitalk_repo: 'custertian.github.io'
   gitalk_owner: 'custertian'
   gitalk_admin: 'custertian'
-  distractionFreeMode: false
+  id: location.pathname,
+  distractionFreeMode: true
