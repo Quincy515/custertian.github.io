@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "etcd使用二进制部署集群"
+title: "k8s部署1-etcd使用二进制部署集群"
 date: 2019-03-25 00:45:55
 image: '/assets/img/'
 description: k8s部署第一步-Etcd数据库集群部署

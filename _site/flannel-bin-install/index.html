@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>k8s部署2-flannel使用二进制安装</title>
+    <meta name="description" content="k8s部署第二步-Flannel网络的部署">
+
+    <!-- Google Authorship Markup -->
+    <link rel="author" href="https://plus.google.com/custer?rel=author">
+
+    <!-- Social: Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DBTua">
+    <meta name="twitter:title" content="k8s部署2-flannel使用二进制安装">
+    <meta name="twitter:description" content="k8s部署第二步-Flannel网络的部署">
+    
+    <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
+    
+
+    <!-- Social: Facebook / Open Graph -->
+    <meta property="og:url" content="http://localhost:4000/flannel-bin-install/">
+    <meta property="og:title" content="k8s部署2-flannel使用二进制安装">
+    
+    <meta property="og:image" content="http://localhost:4000/assets/img/">
+    
+    <meta property="og:description" content="k8s部署第二步-Flannel网络的部署">
+    <meta property="og:site_name" content="custer的学习记录">
+
+    <!-- Social: Google+ / Schema.org  -->
+    <meta itemprop="name" content="k8s部署2-flannel使用二进制安装"/>
+    <meta itemprop="description" content="k8s部署第二步-Flannel网络的部署">
+    <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/assets/img/icons/favicon.ico" type="image/x-icon" />
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icons/apple-touch-icon-152x152.png" />
+    <!-- Windows 8 Tile Icons -->
+    <meta name="application-name" content="Custer Blog">
+    <meta name="msapplication-TileColor" content="#0562DC">
+    <meta name="msapplication-square70x70logo" content="smalltile.png" />
+    <meta name="msapplication-square150x150logo" content="mediumtile.png" />
+    <meta name="msapplication-wide310x150logo" content="widetile.png" />
+    <meta name="msapplication-square310x310logo" content="largetile.png" />
+    <!-- Android Lolipop Theme Color -->
+    <meta name="theme-color" content="#0562DC">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/flannel-bin-install/">
+    <link rel="alternate" type="application/rss+xml" title="custer的学习记录" href="http://localhost:4000/feed.xml" />
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b70b0a020915347f669bbdc309663da2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none" version="1.1"><defs><symbol id="icon-menu" viewBox="0 0 1024 1024"><path class="path1" d="M128 213.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 725.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 469.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5z"/></symbol><symbol id="icon-search" viewBox="0 0 951 1024"><path class="path1" d="M658.286 475.429q0-105.714-75.143-180.857t-180.857-75.143-180.857 75.143-75.143 180.857 75.143 180.857 180.857 75.143 180.857-75.143 75.143-180.857zM950.857 950.857q0 29.714-21.714 51.429t-51.429 21.714q-30.857 0-51.429-21.714l-196-195.429q-102.286 70.857-228 70.857-81.714 0-156.286-31.714t-128.571-85.714-85.714-128.571-31.714-156.286 31.714-156.286 85.714-128.571 128.571-85.714 156.286-31.714 156.286 31.714 128.571 85.714 85.714 128.571 31.714 156.286q0 125.714-70.857 228l196 196q21.143 21.143 21.143 51.429z"/></symbol><symbol id="icon-email" viewBox="0 0 1024 1024"><path class="path1" d="M950.857 859.429v-438.857q-18.286 20.571-39.429 37.714-153.143 117.714-243.429 193.143-29.143 24.571-47.429 38.286t-49.429 27.714-58.571 14h-1.143q-27.429 0-58.571-14t-49.429-27.714-47.429-38.286q-90.286-75.429-243.429-193.143-21.143-17.143-39.429-37.714v438.857q0 7.429 5.429 12.857t12.857 5.429h841.143q7.429 0 12.857-5.429t5.429-12.857zM950.857 258.857v-14t-0.286-7.429-1.714-7.143-3.143-5.143-5.143-4.286-8-1.429h-841.143q-7.429 0-12.857 5.429t-5.429 12.857q0 96 84 162.286 110.286 86.857 229.143 181.143 3.429 2.857 20 16.857t26.286 21.429 25.429 18 28.857 15.714 24.571 5.143h1.143q11.429 0 24.571-5.143t28.857-15.714 25.429-18 26.286-21.429 20-16.857q118.857-94.286 229.143-181.143 30.857-24.571 57.429-66t26.571-75.143zM1024 237.714v621.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-621.714q0-37.714 26.857-64.571t64.571-26.857h841.143q37.714 0 64.571 26.857t26.857 64.571z"/></symbol><symbol id="icon-close" viewBox="0 0 805 1024"><path class="path1" d="M741.714 755.429q0 22.857-16 38.857l-77.714 77.714q-16 16-38.857 16t-38.857-16l-168-168-168 168q-16 16-38.857 16t-38.857-16l-77.714-77.714q-16-16-16-38.857t16-38.857l168-168-168-168q-16-16-16-38.857t16-38.857l77.714-77.714q16-16 38.857-16t38.857 16l168 168 168-168q16-16 38.857-16t38.857 16l77.714 77.714q16 16 16 38.857t-16 38.857l-168 168 168 168q16 16 16 38.857z"/></symbol><symbol id="icon-twitter" viewBox="0 0 951 1024"><path class="path1" d="M925.714 233.143q-38.286 56-92.571 95.429 0.571 8 0.571 24 0 74.286-21.714 148.286t-66 142-105.429 120.286-147.429 83.429-184.571 31.143q-154.857 0-283.429-82.857 20 2.286 44.571 2.286 128.571 0 229.143-78.857-60-1.143-107.429-36.857t-65.143-91.143q18.857 2.857 34.857 2.857 24.571 0 48.571-6.286-64-13.143-106-63.714t-42-117.429v-2.286q38.857 21.714 83.429 23.429-37.714-25.143-60-65.714t-22.286-88q0-50.286 25.143-93.143 69.143 85.143 168.286 136.286t212.286 56.857q-4.571-21.714-4.571-42.286 0-76.571 54-130.571t130.571-54q80 0 134.857 58.286 62.286-12 117.143-44.571-21.143 65.714-81.143 101.714 53.143-5.714 106.286-28.571z"/></symbol><symbol id="icon-facebook" viewBox="0 0 585 1024"><path class="path1" d="M548 6.857v150.857h-89.714q-49.143 0-66.286 20.571t-17.143 61.714v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571q0-106.286 59.429-164.857t158.286-58.571q84 0 130.286 6.857z"/></symbol><symbol id="icon-rss" viewBox="0 0 805 1024"><path class="path1" d="M219.429 768q0 45.714-32 77.714t-77.714 32-77.714-32-32-77.714 32-77.714 77.714-32 77.714 32 32 77.714zM512 838.286q1.143 16-9.714 27.429-10.286 12-26.857 12h-77.143q-14.286 0-24.571-9.429t-11.429-23.714q-12.571-130.857-105.429-223.714t-223.714-105.429q-14.286-1.143-23.714-11.429t-9.429-24.571v-77.143q0-16.571 12-26.857 9.714-9.714 24.571-9.714h2.857q91.429 7.429 174.857 46t148 103.714q65.143 64.571 103.714 148t46 174.857zM804.571 839.429q1.143 15.429-10.286 26.857-10.286 11.429-26.286 11.429h-81.714q-14.857 0-25.429-10t-11.143-24.286q-6.857-122.857-57.714-233.429t-132.286-192-192-132.286-233.429-58.286q-14.286-0.571-24.286-11.143t-10-24.857v-81.714q0-16 11.429-26.286 10.286-10.286 25.143-10.286h1.714q149.714 7.429 286.571 68.571t243.143 168q106.857 106.286 168 243.143t68.571 286.571z"/></symbol><symbol id="icon-google-plus" viewBox="0 0 951 1024"><path class="path1" d="M420 454.857q0 20.571 18.286 40.286t44.286 38.857 51.714 42 44 59.429 18.286 81.143q0 51.429-27.429 98.857-41.143 69.714-120.571 102.571t-170.286 32.857q-75.429 0-140.857-23.714t-98-78.571q-21.143-34.286-21.143-74.857 0-46.286 25.429-85.714t67.714-65.714q74.857-46.857 230.857-57.143-18.286-24-27.143-42.286t-8.857-41.714q0-20.571 12-48.571-26.286 2.286-38.857 2.286-84.571 0-142.571-55.143t-58-139.714q0-46.857 20.571-90.857t56.571-74.857q44-37.714 104.286-56t124.286-18.286h238.857l-78.857 50.286h-74.857q42.286 36 64 76t21.714 91.429q0 41.143-14 74t-33.714 53.143-39.714 37.143-34 35.143-14 37.714zM336.571 400q21.714 0 44.571-9.429t37.714-24.857q30.286-32.571 30.286-90.857 0-33.143-9.714-71.429t-27.714-74-48.286-59.143-66.857-23.429q-24 0-47.143 11.143t-37.429 30q-26.857 33.714-26.857 91.429 0 26.286 5.714 55.714t18 58.857 29.714 52.857 42.857 38.286 55.143 14.857zM337.714 898.857q33.143 0 63.714-7.429t56.571-22.286 41.714-41.714 15.714-62.286q0-14.286-4-28t-8.286-24-15.429-23.714-16.857-20-22-19.714-20.857-16.571-23.714-17.143-20.857-14.857q-9.143-1.143-27.429-1.143-30.286 0-60 4t-61.429 14.286-55.429 26.286-39.143 42.571-15.429 60.286q0 40 20 70.571t52.286 47.429 68 25.143 72.857 8.286zM800.571 398.286h121.714v61.714h-121.714v125.143h-60v-125.143h-121.143v-61.714h121.143v-124h60v124z"/></symbol><symbol id="icon-angle-down" viewBox="0 0 658 1024"><path class="path1" d="M614.286 420.571q0 7.429-5.714 13.143l-266.286 266.286q-5.714 5.714-13.143 5.714t-13.143-5.714l-266.286-266.286q-5.714-5.714-5.714-13.143t5.714-13.143l28.571-28.571q5.714-5.714 13.143-5.714t13.143 5.714l224.571 224.571 224.571-224.571q5.714-5.714 13.143-5.714t13.143 5.714l28.571 28.571q5.714 5.714 5.714 13.143z"/></symbol><symbol id="icon-github-alt" viewBox="0 0 951 1024"><path class="path1" d="M365.714 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM731.429 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM822.857 694.857q0-68.571-39.429-116.571t-106.857-48q-23.429 0-111.429 12-40.571 6.286-89.714 6.286t-89.714-6.286q-86.857-12-111.429-12-67.429 0-106.857 48t-39.429 116.571q0 50.286 18.286 87.714t46.286 58.857 69.714 34.286 80 16.857 85.143 4h96q46.857 0 85.143-4t80-16.857 69.714-34.286 46.286-58.857 18.286-87.714zM950.857 594.286q0 118.286-34.857 189.143-21.714 44-60.286 76t-80.571 49.143-97.143 27.143-98 12.571-95.429 2.571q-44.571 0-81.143-1.714t-84.286-7.143-87.143-17.143-78.286-29.429-69.143-46.286-49.143-65.714q-35.429-70.286-35.429-189.143 0-135.429 77.714-226.286-15.429-46.857-15.429-97.143 0-66.286 29.143-124.571 61.714 0 108.571 22.571t108 70.571q84-20 176.571-20 84.571 0 160 18.286 60-46.857 106.857-69.143t108-22.286q29.143 58.286 29.143 124.571 0 49.714-15.429 96 77.714 91.429 77.714 227.429z"/></symbol></defs></svg>
+
+        <header class="header-post" role="banner">
+    <div class="content">
+        
+            <time itemprop="datePublished" datetime="2019-03-25 08:55:58 +0800" class="date">25 Mar 2019</time>
+        
+        <h1 class="post-title" itemprop="name">k8s部署2-flannel使用二进制安装</h1>
+        <p itemprop="description" class="subtitle">k8s部署第二步-Flannel网络的部署</p>
+    </div>
+     <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
+     <div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <svg class="icon-remove-sign"><use xlink:href="#icon-close"></use></svg>
+        <ul class="search-results search-list"></ul>
+    </div>
+</div>
+
+<div id="fade" class="overlay"></div>
+<a id="slide" class="slideButton fade">
+    <svg id="open" class="icon-menu"><use xlink:href="#icon-menu"></use></svg>
+    <svg id="close" class="icon-menu"><use xlink:href="#icon-close"></use></svg>
+</a>
+<aside id="sidebar">
+<nav id="navigation">
+  <h2>MENU</h2>
+  <ul>
+    
+    
+      <li><a href="http://localhost:4000/">Home</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/series">Series</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/tags">Tags</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/about">About Me</a></li>
+    
+    
+    <li><a class="feed" href="http://localhost:4000/feed.xml" title="Atom/RSS feed">Feed</a></li>
+  </ul>
+</nav>
+</aside>
+<a id="search" class="dosearch">
+    <svg class="icon-menu icon-search"><use xlink:href="#icon-search"></use></svg>
+</a>
+
+</header>
+
+        <section class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+            <article role="article" id="scroll" class="post-content" itemprop="articleBody">
+                <h4 id="part-1-uninstall-old-docker-versions-"><a href="#part1">Part 1: Uninstall old docker versions </a></h4>
+
+<h4 id="part-2-install-using-the-repository"><a href="#part2">Part 2: Install using the repository</a></h4>
+
+<h4 id="part-3-install-docker-ce"><a href="#part3">Part 3: INSTALL DOCKER CE</a></h4>
+
+<h4 id="part-4-daocloud加速"><a href="#part4">Part 4: daocloud加速</a></h4>
+
+<h4 id="part-5-docker-sudo"><a href="#part5">Part 5: docker sudo</a></h4>
+
+<h4 id="part-6-kubernetes网络模型cni"><a href="#part6">Part 6: Kubernetes网络模型（CNI）</a></h4>
+
+<h4 id="part-7-部署kubernetes网络---flannel"><a href="#part7">Part 7: 部署Kubernetes网络 - Flannel</a></h4>
+
+<h4 id="part-8-使用二进制部署flannel"><a href="#part8">Part 8: 使用二进制部署Flannel</a></h4>
+
+<h4 id="part-9-验证"><a href="#part10">Part 9: 验证</a></h4>
+
+<ol>
+  <li><a href="#etcd">颁发etcd证书</a></li>
+</ol>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553497887997-a51f6beb-23b7-45b8-b56a-30f6de5904f5.png#align=left&amp;display=inline&amp;height=433&amp;name=1.png&amp;originHeight=433&amp;originWidth=650&amp;size=37306&amp;status=done&amp;width=650" alt="1.png" /></p>
+
+<p>Docker的安装 <a href="https://docs.docker.com/install/linux/docker-ce/centos/">https://docs.docker.com/install/linux/docker-ce/centos/</a> 安装在 两个node节点上</p>
+
+<h3 id="-uninstall-old-docker-versions"><a name="part1"></a> Uninstall old docker versions</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum remove docker <span class="se">\</span>
+                  docker-client <span class="se">\</span>
+                  docker-client-latest <span class="se">\</span>
+                  docker-common <span class="se">\</span>
+                  docker-latest <span class="se">\</span>
+                  docker-latest-logrotate <span class="se">\</span>
+                  docker-logrotate <span class="se">\</span>
+                  docker-engine
+</code></pre></div></div>
+
+<h3 id="-install-using-the-repository"><a name="part2"></a> Install using the repository</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils <span class="se">\</span>
+  device-mapper-persistent-data <span class="se">\</span>
+  lvm2
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum-config-manager <span class="se">\</span>
+    <span class="nt">--add-repo</span> <span class="se">\</span>
+    https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div></div>
+
+<h3 id="install-docker-ce"><a name="part3"></a>INSTALL DOCKER CE</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install </span>docker-ce docker-ce-cli containerd.io
+</code></pre></div></div>
+
+<h3 id="daocloud加速"><a name="part4"></a>daocloud加速</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sSL</span> https://get.daocloud.io/daotools/set_mirror.sh | sh <span class="nt">-s</span> http://f1361db2.m.daocloud.io
+</code></pre></div></div>
+
+<p>重启docker</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl restart docker
+</code></pre></div></div>
+
+<h3 id="-docker-sudo"><a name="part5"></a> docker sudo</h3>
+
+<p>由于docker daemon需要绑定到主机的Unix socket而不是普通的TCP端口，而Unix socket的属主为root用户，所以其他用户只有在命令前添加sudo选项才能执行相关操作。</p>
+
+<p>如果不想每次使用docker命令的时候还要额外的敲一下sudo，可以按照下面的方法配置一下。</p>
+
+<ol>
+  <li>创建一个docker组</li>
+  <li><code class="highlighter-rouge">$ sudo groupadd docker</code></li>
+  <li>添加当前用户到docker组</li>
+  <li><code class="highlighter-rouge">$ sudo usermod -aG docker $USER</code></li>
+  <li>登出，重新登录shell</li>
+  <li>验证docker命令是否可以运行</li>
+  <li><code class="highlighter-rouge">$ docker ps</code></li>
+</ol>
+
+<h3 id="kubernetes网络模型cni"><a name="part6"></a>Kubernetes网络模型（CNI）</h3>
+
+<p><strong>Container</strong> <strong>Network</strong> <strong>Interface(CNI)：容器网络接口，</strong> <strong>Google和CoreOS主导。</strong><br />**Kubernetes网络模型设计基本要求：</p>
+<ul>
+  <li>一个Pod一个IP</li>
+  <li>每个Pod独立IP，Pod内所有容器共享网络（同一个IP）</li>
+  <li>所有容器都可以与所有其他容器通信</li>
+  <li>所有节点都可以与所有容器通信</li>
+</ul>
+
+<h3 id="部署kubernetes网络---flannel"><a name="part7"></a>部署Kubernetes网络 - Flannel</h3>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553499039634-23ec8175-5e85-4565-8227-408b5e545e3e.png#align=left&amp;display=inline&amp;height=514&amp;name=2.png&amp;originHeight=779&amp;originWidth=1130&amp;size=97240&amp;status=done&amp;width=746" alt="2.png" /></p>
+
+<p><strong>Overlay</strong> <strong>Network：</strong>覆盖网络，在基础网络上叠加的一种虚拟网络技术模式，该网络中的主机通过虚拟链路连接起来。<br /><a href="https://github.com/coreos/flannel"><strong>Flannel</strong></a><strong>：</strong>是Overlay网络的一种，也是将源数据包封装在另一种网络包里面进行路由转发和通信，目前已经支持UDP、VXLAN、host-gw、AWS VPC和GCE路由等数据转发方式。</p>
+
+<ol>
+  <li>容器直接使用目标容器的ip访问，默认通过容器内部的eth0发送出去。<br /></li>
+  <li>报文通过veth pair被发送到vethXXX。<br /></li>
+  <li>vethXXX是直接连接到虚拟交换机docker0的，报文通过虚拟bridge docker0发送出去。<br /></li>
+  <li>查找路由表，外部容器ip的报文都会转发到flannel0虚拟网卡，这是一个P2P的虚拟网卡，然后报文就被转发到监听在另一端的flanneld。<br /></li>
+  <li>flanneld通过etcd维护了各个节点之间的路由表，把原来的报文UDP封装一层，通过配置的iface发送出去。<br /></li>
+  <li>报文通过主机之间的网络找到目标主机。<br /></li>
+  <li>报文继续往上，到传输层，交给监听在8285端口的flanneld程序处理。<br /></li>
+  <li>数据被解包，然后发送给flannel0虚拟网卡。<br /></li>
+  <li>查找路由表，发现对应容器的报文要交给docker0。<br /></li>
+  <li>docker0找到连到自己的容器，把报文发送过去。</li>
+</ol>
+
+<h3 id="使用二进制部署flannel"><a name="part8"></a>使用二进制部署Flannel</h3>
+
+<ol>
+  <li>写入分配的子网段到etcd，供flanneld使用</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="nt">--ca-file</span><span class="o">=</span>ca.pem <span class="nt">--cert-file</span><span class="o">=</span>server.pem <span class="nt">--key-file</span><span class="o">=</span>server-key.pem <span class="se">\</span>
+<span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://192.168.0.x:2379,https://192.168.0.x:2379,https://192.168.0.x:2379"</span> <span class="se">\</span>
+<span class="nb">set</span> /coreos.com/network/config <span class="s1">'{ "Network": "172.17.0.0/16", "Backend": {"Type": "vxlan"}}'</span>
+</code></pre></div></div>
+
+<p>查看etcd集群状态</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="o">&gt;</span> <span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="se">\</span>
+<span class="o">&gt;</span> <span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="se">\</span>
+<span class="o">&gt;</span> cluster-health
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>k8s: 
+member 9fb659a92dca6454 is healthy: got healthy result from https://10.211.55.10:2379
+member f9c27963788aad6e is healthy: got healthy result from https://10.211.55.12:2379
+member ff2f490dbe25f877 is healthy: got healthy result from https://10.211.55.13:2379
+cluster is healthy
+</code></pre></div></div>
+
+<p>只需要把 cluster-health 集群健康检查修改为设置<strong>分配子网</strong>段即可</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="se">\</span>
+<span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="se">\</span>
+<span class="nb">set</span> /coreos.com/network/config <span class="s1">'{ "Network": "172.17.0.0/16", "Backend": {"Type": "host-gw"}}'</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">/coreos.com/network/config</code> 是 Flannel 固定的键值对的键名称，只需要在 Type中设置 flannel 的数据转发方式为 host-gw</p>
+
+<p>也可以使用 <code class="highlighter-rouge">get </code>查看 <code class="highlighter-rouge">/coreos.com/network/config</code> 具体的值</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="se">\</span>
+<span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="se">\</span>
+get /coreos.com/network/config
+</code></pre></div></div>
+
+<ol>
+  <li>下载二进制包</li>
+</ol>
+
+<p><a href="https://github.com/coreos/flannel/releases">https://github.com/coreos/flannel/releases</a></p>
+
+<p>flannel 主要是部署在 node 节点，master 是否部署 flannel 是可选的<br />在 soft 目录存放下载的包， 下载好并解压缩</p>
+
+<ol>
+  <li>部署与配置Flannel</li>
+</ol>
+
+<p>然后使用 flannel.sh 脚本文件来生成 flannel 的配置文件，和 systemd 的启动文件</p>
+
+<p>为了方便管理 k8s 相关组件，我们新建 k8s 的工作目录</p>
+
+<p><code class="highlighter-rouge">sudo mkdir -p /opt/kubernetes/{bin,cfg,ssl}</code></p>
+
+<p>然后把上面解压的文件移动到刚创建的 /opt/kubernetes/bin 目录下</p>
+
+<p><code class="highlighter-rouge">sudo mv flanneld mk-docker-opts.sh /opt/kubernetes/bin/</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">ETCD_ENDPOINTS</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="s2">"http://127.0.0.1:2379"</span><span class="k">}</span>
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/opt/kubernetes/cfg/flanneld
+
+FLANNEL_OPTIONS="--etcd-endpoints=</span><span class="k">${</span><span class="nv">ETCD_ENDPOINTS</span><span class="k">}</span><span class="sh"> \
+-etcd-cafile=/opt/etcd/ssl/ca.pem \
+-etcd-certfile=/opt/etcd/ssl/server.pem \
+-etcd-keyfile=/opt/etcd/ssl/server-key.pem"
+</span><span class="no">
+EOF
+
+</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/usr/lib/systemd/system/flanneld.service
+[Unit]
+Description=Flanneld overlay address etcd agent
+After=network-online.target network.target
+Before=docker.service
+
+[Service]
+Type=notify
+EnvironmentFile=/opt/kubernetes/cfg/flanneld
+ExecStart=/opt/kubernetes/bin/flanneld --ip-masq \</span><span class="nv">$FLANNEL_OPTIONS</span><span class="sh">
+ExecStartPost=/opt/kubernetes/bin/mk-docker-opts.sh -k DOCKER_NETWORK_OPTIONS -d /run/flannel/subnet.env
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</span><span class="no">
+EOF
+
+</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/usr/lib/systemd/system/docker.service
+
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network-online.target firewalld.service
+Wants=network-online.target
+
+[Service]
+Type=notify
+EnvironmentFile=/run/flannel/subnet.env
+ExecStart=/usr/bin/dockerd \</span><span class="nv">$DOCKER_NETWORK_OPTIONS</span><span class="sh">
+ExecReload=/bin/kill -s HUP \</span><span class="nv">$MAINPID</span><span class="sh">
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+TimeoutStartSec=0
+Delegate=yes
+KillMode=process
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
+
+[Install]
+WantedBy=multi-user.target
+</span><span class="no">
+EOF
+
+</span>systemctl daemon-reload
+systemctl <span class="nb">enable </span>flanneld
+systemctl restart flanneld
+systemctl restart docker
+</code></pre></div></div>
+
+<p>然后再执行 <code class="highlighter-rouge">bash flannel.sh</code>需要加上怎么连接etcd的参数<a href="https://10.211.55.10:2379"><code class="highlighter-rouge">https://10.211.55.10:2379</code></a><code class="highlighter-rouge">,</code><a href="https://10.211.55.12:2379"><code class="highlighter-rouge">https://10.211.55.12:2379</code></a><code class="highlighter-rouge">,</code><code class="highlighter-rouge">[https://10.211.55.13:2379](https://10.211.55.13:2379)</code><br />以后所有需要连接etcd的都需要以这种方式连接</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash flannel.sh https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379
+</code></pre></div></div>
+
+<p>可以查看生成的文件 <code class="highlighter-rouge">cat /opt/kubernetes/cfg/flanneld</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/flanneld
+
+<span class="nv">FLANNEL_OPTIONS</span><span class="o">=</span>
+<span class="s2">"--etcd-endpoints=https://10.211.55.10:2379,
+https://10.211.55.12:2379,https://10.211.55.13:2379 
+-etcd-cafile=/opt/etcd/ssl/ca.pem 
+-etcd-certfile=/opt/etcd/ssl/server.pem 
+-etcd-keyfile=/opt/etcd/ssl/server-key.pem"</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>systemd管理Flannel</p>
+  </li>
+  <li>
+    <p>配置Docker使用Flannel生成的子网</p>
+  </li>
+  <li>
+    <p>启动Flannel</p>
+  </li>
+</ol>
+
+<p>启动 flannel <code class="highlighter-rouge">sudo systemctl start flanneld</code>查看启动的结果 <code class="highlighter-rouge">ps -ef | grep flannel</code></p>
+
+<p>查看 docker 是否启用了子网 <code class="highlighter-rouge">ps -ef | grep dockerd</code>  我们确认下修改docker的文件是否生效</p>
+
+<p><code class="highlighter-rouge">cat /usr/lib/systemd/system/docker.service</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">cat</span> /usr/lib/systemd/system/docker.service
+
+<span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>Docker Application Container Engine
+<span class="nv">Documentation</span><span class="o">=</span>https://docs.docker.com
+<span class="nv">After</span><span class="o">=</span>network-online.target firewalld.service
+<span class="nv">Wants</span><span class="o">=</span>network-online.target
+
+<span class="o">[</span>Service]
+<span class="nv">Type</span><span class="o">=</span>notify
+<span class="nv">EnvironmentFile</span><span class="o">=</span>/run/flannel/subnet.env
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd <span class="nv">$DOCKER_NETWORK_OPTIONS</span>
+<span class="nv">ExecReload</span><span class="o">=</span>/bin/kill <span class="nt">-s</span> HUP <span class="nv">$MAINPID</span>
+<span class="nv">LimitNOFILE</span><span class="o">=</span>infinity
+<span class="nv">LimitNPROC</span><span class="o">=</span>infinity
+<span class="nv">LimitCORE</span><span class="o">=</span>infinity
+<span class="nv">TimeoutStartSec</span><span class="o">=</span>0
+<span class="nv">Delegate</span><span class="o">=</span><span class="nb">yes
+</span><span class="nv">KillMode</span><span class="o">=</span>process
+<span class="nv">Restart</span><span class="o">=</span>on-failure
+<span class="nv">StartLimitBurst</span><span class="o">=</span>3
+<span class="nv">StartLimitInterval</span><span class="o">=</span>60s
+
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></div></div>
+
+<p>注意这两行是添加的之外其他都是默认的</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">EnvironmentFile</span><span class="o">=</span>/run/flannel/subnet.env
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd <span class="nv">$DOCKER_NETWORK_OPTIONS</span>
+</code></pre></div></div>
+
+<p>可以查看还没有修改的node01的docker.service文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">cat</span> /usr/lib/systemd/system/docker.service
+<span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>Docker Application Container Engine
+<span class="nv">Documentation</span><span class="o">=</span>https://docs.docker.com
+<span class="nv">BindsTo</span><span class="o">=</span>containerd.service
+<span class="nv">After</span><span class="o">=</span>network-online.target firewalld.service containerd.service
+<span class="nv">Wants</span><span class="o">=</span>network-online.target
+<span class="nv">Requires</span><span class="o">=</span>docker.socket
+
+<span class="o">[</span>Service]
+<span class="nv">Type</span><span class="o">=</span>notify
+<span class="c"># the default is not to use systemd for cgroups because the delegate issues still</span>
+<span class="c"># exists and systemd currently does not support the cgroup feature set required</span>
+<span class="c"># for containers run by docker</span>
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd <span class="nt">-H</span> fd:// <span class="nt">--containerd</span><span class="o">=</span>/run/containerd/containerd.sock
+<span class="nv">ExecReload</span><span class="o">=</span>/bin/kill <span class="nt">-s</span> HUP <span class="nv">$MAINPID</span>
+<span class="nv">TimeoutSec</span><span class="o">=</span>0
+<span class="nv">RestartSec</span><span class="o">=</span>2
+<span class="nv">Restart</span><span class="o">=</span>always
+
+<span class="c"># Note that StartLimit* options were moved from "Service" to "Unit" in systemd 229.</span>
+<span class="c"># Both the old, and new location are accepted by systemd 229 and up, so using the old location</span>
+<span class="c"># to make them work for either version of systemd.</span>
+<span class="nv">StartLimitBurst</span><span class="o">=</span>3
+
+<span class="c"># Note that StartLimitInterval was renamed to StartLimitIntervalSec in systemd 230.</span>
+<span class="c"># Both the old, and new name are accepted by systemd 230 and up, so using the old name to make</span>
+<span class="c"># this option work for either version of systemd.</span>
+<span class="nv">StartLimitInterval</span><span class="o">=</span>60s
+
+<span class="c"># Having non-zero Limit*s causes performance problems due to accounting overhead</span>
+<span class="c"># in the kernel. We recommend using cgroups to do container-local accounting.</span>
+<span class="nv">LimitNOFILE</span><span class="o">=</span>infinity
+<span class="nv">LimitNPROC</span><span class="o">=</span>infinity
+<span class="nv">LimitCORE</span><span class="o">=</span>infinity
+
+<span class="c"># Comment TasksMax if your systemd version does not supports it.</span>
+<span class="c"># Only systemd 226 and above support this option.</span>
+<span class="nv">TasksMax</span><span class="o">=</span>infinity
+
+<span class="c"># set delegate yes so that systemd does not reset the cgroups of docker containers</span>
+<span class="nv">Delegate</span><span class="o">=</span><span class="nb">yes</span>
+
+<span class="c"># kill only the docker process, not all processes in the cgroup</span>
+<span class="nv">KillMode</span><span class="o">=</span>process
+
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">EnvironmentFile=/run/flannel/subnet.env</code>是读取flannel生成的子网</p>
+
+<p>可以查看 <code class="highlighter-rouge">cat </code><code class="highlighter-rouge">/run/flannel/subnet.env</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">cat</span> /run/flannel/subnet.env
+<span class="nv">DOCKER_OPT_BIP</span><span class="o">=</span><span class="s2">"--bip=172.17.40.1/24"</span>
+<span class="nv">DOCKER_OPT_IPMASQ</span><span class="o">=</span><span class="s2">"--ip-masq=false"</span>
+<span class="nv">DOCKER_OPT_MTU</span><span class="o">=</span><span class="s2">"--mtu=1500"</span>
+<span class="nv">DOCKER_NETWORK_OPTIONS</span><span class="o">=</span><span class="s2">" --bip=172.17.40.1/24 --ip-masq=false --mtu=1500"</span>
+</code></pre></div></div>
+
+<p>docker启动如果引用了<code class="highlighter-rouge">ExecStart=/usr/bin/dockerd $DOCKER_NETWORK_OPTIONS</code> 可以查看docker启动的网络是否是flannel设置的子网<code class="highlighter-rouge">DOCKER_NETWORK_OPTIONS=" --bip=172.17.40.1/24 --ip-masq=false --mtu=1500"</code></p>
+
+<p>重启 docker <code class="highlighter-rouge">sudo systemctl restart docker</code>  再查看 <code class="highlighter-rouge">ps -ef | grep docker</code>  </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>docker
+root     26692     1  0 09:34 ?        00:00:00 /usr/bin/dockerd <span class="nt">--bip</span><span class="o">=</span>172.17.40.1/24 <span class="nt">--ip-masq</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--mtu</span><span class="o">=</span>1500
+k8s      26852 24900  0 09:35 pts/0    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto docker
+</code></pre></div></div>
+
+<p>可以查看docker使用了flannel分配的子网，可以再通过 ifconfig 确认下docker0 的ip</p>
+
+<p>如果没有 <code class="highlighter-rouge">ifconfig</code> 可以安装 <code class="highlighter-rouge">sudo yum install net-tools </code> 或者使用 <code class="highlighter-rouge">ip address</code></p>
+
+<p>每个节点上，则不像vxlan一样会有一个flannel.1的bridge，取而代之的是新建的一些列路由</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span>ip route
+default via 10.211.55.1 dev eth0 proto dhcp metric 100 
+10.211.55.0/24 dev eth0 proto kernel scope <span class="nb">link </span>src 10.211.55.13 metric 100 
+172.17.40.0/24 dev docker0 proto kernel scope <span class="nb">link </span>src 172.17.40.1 
+</code></pre></div></div>
+
+<p>这样我们把node02节点是部署的flannel直接拷贝到其他node节点</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp <span class="nt">-r</span> /opt/kubernetes/ root@10.211.55.12:/opt/
+
+<span class="nb">sudo </span>scp /usr/lib/systemd/system/<span class="o">{</span>flanneld,docker<span class="o">}</span>.service root@10.211.55.12:/usr/lib/systemd/system/
+</code></pre></div></div>
+
+<p>这样就可以直接在其他node几点启动 <code class="highlighter-rouge">sudo systemctl start flanneld</code>  ，就可以查看到启动的进程</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>flanneld
+root     25987     1  0 09:53 ?        00:00:00 /opt/kubernetes/bin/flanneld <span class="nt">--ip-masq</span> <span class="nt">--etcd-endpoints</span><span class="o">=</span>https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379 <span class="nt">-etcd-cafile</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">-etcd-certfile</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">-etcd-keyfile</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem
+k8s      26042 25654  0 09:53 pts/0    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto flanneld
+</code></pre></div></div>
+
+<p>然后再重启下 docker <code class="highlighter-rouge">sudo systemctl restart docker</code>确保使用的是 flannel 网络就可以了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl daemon-reload
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart docker
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>docker
+root     26374     1  1 09:56 ?        00:00:00 /usr/bin/dockerd <span class="nt">--bip</span><span class="o">=</span>172.17.68.1/24 <span class="nt">--ip-masq</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--mtu</span><span class="o">=</span>1500
+k8s      26499 25654  0 09:56 pts/0    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto docker
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>ip route
+default via 10.211.55.1 dev eth0 proto dhcp metric 100 
+10.211.55.0/24 dev eth0 proto kernel scope <span class="nb">link </span>src 10.211.55.12 metric 100 
+172.17.40.0/24 via 10.211.55.13 dev eth0 
+172.17.68.0/24 dev docker0 proto kernel scope <span class="nb">link </span>src 172.17.68.1 
+</code></pre></div></div>
+
+<h3 id="验证"><a name="part9"></a>验证</h3>
+
+<ul>
+  <li>所有容器都可以与所有其他容器通信</li>
+  <li>所有节点都可以与所有容器通信</li>
+</ul>
+
+<p> 我们在node02节点运行 <code class="highlighter-rouge">docker run -it busybox</code>  </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span>docker run <span class="nt">-it</span> busybox
+Unable to find image <span class="s1">'busybox:latest'</span> locally
+latest: Pulling from library/busybox
+697743189b6d: Pull <span class="nb">complete 
+</span>Digest: sha256:4415a904b1aca178c2450fd54928ab362825e863c0ad5452fd020e92f7a6a47e
+Status: Downloaded newer image <span class="k">for </span>busybox:latest
+/ <span class="c"># ifconfig</span>
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:28:02  
+          inet addr:172.17.40.2  Bcast:172.17.40.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:14 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1172 <span class="o">(</span>1.1 KiB<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
+
+/ <span class="c"># </span>
+</code></pre></div></div>
+
+<p>我们在node01节点ping一下</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>ping 172.17.40.2
+PING 172.17.40.2 <span class="o">(</span>172.17.40.2<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+64 bytes from 172.17.40.2: <span class="nv">icmp_seq</span><span class="o">=</span>1 <span class="nv">ttl</span><span class="o">=</span>63 <span class="nb">time</span><span class="o">=</span>0.335 ms
+</code></pre></div></div>
+
+<p>node01节点可以访问node02的容器，现在我们在node01节点创建容器<code class="highlighter-rouge">docker run -it busybox</code>  </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>docker run <span class="nt">-it</span> busybox
+Unable to find image <span class="s1">'busybox:latest'</span> locally
+latest: Pulling from library/busybox
+697743189b6d: Pull <span class="nb">complete 
+</span>Digest: sha256:506f440802e1dc578a9953dd0957a48caeb6a4008df9af04a75d9e184aa01006
+Status: Downloaded newer image <span class="k">for </span>busybox:latest
+/ <span class="c"># ifconfig</span>
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:44:02  
+          inet addr:172.17.68.2  Bcast:172.17.68.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:16 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1312 <span class="o">(</span>1.2 KiB<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
+
+/ <span class="c"># </span>
+</code></pre></div></div>
+
+<p>现在我们在node02的容器中访问node01的容器</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/ <span class="c"># ping 172.17.68.2</span>
+PING 172.17.68.2 <span class="o">(</span>172.17.68.2<span class="o">)</span>: 56 data bytes
+64 bytes from 172.17.68.2: <span class="nb">seq</span><span class="o">=</span>0 <span class="nv">ttl</span><span class="o">=</span>62 <span class="nb">time</span><span class="o">=</span>0.430 ms
+</code></pre></div></div>
+
+<p>我们可以在etcd的master节点列出</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="se">\</span>
+<span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="se">\</span>
+<span class="nb">ls</span> /coreos.com/network/
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="se">\</span>
+<span class="o">&gt;</span> <span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="se">\</span>
+<span class="o">&gt;</span> <span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="se">\</span>
+<span class="o">&gt;</span> <span class="nb">ls</span> /coreos.com/network/
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>k8s: 
+/coreos.com/network/config
+/coreos.com/network/subnets
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> <span class="nb">ls</span> /coreos.com/network/subnets
+/coreos.com/network/subnets/172.17.40.0-24
+/coreos.com/network/subnets/172.17.68.0-24
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">sudo</span> /opt/etcd/bin/etcdctl <span class="nt">--ca-file</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">--cert-file</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">--key-file</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem <span class="nt">--endpoints</span><span class="o">=</span><span class="s2">"https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379"</span> get /coreos.com/network/subnets/172.17.40.0-24  
+<span class="o">{</span><span class="s2">"PublicIP"</span>:<span class="s2">"10.211.55.13"</span>,<span class="s2">"BackendType"</span>:<span class="s2">"host-gw"</span><span class="o">}</span>
+</code></pre></div></div>
+
+<p>这个子网分配到哪个ip，所以 flannel 在转发数据之前是需要访问 etcd 中的目标 ip</p>
+
+            </article>
+
+            <section class="share">
+    <h3>Share</h3>
+    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;k8s部署第二步-Flannel网络的部署&quot;%20http://localhost:4000/flannel-bin-install/%20via%20&#64;DBTua&hashtags=kubernetes,flannel,"
+    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Share on Twitter">
+        <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+    </a>
+    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/flannel-bin-install/"
+    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook">
+        <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+    </a>
+    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/flannel-bin-install/"
+    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+">
+        <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
+    </a>
+</section>
+            <section class="author" itemprop="author">
+    <div class="details" itemscope itemtype="http://schema.org/Person">
+        <img itemprop="image" class="img-rounded" src="/assets/img/blog-author.jpg" alt="">
+        <p class="def">作者</p>
+        <h3 class="name">
+            <a itemprop="name" href="https://www.weibo.com/p/1005052465677512">Custer</a>
+        </h3>
+        <p class="desc">Python Developer</p>
+        <a itemprop="email" class="email" href="mailto:custertian@gmail.com">custertian@gmail.com</a>
+    </div>
+</section>
+
+            <section class="comments">
+    <h3>评论</h3>
+    
+    <div id="gitalk_container"></div>
+</section>
+
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '375f13b9eef7a2536214',
+    clientSecret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215',
+    repo: 'custertian.github.io',
+    owner: 'custertian',
+    admin: 'custertian',
+    id: location.pathname,      // Ensure uniqueness and length less than 50k8s部署2-flannel使用二进制安装
+    distractionFreeMode: 'true'  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk_container')
+</script>
+
+
+            <footer>
+    <p>Made with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <span class="love">❤</span> by <a href="http://custer.me">Custer</a>
+    <span id="busuanzi_container_site_pv">本站总访问量：<span id="busuanzi_value_site_pv"></span>次</span>
+</p>
+</footer>
+<script src="/assets/js/main.js"></script>
+
+        </section>
+    </body>
+</html>

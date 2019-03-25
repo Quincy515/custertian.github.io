@@ -5,12 +5,28 @@
     <description>custer的学习记录</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 25 Mar 2019 14:38:34 +0800</pubDate>
-    <lastBuildDate>Mon, 25 Mar 2019 14:38:34 +0800</lastBuildDate>
+    <pubDate>Mon, 25 Mar 2019 19:14:33 +0800</pubDate>
+    <lastBuildDate>Mon, 25 Mar 2019 19:14:33 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
-        <title>etcd使用二进制部署集群</title>
+        <title>k8s部署2-flannel使用二进制安装</title>
+        <description>&lt;h4 id=&quot;part-1-uninstall-old-docker-versions-&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: Uninstall old docker versions &lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-install-using-the-repository&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: Install using the repository&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-3-install-docker-ce&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: INSTALL DOCKER CE&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-4-daocloud加速&quot;&gt;&lt;a href=&quot;#part4&quot;&gt;Part 4: daocloud加速&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-5-docker-sudo&quot;&gt;&lt;a href=&quot;#part5&quot;&gt;Part 5: docker sudo&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-6-kubernetes网络模型cni&quot;&gt;&lt;a href=&quot;#part6&quot;&gt;Part 6: Kubernetes网络模型（CNI）&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-7-部署kubernetes网络---flannel&quot;&gt;&lt;a href=&quot;#part7&quot;&gt;Part 7: 部署Kubernetes网络 - Flannel&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-8-使用二进制部署flannel&quot;&gt;&lt;a href=&quot;#part8&quot;&gt;Part 8: 使用二进制部署Flannel&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-9-验证&quot;&gt;&lt;a href=&quot;#part10&quot;&gt;Part 9: 验证&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#etcd&quot;&gt;颁发etcd证书&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;p&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2019/png/288708/1553497887997-a51f6beb-23b7-45b8-b56a-30f6de5904f5.png#align=left&amp;amp;display=inline&amp;amp;height=433&amp;amp;name=1.png&amp;amp;originHeight=433&amp;amp;originWidth=650&amp;amp;size=37306&amp;amp;status=done&amp;amp;width=650&quot; alt=&quot;1.png&quot; /&gt;&lt;/p&gt; &lt;p&gt;Docker的安装 &lt;a href=&quot;https://docs.docker.com/install/linux/docker-ce/centos/&quot;&gt;https://docs.docker.com/install/linux/docker-ce/centos/&lt;/a&gt; 安装在 两个node节点上&lt;/p&gt; &lt;h3 id=&quot;-uninstall-old-docker-versions&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt; Uninstall old docker versions&lt;/h3&gt; &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum remove docker &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt; docker-client &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt; docker-client-latest &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt; docker-common &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt; docker-latest &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt; docker-latest-logrotate &lt;span...</description>
+        <pubDate>Mon, 25 Mar 2019 08:55:58 +0800</pubDate>
+        <link>http://localhost:4000/flannel-bin-install/</link>
+        <guid isPermaLink="true">http://localhost:4000/flannel-bin-install/</guid>
+        
+        <category>kubernetes</category>
+        
+        <category>flannel</category>
+        
+        
+        <category>kubernetes</category>
+        
+      </item>
+    
+      <item>
+        <title>k8s部署1-etcd使用二进制部署集群</title>
         <description>&lt;h4 id=&quot;part-1-部署平台规划-&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 部署平台规划 &lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-准备工作&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 准备工作&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-3-自签ssl证书&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: 自签SSL证书&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-4-etcd数据库集群部署&quot;&gt;&lt;a href=&quot;#part4&quot;&gt;Part 4: Etcd数据库集群部署&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#etcd&quot;&gt;颁发etcd证书&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-bin&quot;&gt;下载二进制包&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-cfg&quot;&gt;etcd配置文件&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-node&quot;&gt;其他节点加入&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-start&quot;&gt;启动并查看集群状态&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h2 id=&quot;部署平台规划&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;部署平台规划&lt;/h2&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;主机名&lt;/th&gt; &lt;th&gt;名称&lt;/th&gt; &lt;th&gt;ip地址&lt;/th&gt; &lt;th&gt;用户名&lt;/th&gt; &lt;th&gt;密码&lt;/th&gt; &lt;th&gt;角色&lt;/th&gt; &lt;th&gt;组件&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;k8s-master01&lt;/td&gt; &lt;td&gt;k8s-centos-1&lt;/td&gt; &lt;td&gt;10.211.55.10&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;master1&lt;/td&gt; &lt;td&gt;kube-apiserver&lt;br /&gt;kuber-controller-manager&lt;br /&gt;kuber-scheduler&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td&gt;k8s-centos-11&lt;/td&gt; &lt;td&gt;10.211.55.11&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;master2&lt;/td&gt; &lt;td&gt;kube-apiserver&lt;br /&gt;kuber-controller-manager&lt;br /&gt;kuber-scheduler&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;k8s-node01&lt;/td&gt; &lt;td&gt;k8s-centos-12&lt;/td&gt; &lt;td&gt;10.211.55.12&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;node1&lt;/td&gt; &lt;td&gt;kubelet&lt;br /&gt;kube-proxy&lt;br /&gt;docker&lt;br /&gt;flannel&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;k8s-node02&lt;/td&gt; &lt;td&gt;k8s-centos-13&lt;/td&gt; &lt;td&gt;10.211.55.13&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;node2&lt;/td&gt; &lt;td&gt;kubelet&lt;br /&gt;kube-proxy&lt;br /&gt;docker&lt;br /&gt;flannel&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;...</description>
         <pubDate>Mon, 25 Mar 2019 08:45:55 +0800</pubDate>
         <link>http://localhost:4000/etcd-bin-install/</link>
