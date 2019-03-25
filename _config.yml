@@ -50,5 +50,5 @@ comments:
   gitalk_Secret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215'
   gitalk_repo: 'custertian.github.io'
   gitalk_owner: 'custertian'
-  gitalk_admin: ['custertian', 'custertian@gmail.com']
+  gitalk_admin: 'custertian'
   distractionFreeMode: false
