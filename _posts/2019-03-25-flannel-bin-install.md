@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "k8s部署2-flannel使用二进制安装"
+title: "2.k8s部署-flannel使用二进制安装"
 date: 2019-03-25 00:55:58
 image: '/assets/img/'
 description: 'k8s部署第二步-Flannel网络的部署'
@@ -29,6 +29,8 @@ twitter_text: 'k8s部署第二步-Flannel网络的部署'
 #### [Part 8: 使用二进制部署Flannel](#part8)
 
 #### [Part 9: 验证](#part10)
+
+#### [kubernetes二进制部署系列](#serial)
 
 1. [颁发etcd证书](#etcd)
 
@@ -538,3 +540,11 @@ ls /coreos.com/network/
 ```
 
 这个子网分配到哪个ip，所以 flannel 在转发数据之前是需要访问 etcd 中的目标 ip
+
+### <a name="serial"></a>kubernetes二进制部署系列
+
+1. [k8s部署-Etcd数据库集群部署](http://custer.me/etcd-bin-install/)
+2. [k8s部署-Flannel网络](http://custer.me/flannel-bin-install/)
+3. [k8s部署-Master组件](http://custer.me/kube-master/)
+4. [k8s部署-Node组件](http://custer.me/kube-node/)
+5. [k8s部署-多Master集群](http://custer.me/multi-master/)

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>k8s部署1-etcd使用二进制部署集群</title>
+    <title>1.k8s部署-etcd使用二进制部署集群</title>
     <meta name="description" content="k8s部署第一步-Etcd数据库集群部署">
 
     <!-- Google Authorship Markup -->
@@ -14,7 +14,7 @@
     <!-- Social: Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@DBTua">
-    <meta name="twitter:title" content="k8s部署1-etcd使用二进制部署集群">
+    <meta name="twitter:title" content="1.k8s部署-etcd使用二进制部署集群">
     <meta name="twitter:description" content="k8s部署第一步-Etcd数据库集群部署">
     
     <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
@@ -22,7 +22,7 @@
 
     <!-- Social: Facebook / Open Graph -->
     <meta property="og:url" content="http://localhost:4000/etcd-bin-install/">
-    <meta property="og:title" content="k8s部署1-etcd使用二进制部署集群">
+    <meta property="og:title" content="1.k8s部署-etcd使用二进制部署集群">
     
     <meta property="og:image" content="http://localhost:4000/assets/img/">
     
@@ -30,7 +30,7 @@
     <meta property="og:site_name" content="custer的学习记录">
 
     <!-- Social: Google+ / Schema.org  -->
-    <meta itemprop="name" content="k8s部署1-etcd使用二进制部署集群"/>
+    <meta itemprop="name" content="1.k8s部署-etcd使用二进制部署集群"/>
     <meta itemprop="description" content="k8s部署第一步-Etcd数据库集群部署">
     <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
 
@@ -81,7 +81,7 @@
         
             <time itemprop="datePublished" datetime="2019-03-25 08:45:55 +0800" class="date">25 Mar 2019</time>
         
-        <h1 class="post-title" itemprop="name">k8s部署1-etcd使用二进制部署集群</h1>
+        <h1 class="post-title" itemprop="name">1.k8s部署-etcd使用二进制部署集群</h1>
         <p itemprop="description" class="subtitle">k8s部署第一步-Etcd数据库集群部署</p>
     </div>
      <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
@@ -146,6 +146,8 @@
   <li><a href="#etcd-node">其他节点加入</a></li>
   <li><a href="#etcd-start">启动并查看集群状态</a></li>
 </ol>
+
+<h4 id="kubernetes二进制部署系列"><a href="#serial">kubernetes二进制部署系列</a></h4>
 
 <h2 id="部署平台规划"><a name="part1"></a>部署平台规划</h2>
 
@@ -698,6 +700,16 @@ cluster-health
 
 <p>查看进程 <code class="highlighter-rouge">ps -ef | grep etcd</code></p>
 
+<h3 id="kubernetes二进制部署系列-1"><a name="serial"></a>kubernetes二进制部署系列</h3>
+
+<ol>
+  <li><a href="http://custer.me/etcd-bin-install/">k8s部署-Etcd数据库集群部署</a></li>
+  <li><a href="http://custer.me/flannel-bin-install/">k8s部署-Flannel网络</a></li>
+  <li><a href="http://custer.me/kube-master/">k8s部署-Master组件</a></li>
+  <li><a href="http://custer.me/kube-node/">k8s部署-Node组件</a></li>
+  <li><a href="http://custer.me/multi-master/">k8s部署-多Master集群</a></li>
+</ol>
+
             </article>
 
             <section class="share">
@@ -741,7 +753,7 @@ cluster-health
     repo: 'custertian.github.io',
     owner: 'custertian',
     admin: 'custertian',
-    id: location.pathname,      // Ensure uniqueness and length less than 50k8s部署1-etcd使用二进制部署集群
+    id: location.pathname,      // Ensure uniqueness and length less than 501.k8s部署-etcd使用二进制部署集群
     distractionFreeMode: 'true'  // Facebook-like distraction free mode
   })
 

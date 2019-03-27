@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "k8s部署1-etcd使用二进制部署集群"
+title: "1.k8s部署-etcd使用二进制部署集群"
 date: 2019-03-25 00:45:55
 image: '/assets/img/'
 description: k8s部署第一步-Etcd数据库集群部署
@@ -24,6 +24,8 @@ twitter_text: 'k8s部署第一步-Etcd数据库集群部署'
 3. [etcd配置文件](#etcd-cfg)
 4. [其他节点加入](#etcd-node)
 5. [启动并查看集群状态](#etcd-start)
+
+#### [kubernetes二进制部署系列](#serial)
 
 ## <a name="part1"></a>部署平台规划
 
@@ -480,3 +482,11 @@ cluster-health
 关闭进程 `pkill etcd`，`pkill flanneld`
 
 查看进程 `ps -ef | grep etcd`
+
+### <a name="serial"></a>kubernetes二进制部署系列
+
+1. [k8s部署-Etcd数据库集群部署](http://custer.me/etcd-bin-install/)
+2. [k8s部署-Flannel网络](http://custer.me/flannel-bin-install/)
+3. [k8s部署-Master组件](http://custer.me/kube-master/)
+4. [k8s部署-Node组件](http://custer.me/kube-node/)
+5. [k8s部署-多Master集群](http://custer.me/multi-master/)

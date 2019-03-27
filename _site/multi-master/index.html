@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>5.k8s部署-多Master集群</title>
+    <meta name="description" content="k8s部署第五步-多Master集群">
+
+    <!-- Google Authorship Markup -->
+    <link rel="author" href="https://plus.google.com/custer?rel=author">
+
+    <!-- Social: Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DBTua">
+    <meta name="twitter:title" content="5.k8s部署-多Master集群">
+    <meta name="twitter:description" content="k8s部署第五步-多Master集群">
+    
+    <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
+    
+
+    <!-- Social: Facebook / Open Graph -->
+    <meta property="og:url" content="http://localhost:4000/multi-master/">
+    <meta property="og:title" content="5.k8s部署-多Master集群">
+    
+    <meta property="og:image" content="http://localhost:4000/assets/img/">
+    
+    <meta property="og:description" content="k8s部署第五步-多Master集群">
+    <meta property="og:site_name" content="custer的学习记录">
+
+    <!-- Social: Google+ / Schema.org  -->
+    <meta itemprop="name" content="5.k8s部署-多Master集群"/>
+    <meta itemprop="description" content="k8s部署第五步-多Master集群">
+    <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/assets/img/icons/favicon.ico" type="image/x-icon" />
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icons/apple-touch-icon-152x152.png" />
+    <!-- Windows 8 Tile Icons -->
+    <meta name="application-name" content="Custer Blog">
+    <meta name="msapplication-TileColor" content="#0562DC">
+    <meta name="msapplication-square70x70logo" content="smalltile.png" />
+    <meta name="msapplication-square150x150logo" content="mediumtile.png" />
+    <meta name="msapplication-wide310x150logo" content="widetile.png" />
+    <meta name="msapplication-square310x310logo" content="largetile.png" />
+    <!-- Android Lolipop Theme Color -->
+    <meta name="theme-color" content="#0562DC">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/multi-master/">
+    <link rel="alternate" type="application/rss+xml" title="custer的学习记录" href="http://localhost:4000/feed.xml" />
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b70b0a020915347f669bbdc309663da2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none" version="1.1"><defs><symbol id="icon-menu" viewBox="0 0 1024 1024"><path class="path1" d="M128 213.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 725.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 469.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5z"/></symbol><symbol id="icon-search" viewBox="0 0 951 1024"><path class="path1" d="M658.286 475.429q0-105.714-75.143-180.857t-180.857-75.143-180.857 75.143-75.143 180.857 75.143 180.857 180.857 75.143 180.857-75.143 75.143-180.857zM950.857 950.857q0 29.714-21.714 51.429t-51.429 21.714q-30.857 0-51.429-21.714l-196-195.429q-102.286 70.857-228 70.857-81.714 0-156.286-31.714t-128.571-85.714-85.714-128.571-31.714-156.286 31.714-156.286 85.714-128.571 128.571-85.714 156.286-31.714 156.286 31.714 128.571 85.714 85.714 128.571 31.714 156.286q0 125.714-70.857 228l196 196q21.143 21.143 21.143 51.429z"/></symbol><symbol id="icon-email" viewBox="0 0 1024 1024"><path class="path1" d="M950.857 859.429v-438.857q-18.286 20.571-39.429 37.714-153.143 117.714-243.429 193.143-29.143 24.571-47.429 38.286t-49.429 27.714-58.571 14h-1.143q-27.429 0-58.571-14t-49.429-27.714-47.429-38.286q-90.286-75.429-243.429-193.143-21.143-17.143-39.429-37.714v438.857q0 7.429 5.429 12.857t12.857 5.429h841.143q7.429 0 12.857-5.429t5.429-12.857zM950.857 258.857v-14t-0.286-7.429-1.714-7.143-3.143-5.143-5.143-4.286-8-1.429h-841.143q-7.429 0-12.857 5.429t-5.429 12.857q0 96 84 162.286 110.286 86.857 229.143 181.143 3.429 2.857 20 16.857t26.286 21.429 25.429 18 28.857 15.714 24.571 5.143h1.143q11.429 0 24.571-5.143t28.857-15.714 25.429-18 26.286-21.429 20-16.857q118.857-94.286 229.143-181.143 30.857-24.571 57.429-66t26.571-75.143zM1024 237.714v621.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-621.714q0-37.714 26.857-64.571t64.571-26.857h841.143q37.714 0 64.571 26.857t26.857 64.571z"/></symbol><symbol id="icon-close" viewBox="0 0 805 1024"><path class="path1" d="M741.714 755.429q0 22.857-16 38.857l-77.714 77.714q-16 16-38.857 16t-38.857-16l-168-168-168 168q-16 16-38.857 16t-38.857-16l-77.714-77.714q-16-16-16-38.857t16-38.857l168-168-168-168q-16-16-16-38.857t16-38.857l77.714-77.714q16-16 38.857-16t38.857 16l168 168 168-168q16-16 38.857-16t38.857 16l77.714 77.714q16 16 16 38.857t-16 38.857l-168 168 168 168q16 16 16 38.857z"/></symbol><symbol id="icon-twitter" viewBox="0 0 951 1024"><path class="path1" d="M925.714 233.143q-38.286 56-92.571 95.429 0.571 8 0.571 24 0 74.286-21.714 148.286t-66 142-105.429 120.286-147.429 83.429-184.571 31.143q-154.857 0-283.429-82.857 20 2.286 44.571 2.286 128.571 0 229.143-78.857-60-1.143-107.429-36.857t-65.143-91.143q18.857 2.857 34.857 2.857 24.571 0 48.571-6.286-64-13.143-106-63.714t-42-117.429v-2.286q38.857 21.714 83.429 23.429-37.714-25.143-60-65.714t-22.286-88q0-50.286 25.143-93.143 69.143 85.143 168.286 136.286t212.286 56.857q-4.571-21.714-4.571-42.286 0-76.571 54-130.571t130.571-54q80 0 134.857 58.286 62.286-12 117.143-44.571-21.143 65.714-81.143 101.714 53.143-5.714 106.286-28.571z"/></symbol><symbol id="icon-facebook" viewBox="0 0 585 1024"><path class="path1" d="M548 6.857v150.857h-89.714q-49.143 0-66.286 20.571t-17.143 61.714v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571q0-106.286 59.429-164.857t158.286-58.571q84 0 130.286 6.857z"/></symbol><symbol id="icon-rss" viewBox="0 0 805 1024"><path class="path1" d="M219.429 768q0 45.714-32 77.714t-77.714 32-77.714-32-32-77.714 32-77.714 77.714-32 77.714 32 32 77.714zM512 838.286q1.143 16-9.714 27.429-10.286 12-26.857 12h-77.143q-14.286 0-24.571-9.429t-11.429-23.714q-12.571-130.857-105.429-223.714t-223.714-105.429q-14.286-1.143-23.714-11.429t-9.429-24.571v-77.143q0-16.571 12-26.857 9.714-9.714 24.571-9.714h2.857q91.429 7.429 174.857 46t148 103.714q65.143 64.571 103.714 148t46 174.857zM804.571 839.429q1.143 15.429-10.286 26.857-10.286 11.429-26.286 11.429h-81.714q-14.857 0-25.429-10t-11.143-24.286q-6.857-122.857-57.714-233.429t-132.286-192-192-132.286-233.429-58.286q-14.286-0.571-24.286-11.143t-10-24.857v-81.714q0-16 11.429-26.286 10.286-10.286 25.143-10.286h1.714q149.714 7.429 286.571 68.571t243.143 168q106.857 106.286 168 243.143t68.571 286.571z"/></symbol><symbol id="icon-google-plus" viewBox="0 0 951 1024"><path class="path1" d="M420 454.857q0 20.571 18.286 40.286t44.286 38.857 51.714 42 44 59.429 18.286 81.143q0 51.429-27.429 98.857-41.143 69.714-120.571 102.571t-170.286 32.857q-75.429 0-140.857-23.714t-98-78.571q-21.143-34.286-21.143-74.857 0-46.286 25.429-85.714t67.714-65.714q74.857-46.857 230.857-57.143-18.286-24-27.143-42.286t-8.857-41.714q0-20.571 12-48.571-26.286 2.286-38.857 2.286-84.571 0-142.571-55.143t-58-139.714q0-46.857 20.571-90.857t56.571-74.857q44-37.714 104.286-56t124.286-18.286h238.857l-78.857 50.286h-74.857q42.286 36 64 76t21.714 91.429q0 41.143-14 74t-33.714 53.143-39.714 37.143-34 35.143-14 37.714zM336.571 400q21.714 0 44.571-9.429t37.714-24.857q30.286-32.571 30.286-90.857 0-33.143-9.714-71.429t-27.714-74-48.286-59.143-66.857-23.429q-24 0-47.143 11.143t-37.429 30q-26.857 33.714-26.857 91.429 0 26.286 5.714 55.714t18 58.857 29.714 52.857 42.857 38.286 55.143 14.857zM337.714 898.857q33.143 0 63.714-7.429t56.571-22.286 41.714-41.714 15.714-62.286q0-14.286-4-28t-8.286-24-15.429-23.714-16.857-20-22-19.714-20.857-16.571-23.714-17.143-20.857-14.857q-9.143-1.143-27.429-1.143-30.286 0-60 4t-61.429 14.286-55.429 26.286-39.143 42.571-15.429 60.286q0 40 20 70.571t52.286 47.429 68 25.143 72.857 8.286zM800.571 398.286h121.714v61.714h-121.714v125.143h-60v-125.143h-121.143v-61.714h121.143v-124h60v124z"/></symbol><symbol id="icon-angle-down" viewBox="0 0 658 1024"><path class="path1" d="M614.286 420.571q0 7.429-5.714 13.143l-266.286 266.286q-5.714 5.714-13.143 5.714t-13.143-5.714l-266.286-266.286q-5.714-5.714-5.714-13.143t5.714-13.143l28.571-28.571q5.714-5.714 13.143-5.714t13.143 5.714l224.571 224.571 224.571-224.571q5.714-5.714 13.143-5.714t13.143 5.714l28.571 28.571q5.714 5.714 5.714 13.143z"/></symbol><symbol id="icon-github-alt" viewBox="0 0 951 1024"><path class="path1" d="M365.714 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM731.429 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM822.857 694.857q0-68.571-39.429-116.571t-106.857-48q-23.429 0-111.429 12-40.571 6.286-89.714 6.286t-89.714-6.286q-86.857-12-111.429-12-67.429 0-106.857 48t-39.429 116.571q0 50.286 18.286 87.714t46.286 58.857 69.714 34.286 80 16.857 85.143 4h96q46.857 0 85.143-4t80-16.857 69.714-34.286 46.286-58.857 18.286-87.714zM950.857 594.286q0 118.286-34.857 189.143-21.714 44-60.286 76t-80.571 49.143-97.143 27.143-98 12.571-95.429 2.571q-44.571 0-81.143-1.714t-84.286-7.143-87.143-17.143-78.286-29.429-69.143-46.286-49.143-65.714q-35.429-70.286-35.429-189.143 0-135.429 77.714-226.286-15.429-46.857-15.429-97.143 0-66.286 29.143-124.571 61.714 0 108.571 22.571t108 70.571q84-20 176.571-20 84.571 0 160 18.286 60-46.857 106.857-69.143t108-22.286q29.143 58.286 29.143 124.571 0 49.714-15.429 96 77.714 91.429 77.714 227.429z"/></symbol></defs></svg>
+
+        <header class="header-post" role="banner">
+    <div class="content">
+        
+            <time itemprop="datePublished" datetime="2019-03-27 08:55:58 +0800" class="date">27 Mar 2019</time>
+        
+        <h1 class="post-title" itemprop="name">5.k8s部署-多Master集群</h1>
+        <p itemprop="description" class="subtitle">k8s部署第五步-多Master集群</p>
+    </div>
+     <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
+     <div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <svg class="icon-remove-sign"><use xlink:href="#icon-close"></use></svg>
+        <ul class="search-results search-list"></ul>
+    </div>
+</div>
+
+<div id="fade" class="overlay"></div>
+<a id="slide" class="slideButton fade">
+    <svg id="open" class="icon-menu"><use xlink:href="#icon-menu"></use></svg>
+    <svg id="close" class="icon-menu"><use xlink:href="#icon-close"></use></svg>
+</a>
+<aside id="sidebar">
+<nav id="navigation">
+  <h2>MENU</h2>
+  <ul>
+    
+    
+      <li><a href="http://localhost:4000/">Home</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/series">Series</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/tags">Tags</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/about">About Me</a></li>
+    
+    
+    <li><a class="feed" href="http://localhost:4000/feed.xml" title="Atom/RSS feed">Feed</a></li>
+  </ul>
+</nav>
+</aside>
+<a id="search" class="dosearch">
+    <svg class="icon-menu icon-search"><use xlink:href="#icon-search"></use></svg>
+</a>
+
+</header>
+
+        <section class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+            <article role="article" id="scroll" class="post-content" itemprop="articleBody">
+                <h1 id="5-k8s部署-多master集群">5. k8s部署-多Master集群</h1>
+
+<h4 id="part-1-多master集群架构分析"><a href="#part1">Part 1: 多Master集群架构分析</a></h4>
+
+<h4 id="part-2-keepalived和nginx做负载均衡"><a href="#part2">Part 2: keepalived和nginx做负载均衡</a></h4>
+
+<h4 id="part-3-增加master节点"><a href="#part3">Part 3: 增加Master节点</a></h4>
+
+<h4 id="part-4-修改node加入多master集群"><a href="#part4">Part 4: 修改Node加入多Master集群</a></h4>
+
+<h4 id="part-5-kubectl远程连接k8s集群"><a href="#part5">Part 5: kubectl远程连接K8S集群</a></h4>
+
+<h4 id="part-6-webuidashboard部署"><a href="#part6">Part 6: WebUI(Dashboard)部署</a></h4>
+
+<h4 id="kubernetes二进制部署系列"><a href="#serial">kubernetes二进制部署系列</a></h4>
+
+<h3 id="1-多master集群架构分析"><a name="part1"></a>1. 多Master集群架构分析</h3>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553602789312-f418980f-9276-4990-9f85-8b3805096b35.png#align=left&amp;display=inline&amp;height=262&amp;name=5.png&amp;originHeight=522&amp;originWidth=1485&amp;size=42432&amp;status=done&amp;width=746" alt="5.png" /></p>
+
+<p>多 <strong>Master </strong>集群架构主要是给 <strong>apiserver </strong>做负载均衡</p>
+
+<p><strong>scheduler </strong>和 <strong>controller-manager </strong>内部是基于 **etcd **实现的高可用</p>
+
+<p>在我们部署时可以看到配置文件中</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/kube-controller-manager 
+
+<span class="nv">KUBE_CONTROLLER_MANAGER_OPTS</span><span class="o">=</span><span class="s2">"--logtostderr=false </span><span class="se">\</span><span class="s2">
+--log-dir=/opt/kubernetes/logs </span><span class="se">\</span><span class="s2">
+--v=4 </span><span class="se">\</span><span class="s2">
+--master=127.0.0.1:8080 </span><span class="se">\</span><span class="s2">
+--leader-elect=true </span><span class="se">\</span><span class="s2">
+--address=127.0.0.1 </span><span class="se">\</span><span class="s2">
+--service-cluster-ip-range=10.0.0.0/24 </span><span class="se">\</span><span class="s2">
+--cluster-name=kubernetes </span><span class="se">\</span><span class="s2">
+--cluster-signing-cert-file=/opt/kubernetes/ssl/ca.pem </span><span class="se">\</span><span class="s2">
+--cluster-signing-key-file=/opt/kubernetes/ssl/ca-key.pem  </span><span class="se">\</span><span class="s2">
+--root-ca-file=/opt/kubernetes/ssl/ca.pem </span><span class="se">\</span><span class="s2">
+--service-account-private-key-file=/opt/kubernetes/ssl/ca-key.pem </span><span class="se">\</span><span class="s2">
+--experimental-cluster-signing-duration=87600h0m0s"</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">--leader-elect=true</code>: 启用 etcd 的选举工作</p>
+
+<p>我们只需要增加<strong>LoadBalancer</strong>给 <strong>apiserver</strong> 做高可用，<strong>Node</strong>的请求通过<strong>LoadBalancer</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>主机名</th>
+      <th>名称</th>
+      <th>ip地址</th>
+      <th>用户名</th>
+      <th>密码</th>
+      <th>角色</th>
+      <th>组件</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>k8s-master01</td>
+      <td>k8s-centos-1</td>
+      <td>10.211.55.10</td>
+      <td>k8s</td>
+      <td>Root1234</td>
+      <td>master1</td>
+      <td>kube-apiserver<br />kuber-controller-manager<br />kuber-scheduler<br />etcd</td>
+    </tr>
+    <tr>
+      <td>k8s-master02</td>
+      <td>k8s-centos-11</td>
+      <td>10.211.55.11</td>
+      <td>k8s</td>
+      <td>Root1234</td>
+      <td>master2</td>
+      <td>kube-apiserver<br />kuber-controller-manager<br />kuber-scheduler<br />etcd</td>
+    </tr>
+    <tr>
+      <td>k8s-node01</td>
+      <td>k8s-centos-12</td>
+      <td>10.211.55.12</td>
+      <td>k8s</td>
+      <td>Root1234</td>
+      <td>node1</td>
+      <td>kubelet<br />kube-proxy<br />docker<br />flannel<br />etcd</td>
+    </tr>
+    <tr>
+      <td>k8s-node02</td>
+      <td>k8s-centos-13</td>
+      <td>10.211.55.13</td>
+      <td>k8s</td>
+      <td>Root1234</td>
+      <td>node2</td>
+      <td>kubelet<br />kube-proxy<br />docker<br />flannel<br />etcd</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Load Balancer<br />(Master)</td>
+      <td>10.211.55.14<br />(10.211.55.100)Virtual IP</td>
+      <td>nginx</td>
+      <td>Root1234</td>
+      <td>Load Balancer<br />(Master)</td>
+      <td>Nginx L4</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Load Balancer<br />(Backup)</td>
+      <td>10.211.55.15</td>
+      <td>nginx</td>
+      <td>Root1234</td>
+      <td>Load Balancer<br />(Backup)</td>
+      <td>Nginx L4</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Registry</td>
+      <td>10.211.55.16</td>
+      <td>cicd</td>
+      <td>Root1234</td>
+      <td>master</td>
+      <td>Harbor<br />drone<br />gitea<br />docker</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2-keepalived和nginx做负载均衡"><a name="part2"></a>2. keepalived和nginx做负载均衡</h3>
+
+<p>这里我们使用<strong>Nginx</strong>来作为负载均衡，我们先用<strong>keepalived</strong>和<strong>nginx</strong>做好负载均衡的高可用</p>
+
+<p><code class="highlighter-rouge">sudo yum install -y keepalived nginx</code> </p>
+
+<p>如果yum源里没有nginx，可以先查看下 <code class="highlighter-rouge">sudo yum info nginx</code></p>
+
+<p>然后访问 <a href="https://nginx.org/en/linux_packages.html#stable">https://nginx.org/en/linux_packages.html#stable</a>找到链接，安装</p>
+
+<p><a href="https://nginx.org/packages/centos/7/x86_64/RPMS/">https://nginx.org/packages/centos/7/x86_64/RPMS/</a></p>
+
+<p><code class="highlighter-rouge">uname-a</code> 查看内核和centos版本号</p>
+
+<p>然后通过rpm 添加yum源</p>
+
+<p><code class="highlighter-rouge">sudo rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm</code></p>
+
+<p>接着使用<br /><br /><br /><code class="highlighter-rouge">sudo yum install -y nginx</code></p>
+
+<p>便可以解决依赖关系安装<strong>nginx</strong>，接着由于<strong>nginx</strong>安装完后不自动打开，<br />
+<br />如果我们需要开启nginx同时以开机自动运行<br />
+<br /><code class="highlighter-rouge">sudo systemctl start nginx.service</code></p>
+
+<p><code class="highlighter-rouge">sudo systemctl enable nginx.service</code></p>
+
+<p>现在先不启动，先进行配置</p>
+
+<p>安装好之后需要配置 <strong>nginx，</strong><code class="highlighter-rouge">sudo vi /etc/nginx/nginx.conf</code> </p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">user  nginx;</span>
+<span class="s">worker_processes  1;</span>
+
+<span class="s">error_log  /var/log/nginx/error.log warn;</span>
+<span class="s">pid        /var/run/nginx.pid;</span>
+
+
+<span class="s">events {</span>
+    <span class="s">worker_connections  1024;</span>
+<span class="err">}</span>
+
+<span class="c1">######## 添加 stream,nginx的四层负载均衡通过ip+端口进行转发</span>
+<span class="s">stream {</span>
+<span class="err">		</span><span class="s">log_format main '$remote_addr $upstream_addr - [$time_local] $status $upstream_bytes_sent';</span>
+    <span class="s">access_log /var/log/nginx/k8s-access.log main;</span>
+    
+    <span class="s">upstream k8s-apiserver {</span>
+    <span class="err">		</span><span class="s">server 10.211.55.10:6443;</span>
+        <span class="s">server 10.211.55.11:6443;</span>
+    <span class="s">}</span>
+    <span class="s">server {</span>
+    <span class="err">		</span><span class="s">listen 6443;</span>
+        <span class="s">proxy_pass k8s-apiserver;</span>
+    <span class="s">}</span>
+<span class="err">}</span>
+<span class="c1">########</span>
+
+
+<span class="s">http {</span>
+    <span class="s">include       /etc/nginx/mime.types;</span>
+    <span class="s">default_type  application/octet-stream;</span>
+
+    <span class="s">log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span>
+                      <span class="s">'$status $body_bytes_sent "$http_referer" '</span>
+                      <span class="s">'"$http_user_agent" "$http_x_forwarded_for"';</span>
+
+    <span class="s">access_log  /var/log/nginx/access.log  main;</span>
+
+    <span class="s">sendfile        on;</span>
+    <span class="s">#tcp_nopush     on;</span>
+
+    <span class="s">keepalive_timeout  65;</span>
+
+    <span class="s">#gzip  on;</span>
+
+    <span class="s">include /etc/nginx/conf.d/*.conf;</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p>在两个<strong>Load Balancer</strong>节点上添加下面的<strong>stream</strong>代码进行<strong>ip</strong>加端口的四层负载均衡</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stream <span class="o">{</span>
+    log_format main <span class="s1">'$remote_addr $upstream_addr - [$time_local] $status $upstream_bytes_sent'</span><span class="p">;</span>
+    access_log /var/log/nginx/k8s-access.log main<span class="p">;</span>
+    
+    upstream k8s-apiserver <span class="o">{</span>
+        server 10.211.55.10:6443<span class="p">;</span>
+        server 10.211.55.11:6443<span class="p">;</span>
+    <span class="o">}</span>
+    server <span class="o">{</span>
+        listen 6443<span class="p">;</span>
+        proxy_pass k8s-apiserver<span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>配置好之后在两台<strong>Load Balancer</strong>节点上再进行启动 <code class="highlighter-rouge">sudo systemctl start nginx</code>  </p>
+
+<p>然后可以在两台<strong>Load Balancer</strong>节点上配置 <strong>keepalived</strong> </p>
+
+<p>修改默认<strong>keepalived</strong>的配置文件_ _<code class="highlighter-rouge">sudo vi_ /etc/keepalived/keepalived.conf_</code></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">!</span> <span class="s">Configuration File for keepalived</span> 
+ 
+<span class="s">global_defs {</span> 
+   <span class="s">notification_email {</span> 
+     <span class="s">acassen@firewall.loc</span> 
+     <span class="s">failover@firewall.loc</span> 
+     <span class="s">sysadmin@firewall.loc</span> 
+   <span class="s">}</span> 
+   <span class="s">notification_email_from Alexandre.Cassen@firewall.loc</span>  
+   <span class="s">smtp_server 127.0.0.1</span> 
+   <span class="s">smtp_connect_timeout 30</span> 
+   <span class="s">router_id NGINX_MASTER</span> 
+<span class="err">}</span> 
+
+<span class="s">vrrp_script check_nginx {</span> <span class="c1"># 检查nginx状态，确定是否转移IP绑定</span>
+    <span class="s">script "/etc/nginx/check_nginx.sh"</span>
+<span class="err">}</span>
+
+<span class="s">vrrp_instance VI_1 {</span> 
+    <span class="s">state MASTER</span> 
+    <span class="s">interface eth0</span> <span class="c1"># 确定网卡是否是这个，注意修改，我的是eth0，不是ens32</span>
+    <span class="s">virtual_router_id 51</span> <span class="c1"># VRRP 路由 ID实例，每个实例是唯一的 </span>
+    <span class="s">priority 100</span>    <span class="c1"># 优先级，备服务器设置 90 </span>
+    <span class="s">advert_int 1</span>    <span class="c1"># 指定VRRP 心跳包通告间隔时间，默认1秒 </span>
+    <span class="s">authentication {</span> <span class="c1"># 简单的认证信息</span>
+        <span class="s">auth_type PASS</span>      
+        <span class="s">auth_pass 1111</span> 
+    <span class="s">}</span>  
+    <span class="s">virtual_ipaddress {</span> <span class="c1"># 虚拟IP</span>
+        <span class="s">10.211.55.100/24</span> 
+    <span class="s">}</span> 
+    <span class="s">track_script {</span> <span class="c1"># 检查的脚本</span>
+        <span class="s">check_nginx</span>
+    <span class="s">}</span> 
+<span class="err">}</span>
+</code></pre></div></div>
+
+<p><strong>keepalived</strong>是一个双机热备的高可用软件，会有一个 <strong>VIP</strong> 就是 <strong>Virtual IP</strong> 虚拟 <strong>IP</strong> 地址</p>
+
+<p>正常情况下是绑定在<strong>Load Balancer Master</strong> 上的，如果 <strong>master </strong>节点挂了之后会自动绑定到 <strong>backup </strong>上</p>
+
+<p><code class="highlighter-rouge">interface eth0</code>：确定<code class="highlighter-rouge">ifconfig</code>网卡是否是这个，注意修改，我的是eth0，不是ens32</p>
+
+<p><code class="highlighter-rouge">virtual_router_id</code>：VRRP 路由 ID实例，每个实例是唯一的</p>
+
+<p><code class="highlighter-rouge">priority</code>：优先级，备服务器设置 90 </p>
+
+<p><code class="highlighter-rouge">advert_int</code>：指定VRRP 心跳包通告间隔时间，默认1秒</p>
+
+<p><code class="highlighter-rouge">authentication</code>：简单的认证信息</p>
+
+<p><code class="highlighter-rouge">virtual_ipaddress</code>：虚拟IP</p>
+
+<p><code class="highlighter-rouge">track_script</code>：检查的脚本 <code class="highlighter-rouge">check_nginx</code></p>
+
+<p>所以我们也需要先写好这个检查<strong>nginx</strong>的脚本文件 <code class="highlighter-rouge">vi /etc/nginx/check_nginx.sh</code></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">count</span><span class="o">=</span><span class="k">$(</span>ps <span class="nt">-ef</span> |grep nginx |egrep <span class="nt">-cv</span> <span class="s2">"grep|</span><span class="nv">$$</span><span class="s2">"</span><span class="k">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$count</span><span class="s2">"</span> <span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+    /etc/init.d/keepalived stop
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>做好配置文件的准备之后，启动 <strong>keepalived</strong>，虚拟<strong>IP</strong>正常就会绑定到主机的<strong>IP</strong>上</p>
+
+<p><code class="highlighter-rouge">sudo systemctl start keepalived</code> </p>
+
+<p>查看 <code class="highlighter-rouge">ip address</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-loadbalance-master ~]<span class="nv">$ </span>ip address
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:1c:42:53:6b:a6 brd ff:ff:ff:ff:ff:ff
+    inet 10.211.55.14/24 brd 10.211.55.255 scope global noprefixroute dynamic eth0
+       valid_lft 947sec preferred_lft 947sec
+    inet 10.211.55.100/24 scope global secondary eth0
+       valid_lft forever preferred_lft forever
+    inet6 fdb2:2c26:f4e4:0:21c:42ff:fe53:6ba6/64 scope global noprefixroute dynamic 
+       valid_lft 2591646sec preferred_lft 604446sec
+    inet6 fe80::21c:42ff:fe53:6ba6/64 scope <span class="nb">link </span>noprefixroute 
+       valid_lft forever preferred_lft forever
+</code></pre></div></div>
+
+<p>我们可以把 <strong>keepalived </strong>的配置文件拷贝到 <strong>k8s-loadbalance-backup</strong> 节点上</p>
+
+<p><code class="highlighter-rouge">sudo scp /etc/keepalived/keepalived.conf root@10.211.55.15:/etc/keepalived/</code></p>
+
+<p>我们需要在 <strong>k8s-loadbalance-backup</strong> 节点上修改 <strong>keepalived </strong>的配置文件</p>
+
+<p><code class="highlighter-rouge">sudo vi /etc/keepalived/keepalived.conf</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">!</span> Configuration File <span class="k">for </span>keepalived
+
+global_defs <span class="o">{</span>
+   notification_email <span class="o">{</span>
+     acassen@firewall.loc
+     failover@firewall.loc
+     sysadmin@firewall.loc
+   <span class="o">}</span>
+   notification_email_from Alexandre.Cassen@firewall.loc
+   smtp_server 127.0.0.1
+   smtp_connect_timeout 30
+   router_id NGINX_MASTER
+<span class="o">}</span>
+
+vrrp_script check_nginx <span class="o">{</span>
+    script <span class="s2">"/etc/nginx/check_nginx.sh"</span>
+<span class="o">}</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+    state BACKUP
+    interface eth0
+    virtual_router_id 51 <span class="c"># VRRP 路由 ID实例，每个实例是唯一的</span>
+    priority 90    <span class="c"># 优先级，备服务器设置 90 </span>
+    advert_int 1    <span class="c"># 指定VRRP 心跳包通告间隔时间，默认1秒</span>
+    authentication <span class="o">{</span>
+        auth_type PASS
+        auth_pass 1111
+    <span class="o">}</span>
+    virtual_ipaddress <span class="o">{</span>
+        10.211.55.100/24
+    <span class="o">}</span>
+    track_script <span class="o">{</span>
+        check_nginx
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">state</code>：状态需要修改为<strong>BACKUP</strong><br /><code class="highlighter-rouge">priority</code>：优先级修改为<strong>90</strong></p>
+
+<p>然后把检查 <strong>nginx</strong> 的脚本也要拷贝过来</p>
+
+<p><code class="highlighter-rouge">sudo scp /etc/nginx/check_nginx.sh root@10.211.55.15:/etc/nginx/</code></p>
+
+<p>这样就可以启用 <strong>keepalived</strong> 了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /etc/keepalived/keepalived.conf
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span><span class="nb">cat</span> /etc/nginx/check_nginx.sh 
+<span class="nv">count</span><span class="o">=</span><span class="k">$(</span>ps <span class="nt">-ef</span> |grep nginx |egrep <span class="nt">-cv</span> <span class="s2">"grep|</span><span class="nv">$$</span><span class="s2">"</span><span class="k">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$count</span><span class="s2">"</span> <span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+    /etc/init.d/keepalived stop
+<span class="k">fi</span>
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl start keepalived
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>keep
+root      5430     1  0 10:30 ?        00:00:00 /usr/sbin/keepalived <span class="nt">-D</span>
+root      5431  5430  0 10:30 ?        00:00:00 /usr/sbin/keepalived <span class="nt">-D</span>
+root      5432  5430  0 10:30 ?        00:00:00 /usr/sbin/keepalived <span class="nt">-D</span>
+k8s       5450  5267  0 10:30 pts/2    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto keep
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span>ip address
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    <span class="nb">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    <span class="nb">link</span>/ether 00:1c:42:f2:c8:10 brd ff:ff:ff:ff:ff:ff
+    inet 10.211.55.15/24 brd 10.211.55.255 scope global noprefixroute dynamic eth0
+       valid_lft 1666sec preferred_lft 1666sec
+    inet6 fdb2:2c26:f4e4:0:21c:42ff:fef2:c810/64 scope global noprefixroute dynamic 
+       valid_lft 2591884sec preferred_lft 604684sec
+    inet6 fe80::21c:42ff:fef2:c810/64 scope <span class="nb">link </span>noprefixroute 
+       valid_lft forever preferred_lft forever
+</code></pre></div></div>
+
+<p>这样负载均衡就搭建好了</p>
+
+<h3 id="3-增加master节点"><a name="part3"></a>3. 增加Master节点</h3>
+
+<p>只需要把<strong>master01</strong>节点的配置拷贝到<strong>master02</strong>节点，在修改下配置就可以</p>
+
+<p><code class="highlighter-rouge">sudo scp -r /opt/kubernetes/ root@10.211.55.11:/opt/</code>拷贝kubernetes工作目录包括工具和配置</p>
+
+<p><code class="highlighter-rouge">sudo scp -r /usr/lib/systemd/system/{kube-apiserver,kube-scheduler,kube-controller-manager}.service root@10.211.55.11:/usr/lib/systemd/system/</code>拷贝<strong>systemd</strong>的配置文件</p>
+
+<p><code class="highlighter-rouge">sudo scp /usr/bin/kubectl root@10.211.55.11:/usr/bin/</code> 拷贝<strong>kubectl</strong>集群命令台管理工具<br />接下来就可以在 master02节点上修改配置</p>
+
+<p><code class="highlighter-rouge">sudo scp -r /opt/etcd/ssl/ root@10.211.55.11:/opt/etcd/ssl/</code> <strong>Master</strong>主要连接的就是<strong>etcd</strong>，所以需要<strong>etcd</strong>证书</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">KUBE_APISERVER_OPTS</span><span class="o">=</span><span class="s2">"--logtostderr=false </span><span class="se">\</span><span class="s2">
+--log-dir=/opt/kubernetes/logs </span><span class="se">\</span><span class="s2">
+--v=4 </span><span class="se">\</span><span class="s2">
+--etcd-servers=https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379 </span><span class="se">\</span><span class="s2">
+--bind-address=10.211.55.11 </span><span class="se">\</span><span class="s2">
+--secure-port=6443 </span><span class="se">\</span><span class="s2">
+--advertise-address=10.211.55.11 </span><span class="se">\</span><span class="s2">
+--allow-privileged=true </span><span class="se">\</span><span class="s2">
+--service-cluster-ip-range=10.0.0.0/24 </span><span class="se">\</span><span class="s2">
+--enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,NodeRestriction </span><span class="se">\</span><span class="s2">
+--authorization-mode=RBAC,Node </span><span class="se">\</span><span class="s2">
+--kubelet-https=true </span><span class="se">\</span><span class="s2">
+--enable-bootstrap-token-auth </span><span class="se">\</span><span class="s2">
+--token-auth-file=/opt/kubernetes/cfg/token.csv </span><span class="se">\</span><span class="s2">
+--service-node-port-range=30000-50000 </span><span class="se">\</span><span class="s2">
+--tls-cert-file=/opt/kubernetes/ssl/server.pem  </span><span class="se">\</span><span class="s2">
+--tls-private-key-file=/opt/kubernetes/ssl/server-key.pem </span><span class="se">\</span><span class="s2">
+--client-ca-file=/opt/kubernetes/ssl/ca.pem </span><span class="se">\</span><span class="s2">
+--service-account-key-file=/opt/kubernetes/ssl/ca-key.pem </span><span class="se">\</span><span class="s2">
+--etcd-cafile=/opt/etcd/ssl/ca.pem </span><span class="se">\</span><span class="s2">
+--etcd-certfile=/opt/etcd/ssl/server.pem </span><span class="se">\</span><span class="s2">
+--etcd-keyfile=/opt/etcd/ssl/server-key.pem"</span>
+</code></pre></div></div>
+
+<p>只需要把 <code class="highlighter-rouge">--advertise-address</code> 和 <code class="highlighter-rouge">--bind-address</code> 修改为当前的<strong>master02</strong>节点的<strong>IP</strong>地址</p>
+
+<p>然后就可以启动 <strong>Master</strong> 组件的服务了</p>
+
+<p><code class="highlighter-rouge">sudo systemctl restart kube-apiserver</code></p>
+
+<p><code class="highlighter-rouge">sudo systemctl restart kube-scheduler</code></p>
+
+<p><code class="highlighter-rouge">sudo systemctl restart kube-controller-manager</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vim /opt/kubernetes/cfg/kube-apiserver 
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-apiserver
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-scheduler
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-controller-manager
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>kube
+root      5223     1  7 10:23 ?        00:00:01 /opt/kubernetes/bin/kube-scheduler <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--master</span><span class="o">=</span>127.0.0.1:8080 <span class="nt">--leader-elect</span>
+root      5240     1 15 10:23 ?        00:00:00 /opt/kubernetes/bin/kube-controller-manager <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--master</span><span class="o">=</span>127.0.0.1:8080 <span class="nt">--leader-elect</span><span class="o">=</span><span class="nb">true</span> <span class="nt">--address</span><span class="o">=</span>127.0.0.1 <span class="nt">--service-cluster-ip-range</span><span class="o">=</span>10.0.0.0/24 <span class="nt">--cluster-name</span><span class="o">=</span>kubernetes <span class="nt">--cluster-signing-cert-file</span><span class="o">=</span>/opt/kubernetes/ssl/ca.pem <span class="nt">--cluster-signing-key-file</span><span class="o">=</span>/opt/kubernetes/ssl/ca-key.pem <span class="nt">--root-ca-file</span><span class="o">=</span>/opt/kubernetes/ssl/ca.pem <span class="nt">--service-account-private-key-file</span><span class="o">=</span>/opt/kubernetes/ssl/ca-key.pem <span class="nt">--experimental-cluster-signing-duration</span><span class="o">=</span>87600h0m0s
+k8s       5248  4740  0 10:23 pts/1    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto kube
+</code></pre></div></div>
+
+<p>我们也可以先手动<strong>source</strong>启动查看启动状况</p>
+
+<p><code class="highlighter-rouge">source /opt/kubernetes/cfg/kube-apiserver</code></p>
+
+<p><code class="highlighter-rouge">sudo /opt/kubernetes/bin/kube-apiserver $KUBE_APISERVER_OPTS</code></p>
+
+<p><code class="highlighter-rouge">journalctl -u kube-apiserver</code> </p>
+
+<p>先<strong>stop</strong>服务  <code class="highlighter-rouge">sudo systemctl stop kube-apiserver</code></p>
+
+<p>再重新手动启动查看报错 <code class="highlighter-rouge">sudo /opt/kubernetes/bin/kube-apiserver $KUBE_APISERVER_OPTS</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span><span class="nb">sudo</span> /opt/kubernetes/bin/kube-apiserver <span class="nv">$KUBE_APISERVER_OPTS</span>
+F0326 10:42:33.942724    5445 storage_decorator.go:57] 
+Unable to create storage backend: 
+config <span class="o">(</span>&amp;<span class="o">{</span> /registry <span class="o">[</span>https://10.211.55.10:2379 https://10.211.55.12:2379 https://10.211.55.13:2379] 
+/opt/etcd/ssl/server-key.pem 
+/opt/etcd/ssl/server.pem 
+/opt/etcd/ssl/ca.pem <span class="nb">true </span>0xc0007103f0 &lt;nil&gt; 5m0s 1m0s<span class="o">})</span>, 
+err <span class="o">(</span>open /opt/etcd/ssl/server.pem: no such file or directory<span class="o">)</span>
+</code></pre></div></div>
+
+<p>可以查看到具体的报错信息，如果解决了问题还是启动不起来，也有可能是时间问题，同步下互联网时间</p>
+
+<p><code class="highlighter-rouge">sudo ntpdate time.windows.com</code></p>
+
+<p>解决了问题，就可以使用<strong>kubectl</strong>管理集群了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span>kubectl get node
+NAME           STATUS   ROLES    AGE   VERSION
+10.211.55.12   Ready    &lt;none&gt;   37h   v1.13.4
+10.211.55.13   Ready    &lt;none&gt;   35h   v1.13.4
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span>kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok                  
+controller-manager   Healthy   ok                  
+etcd-1               Healthy   <span class="o">{</span><span class="s2">"health"</span>:<span class="s2">"true"</span><span class="o">}</span>   
+etcd-2               Healthy   <span class="o">{</span><span class="s2">"health"</span>:<span class="s2">"true"</span><span class="o">}</span>   
+etcd-0               Healthy   <span class="o">{</span><span class="s2">"health"</span>:<span class="s2">"true"</span><span class="o">}</span>   
+<span class="o">[</span>k8s@k8s-master02 ~]<span class="nv">$ </span>kubectl get pods
+NAME                   READY   STATUS    RESTARTS   AGE
+nginx-5c7588df-2bmzw   1/1     Running   0          34h
+nginx-5c7588df-ljzp5   1/1     Running   0          34h
+nginx-5c7588df-p9m5m   1/1     Running   0          34h
+</code></pre></div></div>
+
+<h3 id="4修改node加入多master集群"><a name="part4"></a>4.修改Node加入多Master集群</h3>
+
+<p>之前的 <strong>Node </strong>节点是直接连接到 <strong>单Master </strong>的，现在有 <strong>双Master </strong>节点，并通过 <strong>LoadBalancer </strong>进行了 <strong>虚拟IP </strong>处理和 <strong>keepalived </strong>双机热备 </p>
+
+<p>所以现在只需要把 <strong>Node</strong> 节点指向 <strong>LoadBalancer</strong>，主要修改连接的IP地址</p>
+
+<p><em>bootstrap.kubeconfig</em> <em>flanneld</em> <em>kubelet.kubeconfig</em> _kube-proxy.kubeconfig _主要就是这几个文件 </p>
+
+<p><code class="highlighter-rouge">sudo vi /opt/kubernetes/cfg/bootstrap.kubeconfig</code> </p>
+
+<p><code class="highlighter-rouge">sudo vi /opt/kubernetes/cfg/kubelet.kubeconfig</code> <br />
+<code class="highlighter-rouge">sudo vi /opt/kubernetes/cfg/kube-proxy.kubeconfig</code> </p>
+
+<p>修改 <code class="highlighter-rouge">server: https://10.211.55.100:6443</code> 为 <strong>loadbalancer</strong> 的虚拟 IP<br /> <br />重启 <strong>Node</strong> 节点的 <strong>kubelet、kube-proxy</strong> 组件就可以</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/bootstrap.kubeconfig
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kubelet.kubeconfig 
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kube-proxy.kubeconfig  
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kubelet
+<span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-proxy
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">sudo tail /var/log/nginx/k8s-access.log</code> 查看 **loadbalancer **的访问日志</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-loadbalance-master ~]<span class="nv">$ </span><span class="nb">sudo tail</span> /var/log/nginx/k8s-access.log
+10.211.55.12 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:11:33 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:11:33 <span class="nt">-0400</span><span class="o">]</span> 200 171
+</code></pre></div></div>
+
+<p>所以<strong>IP</strong>为 <strong>10.211.55.12</strong> 的 <strong>node01</strong> 节点已经加入到 <strong>多Master集群</strong> 中了</p>
+
+<p>现在可以为<strong>node02</strong>节点配置，也加入到 <strong>多Master集群</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/bootstrap.kubeconfig
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kubelet.kubeconfig 
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kube-proxy.kubeconfig  
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kubelet
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-proxy
+</code></pre></div></div>
+
+<p>再查看 <strong>loadbalancer </strong>的访问日志<code class="highlighter-rouge">sudo tail /var/log/nginx/k8s-access.log</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-loadbalance-master ~]<span class="nv">$ </span><span class="nb">sudo tail</span> /var/log/nginx/k8s-access.log
+10.211.55.13 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:17:13 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.13 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:17:13 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.13 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.13 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.13 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.10:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+10.211.55.12 10.211.55.11:6443 - <span class="o">[</span>26/Mar/2019:13:17:14 <span class="nt">-0400</span><span class="o">]</span> 200 171
+</code></pre></div></div>
+
+<h3 id="5-kubectl远程连接k8s集群"><a name="part5"></a>5. kubectl远程连接K8S集群</h3>
+
+<p>我们先生成 <strong>kubectl </strong>远程连接的配置文件，与 <strong>kubernetes </strong>部署 <strong>node </strong>节点时创建 <strong>kubeconfig </strong>文件相似</p>
+
+<p>因为所有的证书都在 <strong>master01</strong> 节点，所以我们现在该节点生成配置文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">ls
+</span>admin.csr             ca-config.json  k8s-cert.sh          kube-proxy.kubeconfig  server.pem
+admin-csr.json        ca.csr          kubeconfig.sh        kube-proxy.pem         token.csv
+admin-key.pem         ca-csr.json     kube-proxy.csr       server.csr
+admin.pem             ca-key.pem      kube-proxy-csr.json  server-csr.json
+bootstrap.kubeconfig  ca.pem          kube-proxy-key.pem   server-key.pem
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span>vi kubelet.sh
+</code></pre></div></div>
+
+<p>这里要用到** admin.csr**，这个管理员的证书，所以我们在该目录下新建<code class="highlighter-rouge">vi kubelet.sh</code>脚本配置文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl config set-cluster kubernetes <span class="se">\</span>
+  <span class="nt">--server</span><span class="o">=</span>https://10.211.55.100:6443 <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span>ca.pem <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>config
+kubectl config set-credentials cluster-admin <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span>ca.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--client-key</span><span class="o">=</span>admin-key.pem <span class="se">\</span>
+  <span class="nt">--client-certificate</span><span class="o">=</span>admin.pem <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>config
+kubectl config set-context default <span class="nt">--cluster</span><span class="o">=</span>kubernetes <span class="nt">--user</span><span class="o">=</span>cluster-admin <span class="nt">--kubeconfig</span><span class="o">=</span>config
+kubectl config use-context default <span class="nt">--kubeconfig</span><span class="o">=</span>config
+</code></pre></div></div>
+
+<p>执行脚本文件生成证书 <code class="highlighter-rouge">bash kubelet.sh</code> 就生成一个 <em>config</em> 文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span>bash kubelet.sh 
+Cluster <span class="s2">"kubernetes"</span> set.
+User <span class="s2">"cluster-admin"</span> set.
+Context <span class="s2">"default"</span> created.
+Switched to context <span class="s2">"default"</span><span class="nb">.</span>
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">cat </span>config 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR2akNDQXFhZ0F3SUJBZ0lVSG5uV0pCdmpFbXF1OUxjaVFrMVpkYy9td1BZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTBNRE15TWpFNE1EQXdNRm93WlRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbGFXcHBibWN4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByZFdKbGNtNWxkR1Z6Ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBM1pmVTZiTHRzVVFKRnlodnNvbC8KaUhpSUd6dk9URDdXZ0twMnlKTXJzNUEyRVUwZEZSYUNJR0QvS3htT3V2RUhUbHJVOEZvY1BiYzdRUVFqZjh2cgpGbjBPTURtd1RuZmozcUpGSFNTUmN0TURhWjl1eFRpMy9qa2w1VFRDTWZtcXBCc2l3N2ZnOVpmOXpkVVo0Q3psCjF2TU9Odi8zVUZoZk5SQlhqR1hKaTFxakdIZnpuQ0lqVzMxZ1llK2hsYm0ySHlJeU5rUktmWTg4bjFHWG81YXAKWUtFdkJPa1pqVGlSQVNEendhRUMzM1UrNldCcStsTjdveGsybzBmVVlQak9VSm5TZU1ZdEQ4K1V6S1lhVnF4dwpwSWRna0RORXkxOGVQME1nR1drdEI5VW8wYVc2OWpXOW9GRlBvREZUdVFTR01aZ2RiUW0yTUYrT2pCU01wM0NIClNRSURBUUFCbzJZd1pEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQkFqQWQKQmdOVkhRNEVGZ1FVU2pqODg5TE13cmhOWUVZcWlucWg5dWJSUjhBd0h3WURWUjBqQkJnd0ZvQVVTamo4ODlMTQp3cmhOWUVZcWlucWg5dWJSUjhBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKL1ltZmFOWU51NUI1T3ROV1BRCmUzU29uMXd2SVJOVHVkNlZ3ZmJTNHdnUXFwMmNVOFB0Unp1Vk5xMDNBZXpOZWFRSjJZZlFBaFdldTdjb2F6cDMKcVY2VG54RE04TWlmZngzQ05CQUliRVRoZE04STliVjJMc3RXNFcxQlR3K1BQNzFwenYyVUs4R0xTUjNMd0RYZQpLM2JpVnBJMkEydmZUVXh2WlFEYVFYa1lpSmdrcjNoVFVnd3FZQ0dNV0tMOFZ3ODJEUk5uNmdiZmRSVW4rWUkyCkFrUXZoYkhualVlYUVxYUhIbVZ1QWZJV2tRbXZNOHcwaW84dEdobkJpcFBNc245bExicEMvbUhiVkFhSE05QzAKTTFpTVN6MWNwQzNoOGdBYzhUNTlSSjJRbmtjVTM0KzdSd2dvWjg4M0FDWHRVVWs0OG51RHEzNzNuc0thZFBNUwpMTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://10.211.55.100:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: cluster-admin
+  name: default
+current-context: default
+kind: Config
+preferences: <span class="o">{}</span>
+<span class="nb">users</span>:
+- name: cluster-admin
+  user:
+    client-certificate-data: <span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUQzVENDQXNXZ0F3SUJBZ0lVZEV0QmJvUmJzUkFIcDgyQ3NyZWV6cVZ1OVdNd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTVNRE15TVRFNE1EQXdNRm93YXpFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFVcHBibWN4RURBT0JnTlZCQWNUQjBKbGFVcHBibWN4RnpBVgpCZ05WQkFvVERuTjVjM1JsYlRwdFlYTjBaWEp6TVE4d0RRWURWUVFMRXdaVGVYTjBaVzB4RGpBTUJnTlZCQU1UCkJXRmtiV2x1TUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFzL3dpZTZ0WXJXRGUKSDRLZWdTcVFKVFloTVhWQ0pYcFZtcG5td2VBVVhpNlpFUk02SlZpNUFIaXlnWTNsL3hGRHlKbnJucUVaN1J2YwpNaFVLMzF5MUNrMURtb0xXa1VkbG1UY2RKaEpCRzJueXFKOVlkSVZGNjNWT0xNK2Q0OURDQVVpM2dPeThuWFFBCnc1UEZHQTU0Rjdva2R5OXRBbHJvY2cxbHQwVjBxRjgrSDA3c1N4NmdMSGk4cFcvc2lIMGkzMkhKMzhMZkJFZWMKcDZSWlFqdVVyRG5HRjgyTDVuTi9udXRTaE5pZWdNbkkvc3E0ajJLQUlta0dhWDc1Z0hRNnRHSHNMNkdtY2QyRQorZS84VUdvbFA5a1FDdndFaEdjd1UzWmRabE5uT2habkV0aThmSk5HdGNVaEdyQ0VWSFBaNEdXM3hRK28yeVBJClIyVTRHdjVzc1FJREFRQUJvMzh3ZlRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGxCQll3RkFZSUt3WUIKQlFVSEF3RUdDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0hRWURWUjBPQkJZRUZGSENpcCtWWjB6egovSXM4WGJjRnNocyt1L2ZUTUI4R0ExVWRJd1FZTUJhQUZFbzQvUFBTek1LNFRXQkdLb3A2b2ZibTBVZkFNQTBHCkNTcUdTSWIzRFFFQkN3VUFBNElCQVFEWDhFbm9YSEtKYTB2all3cVlhVXNNcjJIenNKRjlVWFlSVTBJL1J6QW0KNTJBTE5nYU5lSGtRL25Vb0p3N2xIUVhYNkJhcjNBMzJYTWV6QlZ3blNwOHp0bGFGdWsrSEt6ZjA4REdvTndqRApTcmpsQTFLeHpIOHJlb3lyWHFMZHZkWUdGbTJWa0NFVjN6cjlJL0JRTy9vMDd2NzRJTzNKWHh4Nit6OFUvdWtFCnExaGh0VjRqUE9abitkMjR6ZkNsVGlDb1BES0g4ZCtBbXk0Z25Sa2l5UTdRU01FbE8xTFBIUi82ZXNCWUJOcTAKSk1qVVJEQmJBWnFVa05XTmRvaVVxaHFUOXRXdUg4WXhOaWowWjdRbjdpSXlIM1VrUWRFcjEzVVdtZGpSN0xNdApCdmp3RFBCSkl2b0xmdHEraGVMV0NNMVVHNUNyS3Yyc0p5MlNteERSTVB0UAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg</span><span class="o">==</span>
+    client-key-data: <span class="nv">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBcy93aWU2dFlyV0RlSDRLZWdTcVFKVFloTVhWQ0pYcFZtcG5td2VBVVhpNlpFUk02CkpWaTVBSGl5Z1kzbC94RkR5Sm5ybnFFWjdSdmNNaFVLMzF5MUNrMURtb0xXa1VkbG1UY2RKaEpCRzJueXFKOVkKZElWRjYzVk9MTStkNDlEQ0FVaTNnT3k4blhRQXc1UEZHQTU0Rjdva2R5OXRBbHJvY2cxbHQwVjBxRjgrSDA3cwpTeDZnTEhpOHBXL3NpSDBpMzJISjM4TGZCRWVjcDZSWlFqdVVyRG5HRjgyTDVuTi9udXRTaE5pZWdNbkkvc3E0CmoyS0FJbWtHYVg3NWdIUTZ0R0hzTDZHbWNkMkUrZS84VUdvbFA5a1FDdndFaEdjd1UzWmRabE5uT2habkV0aTgKZkpOR3RjVWhHckNFVkhQWjRHVzN4UStvMnlQSVIyVTRHdjVzc1FJREFRQUJBb0lCQUNSdFUwMVVVSTVHbks0ago4WkNTM0xtclN1eUhudXVXNXR4emFaQ3ptV3UyWXFSaUQ5S2ZNbEkyRzJxOUhWK1NUdlc2c1VWWnRiV1hmZWxrCitONWNGUWdRdXkzNmJSTGFNR1hpRWJReTNacCt4dTM1MGgxREcvT2J1a2EzZm0wdFF4YWZjUVJXNVpXNGRLOGcKcVRORk9ta1M4MjVyMnRRdk1meGpXY0xOKzk1WGtZSFB5MXVHeVlUYkRyVnkwM2YzeVpybDFqRDBldFNwY2Q2awpWalI0dW93Qk91YkgwRDZ1Nnd5ZmVBWHZNUG9kUXFDRWJlUytSZ3Q3Z3MvTkQ0a1RRcUJodlZ6M1ppeGxUVE9YClg5U243ZE5ta2tFY1d4Tm5FUGlwYVArMkNhVDR1TmI2M2JzUUROMklGRTd5SlgzY3RweG5qZjYwQ2Ruck1PQ2sKZjMzcjRBRUNnWUVBMjZNLysvZUJ3M2tCYTFZTDNHNHVETFdjNE95Smh4SEx4TFdiMEhjOGl0TGVnN2FuZ296bApFTGRjdlBueTIzZXVaVDYvRlk0K3ZFM2FKTGtTSTdQQkcxWHd3SENyVXBDc1FCbG12dkpkUkxjcFptMlBGcGZ1Citxak1za2Uxc2xiNHlDTXNNd3Z1OUdHU0lLWnNwV2I0TUtvM2crc0tHaEYzYTB4eXNad2N3dEVDZ1lFQTBjaE8KNm95elRyd0dPZFREN2UwQmk4UXV6ekFwWGZKbXQvdDhqVUZLR09PZzZvWW5JdHIyVUJ3bzVicFFlYXREbU9oYwo0aUh5ZE9XRExnMys2Y0RwUHhzSnc3UVA1ZDhlUHlXZXlrSnF0TVlOdlRyeGV3MTRieHdhV2JwRjB6OFlHc1hwCjVmZWlBY2I2dzN2Y1ZkRlcwNmFmQmxZZlZSU2RwQllFdmdpeXcrRUNnWUF4VHZnWllCcUF3TlRCdlNLU2pTWEgKY3FwU2tLZmJhL0pjS2cxZUFyYlR6NzFtd29YZXVEVGd5Tm1JRDNFbk5qb3Z2cU4xZW1hNUxaMHdxMS9ZSmczUApUajdyWlNBQlBEdC9kSFJ0bjhteW1KQXh6NXpWREt6NUZ4WkZXL1g5b0tyZmU0MzdzODBramhjWlAyT2F5b0FqCnBNTXIyWU4rRUxmSG5mVU56S2RrVVFLQmdRREVZSE5uWXlDeThwWU5hdHVpalB1bWY1YW1BdHFtaERTZHc4Q2IKWm1QYm1ySlcrQkFJczlwaHNZcWpTbDd0Rm1KbjhCU0s1dVpWZ1Vma1E5dTlyQVZzT241UWdlMWo3UkllWUxRZAplRUQxU25Vd0Q4NWZ0NE5tMTNMZlRkenhYQjNQYWplRE8rV2ZMa290MW5PeXJnMU9nYXBadnlNRGZSSDR1VmZsCklMVmZZUUtCZ1FDdHd4REhCNHpvY1VDSUVNQUdwME1naFlTYk9tSHBZQXlyNldScVovNXZQbzkwOE1kOGs4Y2cKeGNvVndvbHZIMElNWWs1ZXVBZWRpOWprNkpVeGRvWmFuZm0wUTJtMEtLNjBpYmZaOW9aTURrMFViQVkrbWVQdQpLWW44aXBqSGN1OFRGN05RTEtYbFBGdGlTaERTVTV6S2EwazdOZ1VyTVVKOUpLa1NIN1FOb3c9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo</span><span class="o">=</span>
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span>
+<span class="o">[</span>5] 0:k8s@k8s-master01
+</code></pre></div></div>
+
+<p>使用这个<strong>config</strong>文件，我们可以在任意地方使用<strong>kubectl</strong>连接集群</p>
+
+<p>我们尝试拷贝到** loadbalancer-backup** 节点</p>
+
+<p><code class="highlighter-rouge">sudo scp /usr/bin/kubectl root@10.211.55.15:/usr/bin/</code></p>
+
+<p><code class="highlighter-rouge">scp config root@10.211.55.15:/home/k8s/</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">sudo </span>scp /usr/bin/kubectl root@10.211.55.15:/usr/bin/ 
+root@10.211.55.15<span class="s1">'s password: 
+kubectl                                                           100%   37MB 118.1MB/s   00:00    
+[k8s@k8s-master01 k8s-cert]$ scp config root@10.211.55.15:/home/k8s/
+root@10.211.55.15'</span>s password: 
+config                                                            100% 6275     5.5MB/s   00:00    
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span>kubectl get pods
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+<span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span><span class="nb">sudo </span>kubectl <span class="nt">--kubeconfig</span><span class="o">=</span>./config get node
+Unable to connect to the server: x509: certificate is valid <span class="k">for 
+</span>10.0.0.1, 127.0.0.1, 10.211.55.10, 10.211.55.11, 10.211.55.12, 10.211.55.13, 
+10.211.55.14, 10.211.55.15, 10.211.55.16, 10.211.55.17, 10.211.55.18, 10.211.55.19,
+10.211.55.20, not 10.211.55.100
+</code></pre></div></div>
+
+<p>所以生成证书的时候最好要把可能需要的所有IP都加上，添加证书后，或者修改虚拟IP之后就可以远程连接了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-loadbalance-backup ~]<span class="nv">$ </span><span class="nb">sudo </span>kubectl <span class="nt">--kubeconfig</span><span class="o">=</span>./config get node
+NAME           STATUS   ROLES    AGE    VERSION
+10.211.55.12   Ready    &lt;none&gt;   9h     v1.13.4
+10.211.55.13   Ready    &lt;none&gt;   7h7m   v1.13.4
+</code></pre></div></div>
+
+<p><strong>kubectl</strong>只是一个客户端，是与 <strong>apiserver</strong> 连接的，如果在<strong>master</strong>执行，连接的是本地的 <strong>apiserver</strong></p>
+
+<h3 id="6webuidashboard部署"><a name="part6"></a>6.WebUI(Dashboard)部署</h3>
+
+<p><a href="https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dashboard">https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dashboard</a></p>
+
+<ul>
+  <li>修改镜像：<code class="highlighter-rouge">registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.0</code></li>
+  <li>暴露外部：<code class="highlighter-rouge">NodePort</code></li>
+  <li>创建登录<code class="highlighter-rouge">admin</code>账号登录</li>
+</ul>
+
+<p>生产环境使用不多，查看日志容器状态</p>
+
+<p>我们在<strong>master01</strong>节点创建<code class="highlighter-rouge"> mkdir ui </code>目录来存放 <strong>Dashboard</strong> 的配置文件</p>
+
+<p>我们把 <strong>github</strong> 下载的 文件到上传到 <em>ui</em> 目录下</p>
+
+<p>首先部署 <strong>rbac</strong> 角色控制管理 <code class="highlighter-rouge">vi dashboard-rbac.yaml</code>从官方下载不需要修改任何代码</p>
+
+<p>部署起来 <code class="highlighter-rouge">kubectl apply -f dashboard-rbac.yaml</code>  </p>
+
+<p><code class="highlighter-rouge">kubectl apply -f dashboard-secret.yaml</code></p>
+
+<p><code class="highlighter-rouge">kubectl apply -f dashboard-configmap.yaml</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> dashboard-rbac.yaml
+role.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard-minimal created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> dashboard-secret.yaml
+secret/kubernetes-dashboard-certs created
+secret/kubernetes-dashboard-key-holder created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> dashboard-configmap.yaml
+configmap/kubernetes-dashboard-settings created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> dashboard-controller.yaml 
+serviceaccount/kubernetes-dashboard created
+deployment.apps/kubernetes-dashboard created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl get pods <span class="nt">-n</span> kube-system
+NAME                                    READY   STATUS              RESTARTS   AGE
+kubernetes-dashboard-77fdb66558-4nkrf   0/1     ContainerCreating   0          &lt;invalid&gt;
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> dashboard-service.yaml 
+service/kubernetes-dashboard created 
+</code></pre></div></div>
+
+<p>然后修改 <code class="highlighter-rouge">vi dashboard-controller.yaml</code> 镜像的访问，默认是墙外的，可能会访问延迟</p>
+
+<p>可以使用dockerhub上的镜像 <code class="highlighter-rouge">image: lizhenliang/kubernetes-dashboard-amd64:v1.10.1</code></p>
+
+<p>部署在了<strong>kube-system</strong>这个命名空间中，现在正在<strong>ContainerCreating</strong>拉取和创建容器</p>
+
+<p>我们需要部署<strong>service</strong>暴露出<strong>NodePort，</strong> <code class="highlighter-rouge">vi dashboard-service.yaml</code> </p>
+
+<p>只需要修改<code class="highlighter-rouge"> type: NodePort</code>，并固定端口，范围是30000-50000，所以我们固定为 <code class="highlighter-rouge">nodePort: 30001</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
+kind: Service
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+  labels:
+    k8s-app: kubernetes-dashboard
+    kubernetes.io/cluster-service: <span class="s2">"true"</span>
+    addonmanager.kubernetes.io/mode: Reconcile
+spec:
+  <span class="nb">type</span>: NodePort
+  selector:
+    k8s-app: kubernetes-dashboard
+  ports:
+  - port: 443
+    targetPort: 8443
+    nodePort: 30001
+</code></pre></div></div>
+
+<p>因为默认部署在 <strong>kube-system</strong> 命名空间内，我们看下 <strong>service</strong></p>
+
+<p><strong><code class="highlighter-rouge">kubectl get pods,svc -n kube-system</code></strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl get pods,svc <span class="nt">-n</span> kube-system         
+NAME                                        READY   STATUS    RESTARTS   AGE
+pod/kubernetes-dashboard-77fdb66558-4nkrf   1/1     Running   0          &lt;invalid&gt;
+
+NAME                           TYPE       CLUSTER-IP   EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>         AGE
+service/kubernetes-dashboard   NodePort   10.0.0.226   &lt;none&gt;        443:30001/TCP   78s
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p>现在访问 <strong>node</strong> <strong>ip</strong> 加上 端口 30001，使用<strong>https</strong>访问 <a href="https://10.211.55.12:30001/#!/login">https://10.211.55.12:30001/</a></p>
+
+<p>登录需要使用 <strong>token</strong> 登录，所以需要创建一个 <strong>admin</strong> 账号，我们新建<code class="highlighter-rouge">vi k8s-admin.yaml</code>一个脚本来创建</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="nn">---</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRoleBinding</span>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io/v1beta1</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+<span class="na">subjects</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">ServiceAccount</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">dashboard-admin</span>
+    <span class="na">namespace</span><span class="pi">:</span> <span class="s">kube-system</span>
+<span class="na">roleRef</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterRole</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">cluster-admin</span>
+  <span class="na">apiGroup</span><span class="pi">:</span> <span class="s">rbac.authorization.k8s.io</span>
+</code></pre></div></div>
+
+<p>创建一个账户使用<strong>token id</strong>登录，执行 <code class="highlighter-rouge">kubectl apply -f k8s-admin.yaml</code></p>
+
+<p>执行之后我们查看下生成的token</p>
+
+<p><code class="highlighter-rouge">kubectl get secret -n kube-system</code> 找到刚生成的<strong>NAME</strong><br />**<br /><code class="highlighter-rouge">kubectl describe secret dashboard-admin-token-*** -n kube-system</code> 查看token</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>vim k8s-admin.yaml 
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl apply <span class="nt">-f</span> k8s-admin.yaml
+serviceaccount/dashboard-admin created
+clusterrolebinding.rbac.authorization.k8s.io/dashboard-admin created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl get secret <span class="nt">-n</span> kube-system
+NAME                               TYPE                                  DATA   AGE
+dashboard-admin-token-qlddb        kubernetes.io/service-account-token   3      &lt;invalid&gt;
+default-token-mwwgk                kubernetes.io/service-account-token   3      15h
+kubernetes-dashboard-certs         Opaque                                0      22m
+kubernetes-dashboard-key-holder    Opaque                                2      22m
+kubernetes-dashboard-token-2gnr4   kubernetes.io/service-account-token   3      &lt;invalid&gt;
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>kubectl describe secret dashboard-admin-token-qlddb <span class="nt">-n</span> kube-system
+Name:         dashboard-admin-token-qlddb
+Namespace:    kube-system
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name: dashboard-admin
+              kubernetes.io/service-account.uid: a1bac419-4efa-11e9-bad1-001c42d2ed8e
+
+Type:  kubernetes.io/service-account-token
+
+Data
+<span class="o">====</span>
+ca.crt:     1359 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4tcWxkZGIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYTFiYWM0MTktNGVmYS0xMWU5LWJhZDEtMDAxYzQyZDJlZDhlIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRhc2hib2FyZC1hZG1pbiJ9.nUf4-kSuiAh8yexmifuWYCpTrBFyUd4dRkj_f6L4Xe3qHJ_hUe9Yg251e4HIKXa9w6n_K900AbWzzirSNI0UP_EGbU7CFhb3UO7HSfzeXY6iYoHkA30q7uVkL2p28dLpi3OBPsMGk6CrMcbHEHbo7He8hF4_vMFNLom6u3SzAFTEADjrpDmsXD9YzwX96FJVhsfpRP_VqZ5gCgHcvr0ti_5WvF-uN11loNmS6siSEHDx2vZH2bB-u_SgipiZbjkJjUl37dahhn2GbK69vlK8JJXcfBCSEtCo4NOvFu8OfqLdayIxhwXLPvygRgDTvalNih6QTITVyXMYKvELFFvu8w
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p>我们复制token粘贴到网站上登录，就可以正常使用<br />
+<img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553680053081-6f4a7e1a-dee8-4975-b3a2-4f6e036e6786.png#align=left&amp;display=inline&amp;height=403&amp;name=6.png&amp;originHeight=1804&amp;originWidth=3338&amp;size=344708&amp;status=done&amp;width=746" alt="6.png" /></p>
+
+<p>如果没有详细信息，显示站点过期或者不安全，无法通过高级等功能进入的话，我们可以选择手动生成证书</p>
+
+<p>新建一个<code class="highlighter-rouge">vi dashboard-cert.sh </code>生成证书的脚本</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&gt;</span> dashboard-csr.json <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+{
+    "CN": "Dashboard",
+    "hosts": [],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "L": "BeiJing",
+            "ST": "BeiJing"
+        }
+    ]
+}
+</span><span class="no">EOF
+
+</span><span class="nv">K8S_CA</span><span class="o">=</span><span class="nv">$1</span>
+cfssl gencert <span class="nt">-ca</span><span class="o">=</span><span class="nv">$K8S_CA</span>/ca.pem <span class="nt">-ca-key</span><span class="o">=</span><span class="nv">$K8S_CA</span>/ca-key.pem <span class="nt">-config</span><span class="o">=</span><span class="nv">$K8S_CA</span>/ca-config.json <span class="nt">-profile</span><span class="o">=</span>kubernetes dashboard-csr.json | cfssljson <span class="nt">-bare</span> dashboard
+kubectl delete secret kubernetes-dashboard-certs <span class="nt">-n</span> kube-system
+kubectl create secret generic kubernetes-dashboard-certs <span class="nt">--from-file</span><span class="o">=</span>./ <span class="nt">-n</span> kube-system
+</code></pre></div></div>
+
+<p>K8S_CA证书的目录，生成证书并替换默认的证书即可</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>bash dashboard-cert.sh /home/k8s/k8s/k8s-cert/
+2019/03/25 09:02:52 <span class="o">[</span>INFO] generate received request
+2019/03/25 09:02:52 <span class="o">[</span>INFO] received CSR
+2019/03/25 09:02:52 <span class="o">[</span>INFO] generating key: rsa-2048
+2019/03/25 09:02:52 <span class="o">[</span>INFO] encoded CSR
+2019/03/25 09:02:52 <span class="o">[</span>INFO] signed certificate with serial number 33568745200808060651724957115956530801072206867
+2019/03/25 09:02:52 <span class="o">[</span>WARNING] This certificate lacks a <span class="s2">"hosts"</span> field. This makes it unsuitable <span class="k">for
+</span>websites. For more information see the Baseline Requirements <span class="k">for </span>the Issuance and Management
+of Publicly-Trusted Certificates, v.1.1.6, from the CA/Browser Forum <span class="o">(</span>https://cabforum.org<span class="o">)</span><span class="p">;</span>
+specifically, section 10.2.3 <span class="o">(</span><span class="s2">"Information Requirements"</span><span class="o">)</span><span class="nb">.</span>
+secret <span class="s2">"kubernetes-dashboard-certs"</span> deleted
+secret/kubernetes-dashboard-certs created
+<span class="o">[</span>k8s@k8s-master01 ui]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p>创建成功之后就会生成两个证书 <strong>dashboard-key.pem</strong> 和 <strong>dashboard.pem</strong><br /><strong><br />下一步需要在 </strong>dashboard-controller.yaml** 文件中增加证书两行</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    spec:
+      priorityClassName: system-cluster-critical
+      containers:
+      - name: kubernetes-dashboard
+        image: lizhenliang/kubernetes-dashboard-amd64:v1.10.1
+        resources:
+          limits:
+            cpu: 100m
+            memory: 300Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - containerPort: 8443
+          protocol: TCP
+        args:
+          <span class="c"># PLATFORM-SPECIFIC ARGS HERE</span>
+          - <span class="nt">--auto-generate-certificates</span>
+          - <span class="nt">--tls-key-file</span><span class="o">=</span>dashboard-key.pem
+          - <span class="nt">--tls-cert-file</span><span class="o">=</span>dashboard.pem
+</code></pre></div></div>
+
+<p>然后重新 apply 就可以更新镜像<code class="highlighter-rouge">kubectl apply -f dashboard-controller.yaml</code></p>
+
+<p>可以查看到新的ui正在准备启动 <code class="highlighter-rouge">kubectl get pods -n kube-system -o wide</code></p>
+
+<h3 id="kubernetes二进制部署系列-1"><a name="serial"></a>kubernetes二进制部署系列</h3>
+
+<ol>
+  <li><a href="http://custer.me/etcd-bin-install/">k8s部署-Etcd数据库集群部署</a></li>
+  <li><a href="http://custer.me/flannel-bin-install/">k8s部署-Flannel网络</a></li>
+  <li><a href="http://custer.me/kube-master/">k8s部署-Master组件</a></li>
+  <li><a href="http://custer.me/kube-node/">k8s部署-Node组件</a></li>
+  <li><a href="http://custer.me/multi-master/">k8s部署-多Master集群</a></li>
+</ol>
+
+            </article>
+
+            <section class="share">
+    <h3>Share</h3>
+    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;k8s部署第五步-多Master集群&quot;%20http://localhost:4000/multi-master/%20via%20&#64;DBTua&hashtags=kubernetes,node,"
+    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Share on Twitter">
+        <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+    </a>
+    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/multi-master/"
+    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook">
+        <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+    </a>
+    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/multi-master/"
+    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+">
+        <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
+    </a>
+</section>
+            <section class="author" itemprop="author">
+    <div class="details" itemscope itemtype="http://schema.org/Person">
+        <img itemprop="image" class="img-rounded" src="/assets/img/blog-author.jpg" alt="">
+        <p class="def">作者</p>
+        <h3 class="name">
+            <a itemprop="name" href="https://www.weibo.com/p/1005052465677512">Custer</a>
+        </h3>
+        <p class="desc">Python Developer</p>
+        <a itemprop="email" class="email" href="mailto:custertian@gmail.com">custertian@gmail.com</a>
+    </div>
+</section>
+
+            <section class="comments">
+    <h3>评论</h3>
+    
+    <div id="gitalk_container"></div>
+</section>
+
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '375f13b9eef7a2536214',
+    clientSecret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215',
+    repo: 'custertian.github.io',
+    owner: 'custertian',
+    admin: 'custertian',
+    id: location.pathname,      // Ensure uniqueness and length less than 505.k8s部署-多Master集群
+    distractionFreeMode: 'true'  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk_container')
+</script>
+
+
+            <footer>
+    <p>Made with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <span class="love">❤</span> by <a href="http://custer.me">Custer</a>
+    <span id="busuanzi_container_site_pv">本站总访问量：<span id="busuanzi_value_site_pv"></span>次</span>
+</p>
+</footer>
+<script src="/assets/js/main.js"></script>
+
+        </section>
+    </body>
+</html>

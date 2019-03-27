@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>k8s部署2-flannel使用二进制安装</title>
+    <title>2.k8s部署-flannel使用二进制安装</title>
     <meta name="description" content="k8s部署第二步-Flannel网络的部署">
 
     <!-- Google Authorship Markup -->
@@ -14,7 +14,7 @@
     <!-- Social: Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@DBTua">
-    <meta name="twitter:title" content="k8s部署2-flannel使用二进制安装">
+    <meta name="twitter:title" content="2.k8s部署-flannel使用二进制安装">
     <meta name="twitter:description" content="k8s部署第二步-Flannel网络的部署">
     
     <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
@@ -22,7 +22,7 @@
 
     <!-- Social: Facebook / Open Graph -->
     <meta property="og:url" content="http://localhost:4000/flannel-bin-install/">
-    <meta property="og:title" content="k8s部署2-flannel使用二进制安装">
+    <meta property="og:title" content="2.k8s部署-flannel使用二进制安装">
     
     <meta property="og:image" content="http://localhost:4000/assets/img/">
     
@@ -30,7 +30,7 @@
     <meta property="og:site_name" content="custer的学习记录">
 
     <!-- Social: Google+ / Schema.org  -->
-    <meta itemprop="name" content="k8s部署2-flannel使用二进制安装"/>
+    <meta itemprop="name" content="2.k8s部署-flannel使用二进制安装"/>
     <meta itemprop="description" content="k8s部署第二步-Flannel网络的部署">
     <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
 
@@ -81,7 +81,7 @@
         
             <time itemprop="datePublished" datetime="2019-03-25 08:55:58 +0800" class="date">25 Mar 2019</time>
         
-        <h1 class="post-title" itemprop="name">k8s部署2-flannel使用二进制安装</h1>
+        <h1 class="post-title" itemprop="name">2.k8s部署-flannel使用二进制安装</h1>
         <p itemprop="description" class="subtitle">k8s部署第二步-Flannel网络的部署</p>
     </div>
      <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
@@ -149,6 +149,8 @@
 <h4 id="part-8-使用二进制部署flannel"><a href="#part8">Part 8: 使用二进制部署Flannel</a></h4>
 
 <h4 id="part-9-验证"><a href="#part10">Part 9: 验证</a></h4>
+
+<h4 id="kubernetes二进制部署系列"><a href="#serial">kubernetes二进制部署系列</a></h4>
 
 <ol>
   <li><a href="#etcd">颁发etcd证书</a></li>
@@ -652,6 +654,16 @@ PING 172.17.68.2 <span class="o">(</span>172.17.68.2<span class="o">)</span>: 56
 
 <p>这个子网分配到哪个ip，所以 flannel 在转发数据之前是需要访问 etcd 中的目标 ip</p>
 
+<h3 id="kubernetes二进制部署系列-1"><a name="serial"></a>kubernetes二进制部署系列</h3>
+
+<ol>
+  <li><a href="http://custer.me/etcd-bin-install/">k8s部署-Etcd数据库集群部署</a></li>
+  <li><a href="http://custer.me/flannel-bin-install/">k8s部署-Flannel网络</a></li>
+  <li><a href="http://custer.me/kube-master/">k8s部署-Master组件</a></li>
+  <li><a href="http://custer.me/kube-node/">k8s部署-Node组件</a></li>
+  <li><a href="http://custer.me/multi-master/">k8s部署-多Master集群</a></li>
+</ol>
+
             </article>
 
             <section class="share">
@@ -695,7 +707,7 @@ PING 172.17.68.2 <span class="o">(</span>172.17.68.2<span class="o">)</span>: 56
     repo: 'custertian.github.io',
     owner: 'custertian',
     admin: 'custertian',
-    id: location.pathname,      // Ensure uniqueness and length less than 50k8s部署2-flannel使用二进制安装
+    id: location.pathname,      // Ensure uniqueness and length less than 502.k8s部署-flannel使用二进制安装
     distractionFreeMode: 'true'  // Facebook-like distraction free mode
   })
 

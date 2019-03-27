@@ -1,7 +1,31 @@
 [
   
     {
-      "title"    : "k8s部署2-flannel使用二进制安装",
+      "title"    : "5.k8s部署-多Master集群",
+      "category" : "kubernetes",
+      "tags"     : "kubernetes and node",
+      "url"      : "/multi-master/",
+      "date"     : "27 Mar 2019"
+    } ,
+  
+    {
+      "title"    : "4.k8s部署-Node组件安装",
+      "category" : "kubernetes",
+      "tags"     : "kubernetes and node",
+      "url"      : "/kube-node/",
+      "date"     : "27 Mar 2019"
+    } ,
+  
+    {
+      "title"    : "3.k8s部署-Master组件安装",
+      "category" : "kubernetes",
+      "tags"     : "kubernetes and master",
+      "url"      : "/kube-master/",
+      "date"     : "27 Mar 2019"
+    } ,
+  
+    {
+      "title"    : "2.k8s部署-flannel使用二进制安装",
       "category" : "kubernetes",
       "tags"     : "kubernetes and flannel",
       "url"      : "/flannel-bin-install/",
@@ -9,7 +33,7 @@
     } ,
   
     {
-      "title"    : "k8s部署1-etcd使用二进制部署集群",
+      "title"    : "1.k8s部署-etcd使用二进制部署集群",
       "category" : "kubernetes",
       "tags"     : "kubernetes and etcd",
       "url"      : "/etcd-bin-install/",

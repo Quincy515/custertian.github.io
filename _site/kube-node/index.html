@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>4.k8s部署-Node组件安装</title>
+    <meta name="description" content="k8s部署第四步-Node组件安装">
+
+    <!-- Google Authorship Markup -->
+    <link rel="author" href="https://plus.google.com/custer?rel=author">
+
+    <!-- Social: Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DBTua">
+    <meta name="twitter:title" content="4.k8s部署-Node组件安装">
+    <meta name="twitter:description" content="k8s部署第四步-Node组件安装">
+    
+    <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
+    
+
+    <!-- Social: Facebook / Open Graph -->
+    <meta property="og:url" content="http://localhost:4000/kube-node/">
+    <meta property="og:title" content="4.k8s部署-Node组件安装">
+    
+    <meta property="og:image" content="http://localhost:4000/assets/img/">
+    
+    <meta property="og:description" content="k8s部署第四步-Node组件安装">
+    <meta property="og:site_name" content="custer的学习记录">
+
+    <!-- Social: Google+ / Schema.org  -->
+    <meta itemprop="name" content="4.k8s部署-Node组件安装"/>
+    <meta itemprop="description" content="k8s部署第四步-Node组件安装">
+    <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/assets/img/icons/favicon.ico" type="image/x-icon" />
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icons/apple-touch-icon-152x152.png" />
+    <!-- Windows 8 Tile Icons -->
+    <meta name="application-name" content="Custer Blog">
+    <meta name="msapplication-TileColor" content="#0562DC">
+    <meta name="msapplication-square70x70logo" content="smalltile.png" />
+    <meta name="msapplication-square150x150logo" content="mediumtile.png" />
+    <meta name="msapplication-wide310x150logo" content="widetile.png" />
+    <meta name="msapplication-square310x310logo" content="largetile.png" />
+    <!-- Android Lolipop Theme Color -->
+    <meta name="theme-color" content="#0562DC">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/kube-node/">
+    <link rel="alternate" type="application/rss+xml" title="custer的学习记录" href="http://localhost:4000/feed.xml" />
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b70b0a020915347f669bbdc309663da2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <body>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none" version="1.1"><defs><symbol id="icon-menu" viewBox="0 0 1024 1024"><path class="path1" d="M128 213.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 725.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5zM128 469.333h768q17.667 0 30.167 12.5t12.5 30.167-12.5 30.167-30.167 12.5h-768q-17.667 0-30.167-12.5t-12.5-30.167 12.5-30.167 30.167-12.5z"/></symbol><symbol id="icon-search" viewBox="0 0 951 1024"><path class="path1" d="M658.286 475.429q0-105.714-75.143-180.857t-180.857-75.143-180.857 75.143-75.143 180.857 75.143 180.857 180.857 75.143 180.857-75.143 75.143-180.857zM950.857 950.857q0 29.714-21.714 51.429t-51.429 21.714q-30.857 0-51.429-21.714l-196-195.429q-102.286 70.857-228 70.857-81.714 0-156.286-31.714t-128.571-85.714-85.714-128.571-31.714-156.286 31.714-156.286 85.714-128.571 128.571-85.714 156.286-31.714 156.286 31.714 128.571 85.714 85.714 128.571 31.714 156.286q0 125.714-70.857 228l196 196q21.143 21.143 21.143 51.429z"/></symbol><symbol id="icon-email" viewBox="0 0 1024 1024"><path class="path1" d="M950.857 859.429v-438.857q-18.286 20.571-39.429 37.714-153.143 117.714-243.429 193.143-29.143 24.571-47.429 38.286t-49.429 27.714-58.571 14h-1.143q-27.429 0-58.571-14t-49.429-27.714-47.429-38.286q-90.286-75.429-243.429-193.143-21.143-17.143-39.429-37.714v438.857q0 7.429 5.429 12.857t12.857 5.429h841.143q7.429 0 12.857-5.429t5.429-12.857zM950.857 258.857v-14t-0.286-7.429-1.714-7.143-3.143-5.143-5.143-4.286-8-1.429h-841.143q-7.429 0-12.857 5.429t-5.429 12.857q0 96 84 162.286 110.286 86.857 229.143 181.143 3.429 2.857 20 16.857t26.286 21.429 25.429 18 28.857 15.714 24.571 5.143h1.143q11.429 0 24.571-5.143t28.857-15.714 25.429-18 26.286-21.429 20-16.857q118.857-94.286 229.143-181.143 30.857-24.571 57.429-66t26.571-75.143zM1024 237.714v621.714q0 37.714-26.857 64.571t-64.571 26.857h-841.143q-37.714 0-64.571-26.857t-26.857-64.571v-621.714q0-37.714 26.857-64.571t64.571-26.857h841.143q37.714 0 64.571 26.857t26.857 64.571z"/></symbol><symbol id="icon-close" viewBox="0 0 805 1024"><path class="path1" d="M741.714 755.429q0 22.857-16 38.857l-77.714 77.714q-16 16-38.857 16t-38.857-16l-168-168-168 168q-16 16-38.857 16t-38.857-16l-77.714-77.714q-16-16-16-38.857t16-38.857l168-168-168-168q-16-16-16-38.857t16-38.857l77.714-77.714q16-16 38.857-16t38.857 16l168 168 168-168q16-16 38.857-16t38.857 16l77.714 77.714q16 16 16 38.857t-16 38.857l-168 168 168 168q16 16 16 38.857z"/></symbol><symbol id="icon-twitter" viewBox="0 0 951 1024"><path class="path1" d="M925.714 233.143q-38.286 56-92.571 95.429 0.571 8 0.571 24 0 74.286-21.714 148.286t-66 142-105.429 120.286-147.429 83.429-184.571 31.143q-154.857 0-283.429-82.857 20 2.286 44.571 2.286 128.571 0 229.143-78.857-60-1.143-107.429-36.857t-65.143-91.143q18.857 2.857 34.857 2.857 24.571 0 48.571-6.286-64-13.143-106-63.714t-42-117.429v-2.286q38.857 21.714 83.429 23.429-37.714-25.143-60-65.714t-22.286-88q0-50.286 25.143-93.143 69.143 85.143 168.286 136.286t212.286 56.857q-4.571-21.714-4.571-42.286 0-76.571 54-130.571t130.571-54q80 0 134.857 58.286 62.286-12 117.143-44.571-21.143 65.714-81.143 101.714 53.143-5.714 106.286-28.571z"/></symbol><symbol id="icon-facebook" viewBox="0 0 585 1024"><path class="path1" d="M548 6.857v150.857h-89.714q-49.143 0-66.286 20.571t-17.143 61.714v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571q0-106.286 59.429-164.857t158.286-58.571q84 0 130.286 6.857z"/></symbol><symbol id="icon-rss" viewBox="0 0 805 1024"><path class="path1" d="M219.429 768q0 45.714-32 77.714t-77.714 32-77.714-32-32-77.714 32-77.714 77.714-32 77.714 32 32 77.714zM512 838.286q1.143 16-9.714 27.429-10.286 12-26.857 12h-77.143q-14.286 0-24.571-9.429t-11.429-23.714q-12.571-130.857-105.429-223.714t-223.714-105.429q-14.286-1.143-23.714-11.429t-9.429-24.571v-77.143q0-16.571 12-26.857 9.714-9.714 24.571-9.714h2.857q91.429 7.429 174.857 46t148 103.714q65.143 64.571 103.714 148t46 174.857zM804.571 839.429q1.143 15.429-10.286 26.857-10.286 11.429-26.286 11.429h-81.714q-14.857 0-25.429-10t-11.143-24.286q-6.857-122.857-57.714-233.429t-132.286-192-192-132.286-233.429-58.286q-14.286-0.571-24.286-11.143t-10-24.857v-81.714q0-16 11.429-26.286 10.286-10.286 25.143-10.286h1.714q149.714 7.429 286.571 68.571t243.143 168q106.857 106.286 168 243.143t68.571 286.571z"/></symbol><symbol id="icon-google-plus" viewBox="0 0 951 1024"><path class="path1" d="M420 454.857q0 20.571 18.286 40.286t44.286 38.857 51.714 42 44 59.429 18.286 81.143q0 51.429-27.429 98.857-41.143 69.714-120.571 102.571t-170.286 32.857q-75.429 0-140.857-23.714t-98-78.571q-21.143-34.286-21.143-74.857 0-46.286 25.429-85.714t67.714-65.714q74.857-46.857 230.857-57.143-18.286-24-27.143-42.286t-8.857-41.714q0-20.571 12-48.571-26.286 2.286-38.857 2.286-84.571 0-142.571-55.143t-58-139.714q0-46.857 20.571-90.857t56.571-74.857q44-37.714 104.286-56t124.286-18.286h238.857l-78.857 50.286h-74.857q42.286 36 64 76t21.714 91.429q0 41.143-14 74t-33.714 53.143-39.714 37.143-34 35.143-14 37.714zM336.571 400q21.714 0 44.571-9.429t37.714-24.857q30.286-32.571 30.286-90.857 0-33.143-9.714-71.429t-27.714-74-48.286-59.143-66.857-23.429q-24 0-47.143 11.143t-37.429 30q-26.857 33.714-26.857 91.429 0 26.286 5.714 55.714t18 58.857 29.714 52.857 42.857 38.286 55.143 14.857zM337.714 898.857q33.143 0 63.714-7.429t56.571-22.286 41.714-41.714 15.714-62.286q0-14.286-4-28t-8.286-24-15.429-23.714-16.857-20-22-19.714-20.857-16.571-23.714-17.143-20.857-14.857q-9.143-1.143-27.429-1.143-30.286 0-60 4t-61.429 14.286-55.429 26.286-39.143 42.571-15.429 60.286q0 40 20 70.571t52.286 47.429 68 25.143 72.857 8.286zM800.571 398.286h121.714v61.714h-121.714v125.143h-60v-125.143h-121.143v-61.714h121.143v-124h60v124z"/></symbol><symbol id="icon-angle-down" viewBox="0 0 658 1024"><path class="path1" d="M614.286 420.571q0 7.429-5.714 13.143l-266.286 266.286q-5.714 5.714-13.143 5.714t-13.143-5.714l-266.286-266.286q-5.714-5.714-5.714-13.143t5.714-13.143l28.571-28.571q5.714-5.714 13.143-5.714t13.143 5.714l224.571 224.571 224.571-224.571q5.714-5.714 13.143-5.714t13.143 5.714l28.571 28.571q5.714 5.714 5.714 13.143z"/></symbol><symbol id="icon-github-alt" viewBox="0 0 951 1024"><path class="path1" d="M365.714 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM731.429 694.857q0 22.857-7.143 46.857t-24.571 43.429-41.429 19.429-41.429-19.429-24.571-43.429-7.143-46.857 7.143-46.857 24.571-43.429 41.429-19.429 41.429 19.429 24.571 43.429 7.143 46.857zM822.857 694.857q0-68.571-39.429-116.571t-106.857-48q-23.429 0-111.429 12-40.571 6.286-89.714 6.286t-89.714-6.286q-86.857-12-111.429-12-67.429 0-106.857 48t-39.429 116.571q0 50.286 18.286 87.714t46.286 58.857 69.714 34.286 80 16.857 85.143 4h96q46.857 0 85.143-4t80-16.857 69.714-34.286 46.286-58.857 18.286-87.714zM950.857 594.286q0 118.286-34.857 189.143-21.714 44-60.286 76t-80.571 49.143-97.143 27.143-98 12.571-95.429 2.571q-44.571 0-81.143-1.714t-84.286-7.143-87.143-17.143-78.286-29.429-69.143-46.286-49.143-65.714q-35.429-70.286-35.429-189.143 0-135.429 77.714-226.286-15.429-46.857-15.429-97.143 0-66.286 29.143-124.571 61.714 0 108.571 22.571t108 70.571q84-20 176.571-20 84.571 0 160 18.286 60-46.857 106.857-69.143t108-22.286q29.143 58.286 29.143 124.571 0 49.714-15.429 96 77.714 91.429 77.714 227.429z"/></symbol></defs></svg>
+
+        <header class="header-post" role="banner">
+    <div class="content">
+        
+            <time itemprop="datePublished" datetime="2019-03-27 08:55:58 +0800" class="date">27 Mar 2019</time>
+        
+        <h1 class="post-title" itemprop="name">4.k8s部署-Node组件安装</h1>
+        <p itemprop="description" class="subtitle">k8s部署第四步-Node组件安装</p>
+    </div>
+     <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
+     <div class="search-wrapper">
+    <div class="search-form">
+        <input type="text" class="search-field" placeholder="Search...">
+        <svg class="icon-remove-sign"><use xlink:href="#icon-close"></use></svg>
+        <ul class="search-results search-list"></ul>
+    </div>
+</div>
+
+<div id="fade" class="overlay"></div>
+<a id="slide" class="slideButton fade">
+    <svg id="open" class="icon-menu"><use xlink:href="#icon-menu"></use></svg>
+    <svg id="close" class="icon-menu"><use xlink:href="#icon-close"></use></svg>
+</a>
+<aside id="sidebar">
+<nav id="navigation">
+  <h2>MENU</h2>
+  <ul>
+    
+    
+      <li><a href="http://localhost:4000/">Home</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/series">Series</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/tags">Tags</a></li>
+    
+    
+    
+      <li><a href="http://localhost:4000/about">About Me</a></li>
+    
+    
+    <li><a class="feed" href="http://localhost:4000/feed.xml" title="Atom/RSS feed">Feed</a></li>
+  </ul>
+</nav>
+</aside>
+<a id="search" class="dosearch">
+    <svg class="icon-menu icon-search"><use xlink:href="#icon-search"></use></svg>
+</a>
+
+</header>
+
+        <section class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+            <article role="article" id="scroll" class="post-content" itemprop="articleBody">
+                <h1 id="4-k8s部署-node组件">4. k8s部署-Node组件</h1>
+
+<h4 id="part-1-kubelet-bootstrap"><a href="#part1">Part 1: kubelet-bootstrap</a></h4>
+
+<h4 id="part-2-创建kubeconfig文件"><a href="#part2">Part 2: 创建kubeconfig文件</a></h4>
+
+<h4 id="part-3-部署kubelet组件"><a href="#part3">Part 3: 部署kubelet组件</a></h4>
+
+<h4 id="part-4-学习排错"><a href="#part4">Part 4: 学习排错</a></h4>
+
+<h4 id="part-5-部署kube-proxy组件"><a href="#part5">Part 5: 部署kube-proxy组件</a></h4>
+
+<h4 id="part-6-扩容node节点"><a href="#part6">Part 6: 扩容Node节点</a></h4>
+
+<h4 id="part-7-部署一个nginx测试示例"><a href="#part7">Part 7: 部署一个Nginx测试示例</a></h4>
+
+<h4 id="kubernetes二进制部署系列"><a href="#serial">kubernetes二进制部署系列</a></h4>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553578734176-ec9a5652-ee65-4b00-95a4-f13c27684c2f.png#align=left&amp;display=inline&amp;height=608&amp;name=3.png&amp;originHeight=643&amp;originWidth=789&amp;size=31031&amp;status=done&amp;width=746" alt="3.png" /></p>
+
+<h3 id="1-将kubelet-bootstrap用户绑定到系统集群角色"><a name="part1"></a>1. 将kubelet-bootstrap用户绑定到系统集群角色</h3>
+
+<p>为我们之前生成token的用户名设定角色权限</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/token.csv 
+3172e91e77cb1a5fe47a3c957e94f5f1,kubelet-bootstrap,10001,<span class="s2">"system:kubelet-bootstrap"</span>
+</code></pre></div></div>
+
+<p>为kubelet-bootstrap用户赋予集群的node-bootstrapper权限</p>
+
+<p>这样 kubernetes 访问集群中的这个 token id</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>kubectl create clusterrolebinding kubelet-bootstrap <span class="se">\</span>
+<span class="nt">--clusterrole</span><span class="o">=</span>system:node-bootstrapper <span class="se">\</span>
+<span class="nt">--user</span><span class="o">=</span>kubelet-bootstrap
+</code></pre></div></div>
+
+<p>命令行返回  <code class="highlighter-rouge">clusterrolebinding.rbac.authorization.k8s.io/kubelet-bootstrap created</code> 就代表创建成功</p>
+
+<h3 id="2-创建kubeconfig文件"><a name="part2"></a>2. 创建kubeconfig文件</h3>
+
+<p>部署 <strong>Node</strong> 组件之前需要先创建 <strong>kubeconfig</strong> 文件 <code class="highlighter-rouge">vi kubeconfig.sh</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 创建 TLS Bootstrapping Token</span>
+<span class="c">#BOOTSTRAP_TOKEN=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')</span>
+<span class="c">#BOOTSTRAP_TOKEN=0fb61c46f8991b718eb38d27b605b008</span>
+
+<span class="c">#cat &gt; token.csv &lt;&lt;EOF</span>
+<span class="c">#${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,"system:kubelet-bootstrap"</span>
+<span class="c">#EOF</span>
+
+<span class="c">#----------------------</span>
+
+<span class="nv">APISERVER</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">SSL_DIR</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="c"># 创建kubelet bootstrapping kubeconfig </span>
+<span class="nb">export </span><span class="nv">KUBE_APISERVER</span><span class="o">=</span><span class="s2">"https://</span><span class="nv">$APISERVER</span><span class="s2">:6443"</span>
+
+<span class="c"># 设置集群参数</span>
+kubectl config set-cluster kubernetes <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/ca.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--server</span><span class="o">=</span><span class="k">${</span><span class="nv">KUBE_APISERVER</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置客户端认证参数</span>
+kubectl config set-credentials kubelet-bootstrap <span class="se">\</span>
+  <span class="nt">--token</span><span class="o">=</span><span class="k">${</span><span class="nv">BOOTSTRAP_TOKEN</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置上下文参数</span>
+kubectl config set-context default <span class="se">\</span>
+  <span class="nt">--cluster</span><span class="o">=</span>kubernetes <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span>kubelet-bootstrap <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置默认上下文</span>
+kubectl config use-context default <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c">#----------------------</span>
+
+<span class="c"># 创建kube-proxy kubeconfig文件</span>
+
+kubectl config set-cluster kubernetes <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/ca.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--server</span><span class="o">=</span><span class="k">${</span><span class="nv">KUBE_APISERVER</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config set-credentials kube-proxy <span class="se">\</span>
+  <span class="nt">--client-certificate</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/kube-proxy.pem <span class="se">\</span>
+  <span class="nt">--client-key</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/kube-proxy-key.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config set-context default <span class="se">\</span>
+  <span class="nt">--cluster</span><span class="o">=</span>kubernetes <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span>kube-proxy <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config use-context default <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+</code></pre></div></div>
+
+<p>我们将之前的 创建 TLS Bootstrapping Token 的代码删除</p>
+
+<p>目的是存放连接 apiserver 的认证信息</p>
+
+<p>保存并执行 <code class="highlighter-rouge">sudo bash kubeconfig.sh</code> 第一个参数是 apiserver 的地址，第二个参数是证书目录</p>
+
+<p><code class="highlighter-rouge">bash kubeconfig.sh 10.211.55.10 ~/k8s/k8s-cert</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">ls
+</span>admin.csr             ca-config.json  k8s-cert.sh          kube-proxy.kubeconfig  server.pem
+admin-csr.json        ca.csr          kubeconfig.sh        kube-proxy.pem         token.csv
+admin-key.pem         ca-csr.json     kube-proxy.csr       server.csr
+admin.pem             ca-key.pem      kube-proxy-csr.json  server-csr.json
+bootstrap.kubeconfig  ca.pem          kube-proxy-key.pem   server-key.pem
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">sudo </span>bash kubeconfig.sh 10.211.55.10 ~/k8s/k8s-cert
+Cluster <span class="s2">"kubernetes"</span> set.
+User <span class="s2">"kubelet-bootstrap"</span> set.
+Context <span class="s2">"default"</span> modified.
+Switched to context <span class="s2">"default"</span><span class="nb">.</span>
+Cluster <span class="s2">"kubernetes"</span> set.
+User <span class="s2">"kube-proxy"</span> set.
+Context <span class="s2">"default"</span> modified.
+Switched to context <span class="s2">"default"</span><span class="nb">.</span>
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">ls
+</span>admin.csr             ca-config.json  k8s-cert.sh          kube-proxy.kubeconfig  server.pem
+admin-csr.json        ca.csr          kubeconfig.sh        kube-proxy.pem         token.csv
+admin-key.pem         ca-csr.json     kube-proxy.csr       server.csr
+admin.pem             ca-key.pem      kube-proxy-csr.json  server-csr.json
+bootstrap.kubeconfig  ca.pem          kube-proxy-key.pem   server-key.pem
+</code></pre></div></div>
+
+<p>可以看到上面生成了两个 .<strong>kubeconfig</strong> 文件，让我们来查看下代码 <code class="highlighter-rouge">cat bootstrap.kubeconfig</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">sudo cat </span>bootstrap.kubeconfig
+<span class="o">[</span><span class="nb">sudo</span><span class="o">]</span> password <span class="k">for </span>k8s: 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR2akNDQXFhZ0F3SUJBZ0lVSG5uV0pCdmpFbXF1OUxjaVFrMVpkYy9td1BZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTBNRE15TWpFNE1EQXdNRm93WlRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbGFXcHBibWN4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByZFdKbGNtNWxkR1Z6Ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBM1pmVTZiTHRzVVFKRnlodnNvbC8KaUhpSUd6dk9URDdXZ0twMnlKTXJzNUEyRVUwZEZSYUNJR0QvS3htT3V2RUhUbHJVOEZvY1BiYzdRUVFqZjh2cgpGbjBPTURtd1RuZmozcUpGSFNTUmN0TURhWjl1eFRpMy9qa2w1VFRDTWZtcXBCc2l3N2ZnOVpmOXpkVVo0Q3psCjF2TU9Odi8zVUZoZk5SQlhqR1hKaTFxakdIZnpuQ0lqVzMxZ1llK2hsYm0ySHlJeU5rUktmWTg4bjFHWG81YXAKWUtFdkJPa1pqVGlSQVNEendhRUMzM1UrNldCcStsTjdveGsybzBmVVlQak9VSm5TZU1ZdEQ4K1V6S1lhVnF4dwpwSWRna0RORXkxOGVQME1nR1drdEI5VW8wYVc2OWpXOW9GRlBvREZUdVFTR01aZ2RiUW0yTUYrT2pCU01wM0NIClNRSURBUUFCbzJZd1pEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQkFqQWQKQmdOVkhRNEVGZ1FVU2pqODg5TE13cmhOWUVZcWlucWg5dWJSUjhBd0h3WURWUjBqQkJnd0ZvQVVTamo4ODlMTQp3cmhOWUVZcWlucWg5dWJSUjhBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKL1ltZmFOWU51NUI1T3ROV1BRCmUzU29uMXd2SVJOVHVkNlZ3ZmJTNHdnUXFwMmNVOFB0Unp1Vk5xMDNBZXpOZWFRSjJZZlFBaFdldTdjb2F6cDMKcVY2VG54RE04TWlmZngzQ05CQUliRVRoZE04STliVjJMc3RXNFcxQlR3K1BQNzFwenYyVUs4R0xTUjNMd0RYZQpLM2JpVnBJMkEydmZUVXh2WlFEYVFYa1lpSmdrcjNoVFVnd3FZQ0dNV0tMOFZ3ODJEUk5uNmdiZmRSVW4rWUkyCkFrUXZoYkhualVlYUVxYUhIbVZ1QWZJV2tRbXZNOHcwaW84dEdobkJpcFBNc245bExicEMvbUhiVkFhSE05QzAKTTFpTVN6MWNwQzNoOGdBYzhUNTlSSjJRbmtjVTM0KzdSd2dvWjg4M0FDWHRVVWs0OG51RHEzNzNuc0thZFBNUwpMTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://10.211.55.10:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubelet-bootstrap
+  name: default
+current-context: default
+kind: Config
+preferences: <span class="o">{}</span>
+<span class="nb">users</span>:
+- name: kubelet-bootstrap
+  user: <span class="o">{}</span>
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">apiVersion</code>：apiserver 版本</p>
+
+<p><code class="highlighter-rouge">clusters</code>：指定kubernetes集群的ca证书 </p>
+
+<p><code class="highlighter-rouge">server</code>：连接apiserver的地址</p>
+
+<p><code class="highlighter-rouge">contexts</code>：上下文决定使用哪一个集群，通过名称区分多个集群</p>
+
+<p><code class="highlighter-rouge">current-context</code>：默认访问的集群 </p>
+
+<p>因为我们分步骤执行的脚本文件，所以这里缺少了token，我们来手动添加上</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/token.csv 
+3172e91e77cb1a5fe47a3c957e94f5f1,kubelet-bootstrap,10001,<span class="s2">"system:kubelet-bootstrap"</span>
+</code></pre></div></div>
+
+<p>这样我们来修改下 <code class="highlighter-rouge">vi kubeconfig.sh</code> 脚本，再重新生成 .<strong>kubeconfig </strong>文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 创建 TLS Bootstrapping Token</span>
+<span class="c">#BOOTSTRAP_TOKEN=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')</span>
+<span class="c">#BOOTSTRAP_TOKEN=0fb61c46f8991b718eb38d27b605b008</span>
+
+<span class="c">#cat &gt; token.csv &lt;&lt;EOF</span>
+<span class="c">#${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,"system:kubelet-bootstrap"</span>
+<span class="c">#EOF</span>
+
+<span class="c">#----------------------</span>
+
+<span class="nv">APISERVER</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">SSL_DIR</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">BOOTSTRAP_TOKEN</span><span class="o">=</span>3172e91e77cb1a5fe47a3c957e94f5f1
+
+<span class="c"># 创建kubelet bootstrapping kubeconfig </span>
+<span class="nb">export </span><span class="nv">KUBE_APISERVER</span><span class="o">=</span><span class="s2">"https://</span><span class="nv">$APISERVER</span><span class="s2">:6443"</span>
+
+<span class="c"># 设置集群参数</span>
+kubectl config set-cluster kubernetes <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/ca.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--server</span><span class="o">=</span><span class="k">${</span><span class="nv">KUBE_APISERVER</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置客户端认证参数</span>
+kubectl config set-credentials kubelet-bootstrap <span class="se">\</span>
+  <span class="nt">--token</span><span class="o">=</span><span class="k">${</span><span class="nv">BOOTSTRAP_TOKEN</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置上下文参数</span>
+kubectl config set-context default <span class="se">\</span>
+  <span class="nt">--cluster</span><span class="o">=</span>kubernetes <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span>kubelet-bootstrap <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c"># 设置默认上下文</span>
+kubectl config use-context default <span class="nt">--kubeconfig</span><span class="o">=</span>bootstrap.kubeconfig
+
+<span class="c">#----------------------</span>
+
+<span class="c"># 创建kube-proxy kubeconfig文件</span>
+
+kubectl config set-cluster kubernetes <span class="se">\</span>
+  <span class="nt">--certificate-authority</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/ca.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--server</span><span class="o">=</span><span class="k">${</span><span class="nv">KUBE_APISERVER</span><span class="k">}</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config set-credentials kube-proxy <span class="se">\</span>
+  <span class="nt">--client-certificate</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/kube-proxy.pem <span class="se">\</span>
+  <span class="nt">--client-key</span><span class="o">=</span><span class="nv">$SSL_DIR</span>/kube-proxy-key.pem <span class="se">\</span>
+  <span class="nt">--embed-certs</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config set-context default <span class="se">\</span>
+  <span class="nt">--cluster</span><span class="o">=</span>kubernetes <span class="se">\</span>
+  <span class="nt">--user</span><span class="o">=</span>kube-proxy <span class="se">\</span>
+  <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+
+kubectl config use-context default <span class="nt">--kubeconfig</span><span class="o">=</span>kube-proxy.kubeconfig
+</code></pre></div></div>
+
+<p>现在再重新执行一下 <code class="highlighter-rouge">sudo bash kubeconfig.sh 10.211.55.10 ~/k8s/k8s-cert</code> </p>
+
+<p>现在再查看一下 <code class="highlighter-rouge">sudo cat bootstrap.kubeconfig</code>  </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">sudo cat </span>bootstrap.kubeconfig
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR2akNDQXFhZ0F3SUJBZ0lVSG5uV0pCdmpFbXF1OUxjaVFrMVpkYy9td1BZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTBNRE15TWpFNE1EQXdNRm93WlRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbGFXcHBibWN4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByZFdKbGNtNWxkR1Z6Ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBM1pmVTZiTHRzVVFKRnlodnNvbC8KaUhpSUd6dk9URDdXZ0twMnlKTXJzNUEyRVUwZEZSYUNJR0QvS3htT3V2RUhUbHJVOEZvY1BiYzdRUVFqZjh2cgpGbjBPTURtd1RuZmozcUpGSFNTUmN0TURhWjl1eFRpMy9qa2w1VFRDTWZtcXBCc2l3N2ZnOVpmOXpkVVo0Q3psCjF2TU9Odi8zVUZoZk5SQlhqR1hKaTFxakdIZnpuQ0lqVzMxZ1llK2hsYm0ySHlJeU5rUktmWTg4bjFHWG81YXAKWUtFdkJPa1pqVGlSQVNEendhRUMzM1UrNldCcStsTjdveGsybzBmVVlQak9VSm5TZU1ZdEQ4K1V6S1lhVnF4dwpwSWRna0RORXkxOGVQME1nR1drdEI5VW8wYVc2OWpXOW9GRlBvREZUdVFTR01aZ2RiUW0yTUYrT2pCU01wM0NIClNRSURBUUFCbzJZd1pEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQkFqQWQKQmdOVkhRNEVGZ1FVU2pqODg5TE13cmhOWUVZcWlucWg5dWJSUjhBd0h3WURWUjBqQkJnd0ZvQVVTamo4ODlMTQp3cmhOWUVZcWlucWg5dWJSUjhBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKL1ltZmFOWU51NUI1T3ROV1BRCmUzU29uMXd2SVJOVHVkNlZ3ZmJTNHdnUXFwMmNVOFB0Unp1Vk5xMDNBZXpOZWFRSjJZZlFBaFdldTdjb2F6cDMKcVY2VG54RE04TWlmZngzQ05CQUliRVRoZE04STliVjJMc3RXNFcxQlR3K1BQNzFwenYyVUs4R0xTUjNMd0RYZQpLM2JpVnBJMkEydmZUVXh2WlFEYVFYa1lpSmdrcjNoVFVnd3FZQ0dNV0tMOFZ3ODJEUk5uNmdiZmRSVW4rWUkyCkFrUXZoYkhualVlYUVxYUhIbVZ1QWZJV2tRbXZNOHcwaW84dEdobkJpcFBNc245bExicEMvbUhiVkFhSE05QzAKTTFpTVN6MWNwQzNoOGdBYzhUNTlSSjJRbmtjVTM0KzdSd2dvWjg4M0FDWHRVVWs0OG51RHEzNzNuc0thZFBNUwpMTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://10.211.55.10:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubelet-bootstrap
+  name: default
+current-context: default
+kind: Config
+preferences: <span class="o">{}</span>
+<span class="nb">users</span>:
+- name: kubelet-bootstrap
+  user:
+    token: 3172e91e77cb1a5fe47a3c957e94f5f1
+</code></pre></div></div>
+
+<p>这样 token 就有了，再看下生成的 <code class="highlighter-rouge">sudo cat kube-proxy.kubeconfig</code> 文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span><span class="nb">sudo cat </span>kube-proxy.kubeconfig 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR2akNDQXFhZ0F3SUJBZ0lVSG5uV0pCdmpFbXF1OUxjaVFrMVpkYy9td1BZd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTBNRE15TWpFNE1EQXdNRm93WlRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbGFXcHBibWN4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByZFdKbGNtNWxkR1Z6Ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBM1pmVTZiTHRzVVFKRnlodnNvbC8KaUhpSUd6dk9URDdXZ0twMnlKTXJzNUEyRVUwZEZSYUNJR0QvS3htT3V2RUhUbHJVOEZvY1BiYzdRUVFqZjh2cgpGbjBPTURtd1RuZmozcUpGSFNTUmN0TURhWjl1eFRpMy9qa2w1VFRDTWZtcXBCc2l3N2ZnOVpmOXpkVVo0Q3psCjF2TU9Odi8zVUZoZk5SQlhqR1hKaTFxakdIZnpuQ0lqVzMxZ1llK2hsYm0ySHlJeU5rUktmWTg4bjFHWG81YXAKWUtFdkJPa1pqVGlSQVNEendhRUMzM1UrNldCcStsTjdveGsybzBmVVlQak9VSm5TZU1ZdEQ4K1V6S1lhVnF4dwpwSWRna0RORXkxOGVQME1nR1drdEI5VW8wYVc2OWpXOW9GRlBvREZUdVFTR01aZ2RiUW0yTUYrT2pCU01wM0NIClNRSURBUUFCbzJZd1pEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0VnWURWUjBUQVFIL0JBZ3dCZ0VCL3dJQkFqQWQKQmdOVkhRNEVGZ1FVU2pqODg5TE13cmhOWUVZcWlucWg5dWJSUjhBd0h3WURWUjBqQkJnd0ZvQVVTamo4ODlMTQp3cmhOWUVZcWlucWg5dWJSUjhBd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFKL1ltZmFOWU51NUI1T3ROV1BRCmUzU29uMXd2SVJOVHVkNlZ3ZmJTNHdnUXFwMmNVOFB0Unp1Vk5xMDNBZXpOZWFRSjJZZlFBaFdldTdjb2F6cDMKcVY2VG54RE04TWlmZngzQ05CQUliRVRoZE04STliVjJMc3RXNFcxQlR3K1BQNzFwenYyVUs4R0xTUjNMd0RYZQpLM2JpVnBJMkEydmZUVXh2WlFEYVFYa1lpSmdrcjNoVFVnd3FZQ0dNV0tMOFZ3ODJEUk5uNmdiZmRSVW4rWUkyCkFrUXZoYkhualVlYUVxYUhIbVZ1QWZJV2tRbXZNOHcwaW84dEdobkJpcFBNc245bExicEMvbUhiVkFhSE05QzAKTTFpTVN6MWNwQzNoOGdBYzhUNTlSSjJRbmtjVTM0KzdSd2dvWjg4M0FDWHRVVWs0OG51RHEzNzNuc0thZFBNUwpMTTg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://10.211.55.10:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kube-proxy
+  name: default
+current-context: default
+kind: Config
+preferences: <span class="o">{}</span>
+<span class="nb">users</span>:
+- name: kube-proxy
+  user:
+    client-certificate-data: <span class="nv">LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUQzakNDQXNhZ0F3SUJBZ0lVREdqd25ubE10T1VteG1OaVRKcUV5ZkoyRmNVd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1pURUxNQWtHQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFXcHBibWN4RURBT0JnTlZCQWNUQjBKbAphV3BwYm1jeEREQUtCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUk13RVFZRFZRUURFd3ByCmRXSmxjbTVsZEdWek1CNFhEVEU1TURNeU5ERTRNREF3TUZvWERUSTVNRE15TVRFNE1EQXdNRm93YkRFTE1Ba0cKQTFVRUJoTUNRMDR4RURBT0JnTlZCQWdUQjBKbGFVcHBibWN4RURBT0JnTlZCQWNUQjBKbGFVcHBibWN4RERBSwpCZ05WQkFvVEEyczRjekVQTUEwR0ExVUVDeE1HVTNsemRHVnRNUm93R0FZRFZRUURFeEZ6ZVhOMFpXMDZhM1ZpClpTMXdjbTk0ZVRDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTDFRYVB3TTd2QlIKaVREbG5qM0NiVmhHWGpKVkJvR3lmakJRL3VvaHM2L2p0SEtNdkJuY0htN0JvYzhHM3hoOU1LZkdnczNtamovbgp3WitEL2FObVdIWHdXSmlFYkRRR0UyMmc5dWh4MURvQk8yaE9XTGZGc2xMODdjZVpjUW1rYnViSVNUSWpVTDNjCk9ncTNVQ3gvRnRnc3hxbWdFRGhIemdNdW1uSUFTa3NyQTBPQjdiNFcxczlydzZWc3dSUlZWRmVuMGpXU3NLNlAKaXllNmdrQlNpZEZ0RGFDR2JPYmFYRGRpaWFRbDIwMUVFMEYzVS84U2pxbGYrcXlKd0FOSmM4OVJBakJ3TlFlNQp6RTFnNTVRMndkOUQrVTcxaFVrMG9uMnV0RHUyYzUyVFBvaVBLS1g0LzBJYXJ4eXhMdFpZcldsZHFlTlNJY2lOCjF4WkRMb2YvdmhzQ0F3RUFBYU4vTUgwd0RnWURWUjBQQVFIL0JBUURBZ1dnTUIwR0ExVWRKUVFXTUJRR0NDc0cKQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakFNQmdOVkhSTUJBZjhFQWpBQU1CMEdBMVVkRGdRV0JCU0llZ3U3OTdCRQpqbFladW9IWlhtYjNxK2VHbWpBZkJnTlZIU01FR0RBV2dCUktPUHp6MHN6Q3VFMWdSaXFLZXFIMjV0Rkh3REFOCkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQU9ZRGZhZG94TFJRbUsyYks4aWwybGF4MVE2UTJrM3BZL1NtSHlBT0cKWlVyNDErRXB2aXNYQ1Vlak5LdnFudnFodFZvdzVUTUVhSmJGMVB1VW9iWlNQNHM4cFZ4VFBraXB4YzNtRENIWApCSXJ0RjdBVWwvLy9CUkVDTjNINmFPdGJHY0pZRW95UkpzZXdpUUpqMGo0c0gzcUs1R3pSdm5XK3lLRk5VSWdXCk83QzA2U0xvUk5rWWUvVWRhTlF5c0wvZ2svbGxLamMrcUhXektnWVpWUktpUUR3TlRkMGdQZjMyc0lxaEpLaFUKVWZqTUNJSjNMeTBnZ0pEdzhYWitwcEFsaE1XbVhrMEE0MnRmb3hkUkZQcmc4YlZKVVdzYkZHQUFEZWtVZTExaQpaVGZBaXFnbmFiTmZnZHhUWGRpaDY2ZXFqWmhLaG9mV21pV294dUNvRnIvS2tBPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo</span><span class="o">=</span>
+    client-key-data: <span class="nv">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBdlZCby9BenU4RkdKTU9XZVBjSnRXRVplTWxVR2diSitNRkQrNmlHenIrTzBjb3k4Ckdkd2Vic0doendiZkdIMHdwOGFDemVhT1ArZkJuNFA5bzJaWWRmQlltSVJzTkFZVGJhRDI2SEhVT2dFN2FFNVkKdDhXeVV2enR4NWx4Q2FSdTVzaEpNaU5RdmR3NkNyZFFMSDhXMkN6R3FhQVFPRWZPQXk2YWNnQktTeXNEUTRIdAp2aGJXejJ2RHBXekJGRlZVVjZmU05aS3dybytMSjdxQ1FGS0owVzBOb0laczV0cGNOMktKcENYYlRVUVRRWGRUCi94S09xVi82ckluQUEwbHp6MUVDTUhBMUI3bk1UV0RubERiQjMwUDVUdldGU1RTaWZhNjBPN1p6blpNK2lJOG8KcGZqL1FocXZITEV1MWxpdGFWMnA0MUloeUkzWEZrTXVoLysrR3dJREFRQUJBb0lCQUFqTi9KUDhaZ0IzU2xJagoyOEF6a3JKUVU0RXp3eUcxRTNsYnl2OUlvZnJFTkZnL2cyQVFoTG5SOTV5UlRUN3VVNXo1OW90czlhQ3pQcVlVCmxXOU1DMEV3OUczamVzVFFvNGF0dmM0QnZVVVZXWlg0VHRmOU1kWDZQWFRUQmhiVXR2TzB6UEt3QWNsU3ZNQlMKMWorN2lXeDBhS2pxOE5ZdFFMK1ZJMG02Q2JxRktSOTJoZGU3dk9aS29LUmhHTWl5U1kwODAvekZaaXpyK29RVwpwcXZ4Wmphb2JuMWhMem9kSU12ZUVrU0huSFpDR1U0NlR0RHJRWUJvSjZSdzRyMjU1cWdGYjVmdFpDVVF2TWxNCk9ES1JQcWhtUDY2ZUlSVU1LTWNiV0FDNE9LUTRZalhPb2JMazJRRFZ5Q01VczVDY3FJTHNMNHhNSmtSRmN2bWIKUFlKOWZnRUNnWUVBM0RNMnZVanQ5ekg5c0NGNkhDZmRNMmgzbVp3eXRtbXBBNTB4ZlB0Ynhwcy9sL1h3dzJRbwpVWUNja2o4YnNQMnU4SWl5MTZnY09CMDNleVRzK2pZMDRIWXJZRURYZjFNdENTaXlzYktWblNsZXZtdzJpM3k3CjZWR2ZZU0ppM3pYQ3RnWXFRQlVQVWZsUTk0VGF3SkRMcnhuZTZlL0dtTjNETy9Gc2dYc2cyT0VDZ1lFQTNCZTIKN0JHVlZiT2tsMHRjWDVEVXFndUxmN0FhaGRVdWVNRGN4enc1R2VKTlIzenI4OUR4b1NPNEEwVk5SZ25TL1JFbwpMWFJhUUJFTzloS25sNDR6eVp5cXRFeVMvaERkUEpiU1hreFh6VGt0eWtSYmpySi9vQWx5SzhsWmd6d056elpsCm56TDNkYlc5aW9DV0NtSEFvdmNVWVN1czZrOUVTVC9kZUNqV3luc0NnWUI5bWVEUld6WVJXRHlDS0xaRU5TRGgKWCtkSWdXWVQwblVMa0xCWHYvQjdlclp0Y1dXaHJoR3BXNWp6ZW5mTEh3aVlQd0QwTGZuYXNCK2phRTZiOGl0NwpGU3hzdk0rdTJyekhpcVZTNHJDZ2NxYU9LNTk1Tk83aWlTSkYvNTB5QUxKTnJYcVFEdk1zS08vY0g3Vy9QVmhSClNvcHlHY2pJRFVaOWZKb055VFBWUVFLQmdDR1ZQTVFvcXJDNUNKUk5XM3I1am5tajZWVkNlY21TRGRVL0dIRU8KTDJoVHI1Y0k2TGY3V2VOTW4vZGZ5N3EwSlEyWVlKa085L1p1bytuSVR1cEJPSVc2OGhFdzNmMEdkYnVaQitCNwpwYW9hMzNITm5HclpzYitwc1ZJZEZ4dC9QbHd2NExHNkJTaGc0dHNQWTlXUnRPTW84R01qVnU4cHlUR2tIUmNJCnBEMmhBb0dCQU1ScFAwSTN2bWorOU1Kb1BXc3lLbUFSWmptZGU0WktVKzVlZ3FLdUlHMlJnb0s5U2Z4cFZxRGQKL1c5N2hDejNvQ3ViY2pXczgvRjYxQ1RoTjVxdXBYc0lXYVdvbExpbTIrL2M2OG95VUdQY2FDUDBURXRNQmluVApzRkVoWlpHTVN1dGVyS1FUcytvYnYyanFiYVg2ZHF1WFNzT2FKTXRqcnkreG03SUZnU1dSCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg</span><span class="o">==</span>
+<span class="o">[</span>k8s@k8s-master01 k8s-cert]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<h3 id="3-部署kubelet组件"><a name="part3"></a>3. 部署kubelet组件</h3>
+
+<p>准备好了 <strong>bootstrap.kubeconfig</strong> 和 <strong>kube-proxy.kubeconfig</strong> 文件之后，先拷贝到 node 节点上</p>
+
+<p><code class="highlighter-rouge">sudo scp bootstrap.kubeconfig kube-proxy.kubeconfig root@10.211.55.12:/opt/kubernetes/cfg/</code></p>
+
+<p><code class="highlighter-rouge">sudo scp bootstrap.kubeconfig kube-proxy.kubeconfig root@10.211.55.13:/opt/kubernetes/cfg/</code></p>
+
+<p><code class="highlighter-rouge">sudo scp kubelet kube-proxy root@</code><code class="highlighter-rouge">10.211.55.12:/opt/kubernetes/bin/</code><br /><br /><code class="highlighter-rouge">sudo scp kubelet kube-proxy root@</code><code class="highlighter-rouge">10.211.55.13:/opt/kubernetes/bin/</code></p>
+
+<p>等下部署<strong>kubelet</strong>，<strong>kube-proxy </strong>组件 都需要这两个文件，接下来就可以在这两个 <strong>node</strong> 节点上部署 <strong>node</strong> 了</p>
+
+<p>我们现在一个node节点上新建一个<code class="highlighter-rouge">vi kubelet.sh</code>脚本，该脚本与 apiserver 脚本大体相同</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">NODE_ADDRESS</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">DNS_SERVER_IP</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="s2">"10.0.0.2"</span><span class="k">}</span>
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/opt/kubernetes/cfg/kubelet
+
+KUBELET_OPTS="--logtostderr=false \\
+--log-dir=/opt/kubernetes/logs \\
+--v=4 \\
+--hostname-override=</span><span class="k">${</span><span class="nv">NODE_ADDRESS</span><span class="k">}</span><span class="sh"> \\
+--kubeconfig=/opt/kubernetes/cfg/kubelet.kubeconfig \\
+--bootstrap-kubeconfig=/opt/kubernetes/cfg/bootstrap.kubeconfig \\
+--config=/opt/kubernetes/cfg/kubelet.config \\
+--cert-dir=/opt/kubernetes/ssl \\
+--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0"
+</span><span class="no">
+EOF
+
+</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/opt/kubernetes/cfg/kubelet.config
+
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+address: </span><span class="k">${</span><span class="nv">NODE_ADDRESS</span><span class="k">}</span><span class="sh">
+port: 10250
+readOnlyPort: 10255
+cgroupDriver: cgroupfs
+clusterDNS:
+- </span><span class="k">${</span><span class="nv">DNS_SERVER_IP</span><span class="k">}</span><span class="sh"> 
+clusterDomain: cluster.local.
+failSwapOn: false
+authentication:
+  anonymous:
+    enabled: true
+</span><span class="no">EOF
+
+</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/usr/lib/systemd/system/kubelet.service
+[Unit]
+Description=Kubernetes Kubelet
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/opt/kubernetes/cfg/kubelet
+ExecStart=/opt/kubernetes/bin/kubelet \</span><span class="nv">$KUBELET_OPTS</span><span class="sh">
+Restart=on-failure
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+</span><span class="no">EOF
+
+</span>systemctl daemon-reload
+systemctl <span class="nb">enable </span>kubelet
+systemctl restart kubelet
+</code></pre></div></div>
+
+<p>运行脚本，注意需要指定 <strong>NODE_ADDRESS</strong> 地址，<strong>DNS_SERVER_IP </strong>直接使用默认的就可以了</p>
+
+<p><code class="highlighter-rouge">sudo bash kubelet.sh 10.211.55.12</code> </p>
+
+<p>查看下有没有启动 <code class="highlighter-rouge">ps -ef | grep kube</code>   </p>
+
+<p>查看下生成的配置文件</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/kubelet
+
+<span class="nv">KUBELET_OPTS</span><span class="o">=</span><span class="s2">"--logtostderr=false </span><span class="se">\</span><span class="s2">
+--log-dir=/opt/kubernetes/logs </span><span class="se">\</span><span class="s2">
+--v=4 </span><span class="se">\</span><span class="s2">
+--hostname-override=10.211.55.12 </span><span class="se">\</span><span class="s2">
+--kubeconfig=/opt/kubernetes/cfg/kubelet.kubeconfig </span><span class="se">\</span><span class="s2">
+--bootstrap-kubeconfig=/opt/kubernetes/cfg/bootstrap.kubeconfig </span><span class="se">\</span><span class="s2">
+--config=/opt/kubernetes/cfg/kubelet.config </span><span class="se">\</span><span class="s2">
+--cert-dir=/opt/kubernetes/ssl </span><span class="se">\</span><span class="s2">
+--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0"</span>
+
+<span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span><span class="nb">cat</span> /opt/kubernetes/cfg/kubelet.config 
+
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+address: 10.211.55.12
+port: 10250
+readOnlyPort: 10255
+cgroupDriver: cgroupfs
+clusterDNS:
+- 10.0.0.2 
+clusterDomain: cluster.local.
+failSwapOn: <span class="nb">false
+</span>authentication:
+  anonymous:
+    enabled: <span class="nb">true</span>
+<span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p>这里参数的具体意义：</p>
+
+<p><code class="highlighter-rouge">logtostderr</code>：日志目录，记得要有对应的目录，<code class="highlighter-rouge">sudo mkdir /opt/kubernetes/logs</code></p>
+
+<p><code class="highlighter-rouge">--v=4</code>：日志级别</p>
+
+<p><code class="highlighter-rouge">--hostname-override</code>：当前的主机名就是当前的IP</p>
+
+<p><code class="highlighter-rouge">--kubeconfig</code>：kubernetes的配置文件</p>
+
+<p><code class="highlighter-rouge">--bootstrap-kubeconfig</code>：之前创建的<strong>bootstrap.kubeconfig</strong>文件</p>
+
+<p><code class="highlighter-rouge">--pod-infra-container-image</code>：创建Pod 时容器引用的镜像地址，默认的国外服务器可能访问延迟或失败</p>
+
+<h3 id="4-学习排错"><a name="part4"></a>4. 学习排错</h3>
+
+<p>现在启动 <strong>kubelet</strong> 是失败的，让我们来一步步排查下问题 <code class="highlighter-rouge">sudo systemctl restart kubelet</code></p>
+
+<p><code class="highlighter-rouge">journalctl -u kubelet</code> 可以查看失败的原因</p>
+
+<p><code class="highlighter-rouge">sudo tail /var/log/messages -f</code> 查看系统日志</p>
+
+<p><code class="highlighter-rouge">sudo less /var/log/messages -f</code> </p>
+
+<p><code class="highlighter-rouge">less /opt/kubernetes/logs/kubelet.INFO</code> 查看kubelet生成的日志</p>
+
+<p><code class="highlighter-rouge">sudo cat /opt/kubernetes/cfg/bootstrap.kubeconfig</code> 检查配置文件 </p>
+
+<p><code class="highlighter-rouge">less /opt/kubernetes/logs/kubelet.ERROR</code> 查看 error 信息</p>
+
+<p><code class="highlighter-rouge">source /opt/kubenetes/cfg/kubelet</code> source kubelet配置文件</p>
+
+<p><code class="highlighter-rouge">/opt/kubernetes/bin/kubelet $KUBELET_OPTS</code> 然后指定选项进行手动启动</p>
+
+<p>解决之后的显示如下 <code class="highlighter-rouge">sudo systemctl restart kubelet</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span>ps <span class="nt">-ef</span>|grep kubelet
+root      8737     1  0 20:11 ?        00:00:00 /opt/kubernetes/bin/kubelet <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--hostname-override</span><span class="o">=</span>10.211.55.12 <span class="nt">--kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/kubelet.kubeconfig <span class="nt">--bootstrap-kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/bootstrap.kubeconfig <span class="nt">--config</span><span class="o">=</span>/opt/kubernetes/cfg/kubelet.config <span class="nt">--cert-dir</span><span class="o">=</span>/opt/kubernetes/ssl <span class="nt">--pod-infra-container-image</span><span class="o">=</span>registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
+k8s      11133 15286  0 20:43 pts/3    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto kubelet
+</code></pre></div></div>
+
+<p>可以在 master 节点上通过 <code class="highlighter-rouge">kubectl get csr</code> 来获取请求的签名</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get csr
+NAME                                                   AGE   REQUESTOR           CONDITION
+node-csr-dOkgFXEB9Ee5A060ALeSKQ6Pm4ahYT6XyaQbv_c5lK8   40m   kubelet-bootstrap   Pending
+</code></pre></div></div>
+
+<p>通过 <code class="highlighter-rouge">kubectl certificate approve node-csr-**</code> 来允许颁发</p>
+
+<p>这样就可以通过 <code class="highlighter-rouge">kubectl get node</code> 查看，这样就长长加入到集群中了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get csr
+NAME                                                   AGE   REQUESTOR           CONDITION
+node-csr-dOkgFXEB9Ee5A060ALeSKQ6Pm4ahYT6XyaQbv_c5lK8   40m   kubelet-bootstrap   Pending
+<span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get node
+No resources found.
+<span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl certificate approve node-csr-dOkgFXEB9Ee5A060ALeSKQ6Pm4ahYT6XyaQbv_c5lK8
+certificatesigningrequest.certificates.k8s.io/node-csr-dOkgFXEB9Ee5A060ALeSKQ6Pm4ahYT6XyaQbv_c5lK8 approved
+<span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get node
+NAME           STATUS     ROLES    AGE   VERSION
+10.211.55.12   NotReady   &lt;none&gt;   9s    v1.13.4
+<span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get node
+NAME           STATUS   ROLES    AGE   VERSION
+10.211.55.12   Ready    &lt;none&gt;   19s   v1.13.4
+</code></pre></div></div>
+
+<h3 id="5-部署kube-proxy组件"><a name="part5"></a>5. 部署kube-proxy组件</h3>
+
+<p>首先新建 <code class="highlighter-rouge">vi proxy.sh</code> 脚本</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">NODE_ADDRESS</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/opt/kubernetes/cfg/kube-proxy
+
+KUBE_PROXY_OPTS="--logtostderr=false \\
+--log-dir=/opt/kubernetes/logs \\
+--v=4 \\
+--hostname-override=</span><span class="k">${</span><span class="nv">NODE_ADDRESS</span><span class="k">}</span><span class="sh"> \\
+--cluster-cidr=10.0.0.0/24 \\
+--proxy-mode=ipvs \\
+--kubeconfig=/opt/kubernetes/cfg/kube-proxy.kubeconfig"
+</span><span class="no">
+EOF
+
+</span><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt;/usr/lib/systemd/system/kube-proxy.service
+[Unit]
+Description=Kubernetes Proxy
+After=network.target
+
+[Service]
+EnvironmentFile=-/opt/kubernetes/cfg/kube-proxy
+ExecStart=/opt/kubernetes/bin/kube-proxy \</span><span class="nv">$KUBE_PROXY_OPTS</span><span class="sh">
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</span><span class="no">EOF
+
+</span>systemctl daemon-reload
+systemctl <span class="nb">enable </span>kube-proxy
+systemctl restart kube-proxy
+</code></pre></div></div>
+
+<p>执行下脚本注意参数是node节点的IP地址 <code class="highlighter-rouge">sudo bash proxy.sh 10.211.55.12</code></p>
+
+<p>查看下进程 <code class="highlighter-rouge">ps -ef | grep proxy</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span><span class="nb">sudo </span>bash proxy.sh 10.211.55.12
+Created symlink from /etc/systemd/system/multi-user.target.wants/kube-proxy.service to /usr/lib/systemd/system/kube-proxy.service.
+<span class="o">[</span>k8s@k8s-node01 node]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>proxy
+root     13409     1  0 21:10 ?        00:00:00 /opt/kubernetes/bin/kube-proxy <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--hostname-override</span><span class="o">=</span>10.211.55.12 <span class="nt">--cluster-cidr</span><span class="o">=</span>10.0.0.0/24 <span class="nt">--proxy-mode</span><span class="o">=</span>ipvs <span class="nt">--kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/kube-proxy.kubeconfig
+k8s      13615 15286  0 21:11 pts/3    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto proxy
+</code></pre></div></div>
+
+<p>这样 node 的<strong>kubelet</strong>和<strong>kube-proxy</strong>两个组件都已经部署完成了</p>
+
+<p>也加入到集群中了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 bin]<span class="nv">$ </span>kubectl get node
+NAME           STATUS   ROLES    AGE   VERSION
+10.211.55.12   Ready    &lt;none&gt;   15m   v1.13.4
+</code></pre></div></div>
+
+<h3 id="6-扩容node节点"><a name="part6"></a>6. 扩容Node节点</h3>
+
+<p>我们只需要把部署的第一个<strong>Node</strong>文件拷贝到第二个<strong>Node</strong>节点上就可以了</p>
+
+<p><code class="highlighter-rouge">sudo scp -r /opt/kubernetes/ root@10.211.55.13:/opt/</code></p>
+
+<p>继续拷贝 service</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>scp /usr/lib/systemd/system/<span class="o">{</span>kubelet,kube-proxy<span class="o">}</span>.service root@10.211.55.13:/usr/lib/systemd/system/
+</code></pre></div></div>
+
+<p>拷贝完成之后需要做的事情</p>
+
+<ol>
+  <li>删除它为之前的Node 节点颁发的证书 <code class="highlighter-rouge">sudo rm /opt/kubernetes/ssl/*.*</code> </li>
+  <li>修改当前Node节点的IP地址 <strong>kubelet</strong>kubelet.config**kube-proxy **这三个文件</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kubelet                                             
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kubelet.config 
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>vi /opt/kubernetes/cfg/kube-proxy
+</code></pre></div></div>
+
+<p>我们看下 kubelet.config 文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+address: 10.211.55.13
+port: 10250
+readOnlyPort: 10255
+cgroupDriver: cgroupfs
+clusterDNS:
+- 10.0.0.2
+clusterDomain: cluster.local.
+failSwapOn: <span class="nb">false
+</span>authentication:
+  anonymous:
+    enabled: <span class="nb">true</span>
+</code></pre></div></div>
+
+<p>修改之后就可以启动了 </p>
+
+<p><code class="highlighter-rouge">sudo systemctl restart kubelet</code></p>
+
+<p><code class="highlighter-rouge">sudo systemctl restart kube-proxy</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kubelet
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span><span class="nb">sudo </span>systemctl restart kube-proxy
+<span class="o">[</span>k8s@k8s-node02 ~]<span class="nv">$ </span>ps <span class="nt">-ef</span> | <span class="nb">grep </span>kube
+root     16774 17223  0 21:36 pts/3    00:00:00 <span class="nb">sudo </span>vi /opt/kubernetes/cfg/kubelet.config
+root     16775 16774  0 21:36 pts/3    00:00:00 vi /opt/kubernetes/cfg/kubelet.config
+root     25183     1  0 09:16 ?        00:00:43 /opt/kubernetes/bin/flanneld <span class="nt">--ip-masq</span> <span class="nt">--etcd-endpoints</span><span class="o">=</span>https://10.211.55.10:2379,https://10.211.55.12:2379,https://10.211.55.13:2379 <span class="nt">-etcd-cafile</span><span class="o">=</span>/opt/etcd/ssl/ca.pem <span class="nt">-etcd-certfile</span><span class="o">=</span>/opt/etcd/ssl/server.pem <span class="nt">-etcd-keyfile</span><span class="o">=</span>/opt/etcd/ssl/server-key.pem
+root     26796     1  2 23:46 ?        00:00:00 /opt/kubernetes/bin/kubelet <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--hostname-override</span><span class="o">=</span>10.211.55.13 <span class="nt">--kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/kubelet.kubeconfig <span class="nt">--bootstrap-kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/bootstrap.kubeconfig <span class="nt">--config</span><span class="o">=</span>/opt/kubernetes/cfg/kubelet.config <span class="nt">--cert-dir</span><span class="o">=</span>/opt/kubernetes/ssl <span class="nt">--pod-infra-container-image</span><span class="o">=</span>registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0
+root     26831     1  2 23:46 ?        00:00:00 /opt/kubernetes/bin/kube-proxy <span class="nt">--logtostderr</span><span class="o">=</span><span class="nb">false</span> <span class="nt">--log-dir</span><span class="o">=</span>/opt/kubernetes/logs <span class="nt">--v</span><span class="o">=</span>4 <span class="nt">--hostname-override</span><span class="o">=</span>10.211.55.13 <span class="nt">--cluster-cidr</span><span class="o">=</span>10.0.0.0/24 <span class="nt">--proxy-mode</span><span class="o">=</span>ipvs <span class="nt">--kubeconfig</span><span class="o">=</span>/opt/kubernetes/cfg/kube-proxy.kubeconfig
+k8s      27051 26756  0 23:46 pts/4    00:00:00 <span class="nb">grep</span> <span class="nt">--color</span><span class="o">=</span>auto kube
+</code></pre></div></div>
+
+<p>我们在mater节点，看有没有新的节点加入进来</p>
+
+<p><code class="highlighter-rouge">kubectl get csr</code>新的节点加入进来</p>
+
+<p><code class="highlighter-rouge">kubectl certificate approve node-csr-sMJO_rDJIrM7xhOGmMZKLTlN5XTadRuePZnrQVxg1eQ</code> 颁发证书</p>
+
+<p><code class="highlighter-rouge">kubectl get node</code> 查看node就发现新的节点加入进来</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get csr
+NAME                                                   AGE    REQUESTOR           CONDITION
+node-csr-sMJO_rDJIrM7xhOGmMZKLTlN5XTadRuePZnrQVxg1eQ   106s   kubelet-bootstrap   Pending
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl certificate approve node-csr-sMJO_rDJIrM7xhOGmMZKLTlN5XTadRuePZnrQVxg1eQ
+certificatesigningrequest.certificates.k8s.io/node-csr-sMJO_rDJIrM7xhOGmMZKLTlN5XTadRuePZnrQVxg1eQ approved
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get node
+NAME           STATUS   ROLES    AGE    VERSION
+10.211.55.12   Ready    &lt;none&gt;   170m   v1.13.4
+10.211.55.13   Ready    &lt;none&gt;   20s    v1.13.4
+</code></pre></div></div>
+
+<p>一个<strong>master</strong>两个<strong>node</strong>就部署好了<strong>kubernetes</strong>集群了</p>
+
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/288708/1553600955276-0485f1cb-f4d1-4917-9644-7c43aeb849cd.png#align=left&amp;display=inline&amp;height=361&amp;name=4.png&amp;originHeight=497&amp;originWidth=1028&amp;size=27106&amp;status=done&amp;width=746" alt="4.png" /><br />单<strong>Master</strong>集群架构图</p>
+
+<h3 id="7-部署一个nginx测试示例"><a name="part7"></a>7. 部署一个Nginx测试示例</h3>
+
+<p>我们先到<strong>master</strong>节点操作</p>
+
+<p><code class="highlighter-rouge">kubectl create deployment nginx --image=nginx</code>创建一个nginx容器</p>
+
+<p><code class="highlighter-rouge">kubectl get pod</code>可以查看pod状态</p>
+
+<p><code class="highlighter-rouge">kubectl scale deployment nginx --replicas=3</code> 由一个容器扩容到3个容器</p>
+
+<p><code class="highlighter-rouge">kubectl get pods -o wide</code> 可以查看分布到哪个节点<br />   <br /><code class="highlighter-rouge">kubectl expose deployment nginx --port=88 --target-port=80 --type=NodePort</code> 通过临时命令创建<strong>service</strong>暴露端口才可以对外访问</p>
+
+<p><code class="highlighter-rouge">kubectl get svc nginx</code> </p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get svc nginx
+NAME    TYPE       CLUSTER-IP   EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>        AGE
+nginx   NodePort   10.0.0.31    &lt;none&gt;        88:48187/TCP   4m59s
+</code></pre></div></div>
+
+<p>可以在 node 节点访问 88 内部端口</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-node01 ~]<span class="nv">$ </span>curl 10.0.0.31:88
+&lt;<span class="o">!</span>DOCTYPE html&gt;
+&lt;html&gt;
+&lt;<span class="nb">head</span><span class="o">&gt;</span>
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+    body <span class="o">{</span>
+        width: 35em<span class="p">;</span>
+        margin: 0 auto<span class="p">;</span>
+        font-family: Tahoma, Verdana, Arial, sans-serif<span class="p">;</span>
+    <span class="o">}</span>
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.&lt;/p&gt;
+
+&lt;p&gt;For online documentation and support please refer to
+&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">"http://nginx.org/"</span><span class="o">&gt;</span>nginx.org&lt;/a&gt;.&lt;br/&gt;
+Commercial support is available at
+&lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">"http://nginx.com/"</span><span class="o">&gt;</span>nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you <span class="k">for </span>using nginx.&lt;/em&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>也可以访问 <strong>node</strong> 节点的 <strong>ip</strong> 加上随机生成的 48187 端口，就可以访问到部署的应用</p>
+
+<p>查看日志 <code class="highlighter-rouge">kubectl logs +NAME</code> 需要授权</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl create deployment nginx <span class="nt">--image</span><span class="o">=</span>nginx
+deployment.apps/nginx created
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get pods
+NAME                   READY   STATUS              RESTARTS   AGE
+nginx-5c7588df-p9m5m   0/1     ContainerCreating   0          9s
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl scale deployment nginx <span class="nt">--replicas</span><span class="o">=</span>3
+deployment.extensions/nginx scaled
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get pods
+NAME                   READY   STATUS    RESTARTS   AGE
+nginx-5c7588df-2bmzw   1/1     Running   0          68s
+nginx-5c7588df-ljzp5   1/1     Running   0          68s
+nginx-5c7588df-p9m5m   1/1     Running   0          3m19s
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get pods <span class="nt">-o</span> wide
+NAME                   READY   STATUS    RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+nginx-5c7588df-2bmzw   1/1     Running   0          73s     172.17.68.3   10.211.55.12   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-ljzp5   1/1     Running   0          73s     172.17.40.2   10.211.55.13   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-p9m5m   1/1     Running   0          3m24s   172.17.68.2   10.211.55.12   &lt;none&gt;           &lt;none&gt;
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl expose deployment nginx <span class="nt">--port</span><span class="o">=</span>88 <span class="nt">--target-port</span><span class="o">=</span>80 <span class="nt">--type</span><span class="o">=</span>NodePort
+service/nginx exposed
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl get svc nginx
+NAME    TYPE       CLUSTER-IP   EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>        AGE
+nginx   NodePort   10.0.0.31    &lt;none&gt;        88:48187/TCP   4m59s
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl logs nginx-5c7588df-2bmzw
+Error from server <span class="o">(</span>Forbidden<span class="o">)</span>: 
+Forbidden <span class="o">(</span><span class="nv">user</span><span class="o">=</span>system:anonymous, <span class="nv">verb</span><span class="o">=</span>get, <span class="nv">resource</span><span class="o">=</span>nodes, <span class="nv">subresource</span><span class="o">=</span>proxy<span class="o">)</span> <span class="o">(</span> pods/log nginx-5c7588df-2bmzw<span class="o">)</span>
+</code></pre></div></div>
+
+<p>授权：<code class="highlighter-rouge">kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=cluster-admin --user=system:anonymous</code></p>
+
+<p>再查看日志就可以了</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl create clusterrolebinding cluster-system-anonymous <span class="nt">--clusterrole</span><span class="o">=</span>cluster-admin <span class="nt">--user</span><span class="o">=</span>system:anonymous
+clusterrolebinding.rbac.authorization.k8s.io/cluster-system-anonymous created
+<span class="o">[</span>k8s@k8s-master01 ~]<span class="nv">$ </span>kubectl logs nginx-5c7588df-2bmzw
+10.0.0.31 - - <span class="o">[</span>25/Mar/2019:04:11:57 +0000] <span class="s2">"GET / HTTP/1.1"</span> 200 612 <span class="s2">"-"</span> <span class="s2">"curl/7.29.0"</span> <span class="s2">"-"</span>
+172.17.68.1 - - <span class="o">[</span>25/Mar/2019:04:13:03 +0000] <span class="s2">"GET / HTTP/1.1"</span> 200 612 <span class="s2">"-"</span> <span class="s2">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15"</span> <span class="s2">"-"</span>
+</code></pre></div></div>
+
+<h3 id="kubernetes二进制部署系列-1"><a name="serial"></a>kubernetes二进制部署系列</h3>
+
+<ol>
+  <li><a href="http://custer.me/etcd-bin-install/">k8s部署-Etcd数据库集群部署</a></li>
+  <li><a href="http://custer.me/flannel-bin-install/">k8s部署-Flannel网络</a></li>
+  <li><a href="http://custer.me/kube-master/">k8s部署-Master组件</a></li>
+  <li><a href="http://custer.me/kube-node/">k8s部署-Node组件</a></li>
+  <li><a href="http://custer.me/multi-master/">k8s部署-多Master集群</a></li>
+</ol>
+
+            </article>
+
+            <section class="share">
+    <h3>Share</h3>
+    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;k8s部署第四步-Node组件安装&quot;%20http://localhost:4000/kube-node/%20via%20&#64;DBTua&hashtags=kubernetes,node,"
+    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Share on Twitter">
+        <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+    </a>
+    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/kube-node/"
+    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook">
+        <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+    </a>
+    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/kube-node/"
+    onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+">
+        <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
+    </a>
+</section>
+            <section class="author" itemprop="author">
+    <div class="details" itemscope itemtype="http://schema.org/Person">
+        <img itemprop="image" class="img-rounded" src="/assets/img/blog-author.jpg" alt="">
+        <p class="def">作者</p>
+        <h3 class="name">
+            <a itemprop="name" href="https://www.weibo.com/p/1005052465677512">Custer</a>
+        </h3>
+        <p class="desc">Python Developer</p>
+        <a itemprop="email" class="email" href="mailto:custertian@gmail.com">custertian@gmail.com</a>
+    </div>
+</section>
+
+            <section class="comments">
+    <h3>评论</h3>
+    
+    <div id="gitalk_container"></div>
+</section>
+
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '375f13b9eef7a2536214',
+    clientSecret: 'bfc30603cbb4bc5c59d9e0dabfc1d235c11e6215',
+    repo: 'custertian.github.io',
+    owner: 'custertian',
+    admin: 'custertian',
+    id: location.pathname,      // Ensure uniqueness and length less than 504.k8s部署-Node组件安装
+    distractionFreeMode: 'true'  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk_container')
+</script>
+
+
+            <footer>
+    <p>Made with <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> and <span class="love">❤</span> by <a href="http://custer.me">Custer</a>
+    <span id="busuanzi_container_site_pv">本站总访问量：<span id="busuanzi_value_site_pv"></span>次</span>
+</p>
+</footer>
+<script src="/assets/js/main.js"></script>
+
+        </section>
+    </body>
+</html>
