@@ -11,6 +11,7 @@ categories:
 - kubernetes
 twitter_text: 'k8s部署第一步-Etcd数据库集群部署'
 ---
+> 每日一句: Those who cannot change their minds cannot change anything.
 
 #### [Part 1: 部署平台规划 ](#part1)
 

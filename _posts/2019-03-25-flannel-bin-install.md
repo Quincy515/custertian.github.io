@@ -11,6 +11,7 @@ categories:
 - kubernetes
 twitter_text: 'k8s部署第二步-Flannel网络的部署'
 ---
+> 每日一句: The price of inaction is far greater than the cost of making a mistake.
 
 #### [Part 1: Uninstall old docker versions ](#part1)
 

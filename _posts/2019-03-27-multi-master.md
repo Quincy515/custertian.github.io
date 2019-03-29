@@ -11,6 +11,8 @@ categories:
 - kubernetes
 twitter_text: 'k8s部署第五步-多Master集群'
 ---
+> 每日一句: Desire is the starting point of all achievement, not a hope, not a wish, but a keen pulsating desire which transcends everything.
+
 # 5. k8s部署-多Master集群
 
 #### [Part 1: 多Master集群架构分析](#part1)

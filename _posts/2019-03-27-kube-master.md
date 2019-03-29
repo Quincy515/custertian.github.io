@@ -11,6 +11,7 @@ categories:
 - kubernetes
 twitter_text: 'k8s部署第三步-Master组件安装'
 ---
+> 每日一句: Real integrity is doing the right thing, knowing that nobody’s going to know whether you did it or not.
 
 #### [Part 1: kube-apiserver](#part1)
 
