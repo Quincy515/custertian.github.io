@@ -3,3 +3,4 @@ node_modules
 _drafts
 __pycache__
 .vscode
+.cache/

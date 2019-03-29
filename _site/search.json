@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "2.计数二进制子串-696",
+      "category" : "LeetCode",
+      "tags"     : "ARTS and leetcode",
+      "url"      : "/leetcode-696/",
+      "date"     : "29 Mar 2019"
+    } ,
+  
+    {
       "title"    : "5.k8s部署-多Master集群",
       "category" : "kubernetes",
       "tags"     : "kubernetes and node",
@@ -41,7 +49,7 @@
     } ,
   
     {
-      "title"    : "反转字符串中的单词III",
+      "title"    : "1.反转字符串中的单词III-557",
       "category" : "LeetCode",
       "tags"     : "ARTS and leetcode",
       "url"      : "/leetcode-557/",
