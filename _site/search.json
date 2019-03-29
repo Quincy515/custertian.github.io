@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "1.编写第一个Go程序",
+      "category" : "Go入门",
+      "tags"     : "Go",
+      "url"      : "/hello-go/",
+      "date"     : "29 Mar 2019"
+    } ,
+  
+    {
       "title"    : "2.计数二进制子串-696",
       "category" : "LeetCode",
       "tags"     : "ARTS and leetcode",

@@ -5,9 +5,23 @@
     <description>custer的学习记录</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 29 Mar 2019 18:59:39 +0800</pubDate>
-    <lastBuildDate>Fri, 29 Mar 2019 18:59:39 +0800</lastBuildDate>
+    <pubDate>Sat, 30 Mar 2019 00:20:49 +0800</pubDate>
+    <lastBuildDate>Sat, 30 Mar 2019 00:20:49 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>1.编写第一个Go程序</title>
+        <description>&lt;blockquote&gt; &lt;p&gt;“You don’t have to see the whole staircase, just take the first step.”&lt;/p&gt; &lt;p&gt;– Martin Luther King, Civil Rights Leader&lt;/p&gt; &lt;p&gt;「你不用看到整个楼梯，你只需跨出第一步。」– 马丁‧路德 (民运领袖)&lt;/p&gt; &lt;p&gt;&lt;strong&gt;走了第一步，持续行动，就会看到下一步。&lt;/strong&gt;&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;Go 语言官方文档 &lt;a href=&quot;https://golang.org/doc/faq&quot;&gt;https://golang.org/doc/faq&lt;/a&gt;&lt;/p&gt; &lt;h4 id=&quot;part-1-编写第一个go程序&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 编写第一个Go程序&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#part1-1&quot;&gt;基本程序结构&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part1-2&quot;&gt;应用程序入口&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part1-3&quot;&gt;退出返回值&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part1-4&quot;&gt;获取命令行参数&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-2-变量常量以及与其他语言的差异&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 变量、常量以及与其他语言的差异&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#part2-1&quot;&gt;编写测试程序&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part2-2&quot;&gt;实现 Fibonacci 数列&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part2-3&quot;&gt;变量赋值&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part2-4&quot;&gt;常量定义&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h1 id=&quot;编写第一个go程序&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;编写第一个Go程序&lt;/h1&gt; &lt;h2 id=&quot;基本程序结构&quot;&gt;&lt;a name=&quot;part1-1&quot;&gt;&lt;/a&gt;基本程序结构&lt;/h2&gt; &lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;package&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c&quot;&gt;// 包，表明代码所在的模块（包）&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fmt&quot;&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c&quot;&gt;// 引入代码依赖&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c&quot;&gt;// 功能实现&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;x&quot;&gt; &lt;/span&gt;&lt;span...</description>
+        <pubDate>Fri, 29 Mar 2019 08:32:52 +0800</pubDate>
+        <link>http://localhost:4000/hello-go/</link>
+        <guid isPermaLink="true">http://localhost:4000/hello-go/</guid>
+        
+        <category>Go</category>
+        
+        
+        <category>Go入门</category>
+        
+      </item>
     
       <item>
         <title>2.计数二进制子串-696</title>
