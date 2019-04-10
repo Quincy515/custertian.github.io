@@ -5,9 +5,83 @@
     <description>custer的学习记录</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 30 Mar 2019 00:20:49 +0800</pubDate>
-    <lastBuildDate>Sat, 30 Mar 2019 00:20:49 +0800</lastBuildDate>
+    <pubDate>Wed, 10 Apr 2019 21:59:48 +0800</pubDate>
+    <lastBuildDate>Wed, 10 Apr 2019 21:59:48 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>3.电话号码的字母组合</title>
+        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: Persistence guarantees that results are inevitable.&lt;/p&gt; &lt;p&gt;– Paramahansa Yogananda, Meditation Teacher&lt;/p&gt; &lt;/blockquote&gt; &lt;h4 id=&quot;part-1-题目&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 题目&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-思考&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 思考&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#find&quot;&gt;从输入和输出找规律&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#achieve&quot;&gt;伪代码实现思路&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-3-javascript解题&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: JavaScript解题&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#code&quot;&gt;JS代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#test&quot;&gt;JS测试&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h2 id=&quot;题目&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;题目&lt;/h2&gt; &lt;p&gt;给定一个仅包含数字 &lt;code class=&quot;highlighter-rouge&quot;&gt;2-9&lt;/code&gt; 的字符串，返回所有它能表示的字母组合。&lt;/p&gt; &lt;p&gt;给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。&lt;/p&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;电话按键&lt;/th&gt; &lt;th&gt;字母&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;2&lt;/td&gt; &lt;td&gt;abc&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;3&lt;/td&gt; &lt;td&gt;def&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;4&lt;/td&gt; &lt;td&gt;ghi&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;5&lt;/td&gt; &lt;td&gt;jkl&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;6&lt;/td&gt; &lt;td&gt;mno&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;7&lt;/td&gt; &lt;td&gt;pqrs&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;8&lt;/td&gt; &lt;td&gt;tuv&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;9&lt;/td&gt; &lt;td&gt;wxyz&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt; &lt;p&gt;示例:&lt;/p&gt; &lt;blockquote&gt; &lt;p&gt;&lt;strong&gt;输入&lt;/strong&gt;：&lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;23&quot;&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;输出&lt;/strong&gt;：&lt;code class=&quot;highlighter-rouge&quot;&gt;[&quot;ad&quot;, &quot;ae&quot;,...</description>
+        <pubDate>Wed, 10 Apr 2019 09:04:52 +0800</pubDate>
+        <link>http://localhost:4000/leetcode-17/</link>
+        <guid isPermaLink="true">http://localhost:4000/leetcode-17/</guid>
+        
+        <category>ARTS</category>
+        
+        <category>leetcode</category>
+        
+        
+        <category>LeetCode</category>
+        
+      </item>
+    
+      <item>
+        <title>2.算法设计常用思想之贪婪法</title>
+        <description>&lt;h4 id=&quot;part-1-贪婪法的基本思想&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 贪婪法的基本思想&lt;/a&gt;&lt;/h4&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;贪婪法&lt;/code&gt;（Greedy Algorithm），又称&lt;code class=&quot;highlighter-rouge&quot;&gt;贪心算法&lt;/code&gt;，是寻找&lt;code class=&quot;highlighter-rouge&quot;&gt;最优解&lt;/code&gt;问题的常用方法，这种方法模式一般将&lt;code class=&quot;highlighter-rouge&quot;&gt;求解过程&lt;/code&gt;分成&lt;code class=&quot;highlighter-rouge&quot;&gt;若干&lt;/code&gt;个&lt;code class=&quot;highlighter-rouge&quot;&gt;步骤&lt;/code&gt;，但每个步骤都应用&lt;code class=&quot;highlighter-rouge&quot;&gt;贪心原则&lt;/code&gt;，选取当前状态下最好的或最优的选择（&lt;code class=&quot;highlighter-rouge&quot;&gt;局部最有利的选择&lt;/code&gt;），并以此希望最后堆叠出的结果也是最好或最优的解。&lt;/p&gt;
+
+  &lt;p&gt;贪婪法的每次决策都以当前情况为基础并根据某个最优原则进行选择，不从整体上考虑其他各种可能的情况。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;注意：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;每一个步骤的&lt;code class=&quot;highlighter-rouge&quot;&gt;局部最优解&lt;/code&gt;确定以后，就不再修改，直到算法结束&lt;/li&gt;
+  &lt;li&gt;所以贪婪法只在很少的情况下可以得到&lt;code class=&quot;highlighter-rouge&quot;&gt;真正的最优解&lt;/code&gt;，比如&lt;code class=&quot;highlighter-rouge&quot;&gt;最短路径问题&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;图的最小生成树&lt;/code&gt;问题&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;简单&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;高效&lt;/code&gt;，省去了为找最优解可能需要的&lt;code class=&quot;highlighter-rouge&quot;&gt;穷举操作&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;得到与最优解比较接近的&lt;code class=&quot;highlighter-rouge&quot;&gt;近似最优解&lt;/code&gt;，通常作为其他算法的&lt;code class=&quot;highlighter-rouge&quot;&gt;辅助算法&lt;/code&gt;来使用。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;贪婪法的基本设计思想有以下三个步骤：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;建立对问题精确描述的&lt;code class=&quot;highlighter-rouge&quot;&gt;数学模型&lt;/code&gt;，包括&lt;code class=&quot;highlighter-rouge&quot;&gt;定义最优解的模型&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;将问题分解为一系列的&lt;code class=&quot;highlighter-rouge&quot;&gt;子问题&lt;/code&gt;，同时定义子问题的&lt;code class=&quot;highlighter-rouge&quot;&gt;最优解结构&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;应用&lt;code class=&quot;highlighter-rouge&quot;&gt;贪心原则&lt;/code&gt;确定每个子问题的&lt;code class=&quot;highlighter-rouge&quot;&gt;局部最优解&lt;/code&gt;，并根据&lt;code class=&quot;highlighter-rouge&quot;&gt;最优解的模型&lt;/code&gt;，用&lt;code class=&quot;highlighter-rouge&quot;&gt;子问题&lt;/code&gt;的&lt;code class=&quot;highlighter-rouge&quot;&gt;局部最优解&lt;/code&gt;堆叠出&lt;code class=&quot;highlighter-rouge&quot;&gt;全局最优解&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;part-2-贪婪法的例子0-1-背包问题&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 贪婪法的例子：0-1 背包问题&lt;/a&gt;&lt;/h4&gt;
+</description>
+        <pubDate>Mon, 01 Apr 2019 08:12:02 +0800</pubDate>
+        <link>http://localhost:4000/greedy-algorithm/</link>
+        <guid isPermaLink="true">http://localhost:4000/greedy-algorithm/</guid>
+        
+        <category>算法的乐趣</category>
+        
+        <category>Algorithms</category>
+        
+        
+        <category>玩转算法</category>
+        
+      </item>
+    
+      <item>
+        <title>1.如何“玩”算法</title>
+        <description>&lt;blockquote&gt; &lt;p&gt;“Find a group of people who challenge and inspire you; spend a lot of time with them, and it will change your life.”&lt;/p&gt; &lt;p&gt;– Amy Poehler, Actress&lt;/p&gt; &lt;p&gt;「找一群會刺激並鼓舞你的人，花很多時間和他們在一起，這將改變你的人生。」– 艾米·波勒 (女演員)&lt;/p&gt; &lt;/blockquote&gt; &lt;h4 id=&quot;part-1-如何玩算法&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 如何“玩”算法&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-数据模型&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 数据模型&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-3-把问题抽象成数据模型&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: 把问题抽象成数据模型&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#part3-1&quot;&gt;信息数字化&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part3-2&quot;&gt;类比和转化&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part3-3&quot;&gt;数学问题的建模&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#part3-4&quot;&gt;图论算法的建模&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-4-总结&quot;&gt;&lt;a href=&quot;#part4&quot;&gt;Part 4: 总结&lt;/a&gt;&lt;/h4&gt; &lt;h1 id=&quot;如何玩算法&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;如何”玩”算法&lt;/h1&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;玩&lt;/code&gt;算法就是要能够做到以下三点：&lt;/p&gt; &lt;ol&gt; &lt;li&gt;对遇到的&lt;code class=&quot;highlighter-rouge&quot;&gt;特殊问题&lt;/code&gt;要能够&lt;code class=&quot;highlighter-rouge&quot;&gt;自己设计出算法实现&lt;/code&gt;。(可能是一个智力游戏题目，也可能是工作中遇到的实际问题)&lt;/li&gt; &lt;li&gt;对于原理公开和知名的算法，要能&lt;code class=&quot;highlighter-rouge&quot;&gt;将算法原理翻译成具体的算法代码&lt;/code&gt;。(如二部图匹配的匈牙利算法、大整数乘法的Karatsuba算法)&lt;/li&gt; &lt;li&gt;对已有&lt;code class=&quot;highlighter-rouge&quot;&gt;具体实现的算法&lt;/code&gt;，要能够&lt;code class=&quot;highlighter-rouge&quot;&gt;设计出合适的数学模型&lt;/code&gt;，将算法应用到实际问题中。(如遗传算法、SIFT图像识别算法)&lt;/li&gt; &lt;/ol&gt; &lt;h1 id=&quot;数据模型&quot;&gt;&lt;a name=&quot;part2&quot;&gt;&lt;/a&gt;数据模型&lt;/h1&gt; &lt;p&gt;&lt;strong&gt;数据模型&lt;/strong&gt; - &lt;code class=&quot;highlighter-rouge&quot;&gt;编程语言&lt;/code&gt;利用&lt;code class=&quot;highlighter-rouge&quot;&gt;数据结构&lt;/code&gt;可以直接描述的&lt;code class=&quot;highlighter-rouge&quot;&gt;数学模型&lt;/code&gt;，是数学模型的一种表达形式&lt;/p&gt; &lt;p&gt;一个完整的算法实现应包括：&lt;/p&gt; &lt;ol&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;数据模型&lt;/code&gt;&lt;/li&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;算法逻辑主体&lt;/code&gt;&lt;/li&gt; &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;输入输出&lt;/code&gt;&lt;/li&gt; &lt;/ol&gt; &lt;p&gt;这三个组成的核心是数据模型，把&lt;code class=&quot;highlighter-rouge&quot;&gt;问题&lt;/code&gt;的描述建立&lt;code class=&quot;highlighter-rouge&quot;&gt;数据模型&lt;/code&gt;的能力是“玩”算法的关键&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;解决实际问题&lt;/code&gt;的能力体现在:&lt;/p&gt;...</description>
+        <pubDate>Sat, 30 Mar 2019 08:42:14 +0800</pubDate>
+        <link>http://localhost:4000/how-to-play-algorithms/</link>
+        <guid isPermaLink="true">http://localhost:4000/how-to-play-algorithms/</guid>
+        
+        <category>算法的乐趣</category>
+        
+        <category>Algorithms</category>
+        
+        
+        <category>玩转算法</category>
+        
+      </item>
     
       <item>
         <title>1.编写第一个Go程序</title>
@@ -116,54 +190,6 @@
         
         
         <category>kubernetes</category>
-        
-      </item>
-    
-      <item>
-        <title>1.反转字符串中的单词III-557</title>
-        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: As one goes through life, one learns that if you don’t paddle your own canoe, you don’t move.&lt;/p&gt; &lt;/blockquote&gt; &lt;h4 id=&quot;part-1-题目&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 题目&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-javascript解题&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: JavaScript解题&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#code&quot;&gt;JS代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#test&quot;&gt;JS测试&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-3-重构&quot;&gt;&lt;a href=&quot;#rebuild&quot;&gt;Part 3: 重构&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#simple&quot;&gt;简化代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#other&quot;&gt;其他思路&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-4-总结&quot;&gt;&lt;a href=&quot;#think&quot;&gt;Part 4: 总结&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#knowelage&quot;&gt;知识点&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#thinking&quot;&gt;思维方法&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-5-python解题&quot;&gt;&lt;a href=&quot;#part5&quot;&gt;Part 5: Python解题&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#py_code&quot;&gt;Python代码&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#py_test&quot;&gt;Python测试&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;part-6-python重构&quot;&gt;&lt;a href=&quot;#part6&quot;&gt;Part 6: Python重构&lt;/a&gt;&lt;/h4&gt; &lt;h2 id=&quot;题目&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;题目&lt;/h2&gt; &lt;p&gt;给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;示例 1:&lt;/code&gt;&lt;/p&gt; &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;输入&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Let's take LeetCode contest&quot;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;输出&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;s'teL ekat...</description>
-        <pubDate>Sun, 24 Mar 2019 17:42:48 +0800</pubDate>
-        <link>http://localhost:4000/leetcode-557/</link>
-        <guid isPermaLink="true">http://localhost:4000/leetcode-557/</guid>
-        
-        <category>ARTS</category>
-        
-        <category>leetcode</category>
-        
-        
-        <category>LeetCode</category>
-        
-      </item>
-    
-      <item>
-        <title>How to use</title>
-        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: You will do foolish things, but do them with enthusiasm.&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;This is a simple and minimalist template for Jekyll designed for developers that want to write blog posts but don’t want to care about frontend stuff.&lt;/p&gt; &lt;p&gt;The Theme features:&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Gulp&lt;/li&gt; &lt;li&gt;Stylus (Jeet, Rupture, Kouto Swiss)&lt;/li&gt; &lt;li&gt;Smoothscroll&lt;/li&gt; &lt;li&gt;Live Search&lt;/li&gt; &lt;li&gt;Offcanvas Menu&lt;/li&gt; &lt;li&gt;SVG icons&lt;/li&gt; &lt;li&gt;Shell Script to create posts&lt;/li&gt; &lt;li&gt;Tags page&lt;/li&gt; &lt;li&gt;Series page&lt;/li&gt; &lt;li&gt;About Me page&lt;/li&gt; &lt;li&gt;Feed RSS&lt;/li&gt; &lt;li&gt;Sitemap.xml&lt;/li&gt; &lt;li&gt;Color Customization&lt;/li&gt; &lt;li&gt;Info Customization&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;basic-setup&quot;&gt;Basic Setup&lt;/h2&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;http://jekyllrb.com&quot;&gt;Install Jekyll&lt;/a&gt;&lt;/li&gt; &lt;li&gt;Fork the &lt;a href=&quot;https://github.com/willianjusten/will-jekyll-template/fork&quot;&gt;Will Jekyll Template&lt;/a&gt;&lt;/li&gt; &lt;li&gt;Clone the repo you just forked.&lt;/li&gt; &lt;li&gt;Edit &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; to personalize...</description>
-        <pubDate>Mon, 03 Aug 2015 11:32:44 +0800</pubDate>
-        <link>http://localhost:4000/how-to-use/</link>
-        <guid isPermaLink="true">http://localhost:4000/how-to-use/</guid>
-        
-        <category>jekyll</category>
-        
-        <category>template</category>
-        
-        
-        <category>I love Jekyll</category>
-        
-      </item>
-    
-      <item>
-        <title>Welcome to Jekyll</title>
-        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: Let yourself be silently drawn by the stronger pull of what you really love.&lt;/p&gt; &lt;/blockquote&gt; &lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-w&lt;/code&gt; switch) to see your changes! To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt; &lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt; &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom'...</description>
-        <pubDate>Tue, 24 Mar 2015 11:21:35 +0800</pubDate>
-        <link>http://localhost:4000/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">http://localhost:4000/welcome-to-jekyll/</guid>
-        
-        <category>jekyll</category>
-        
-        <category>web</category>
-        
-        
-        <category>Jekyll is awesome</category>
         
       </item>
     

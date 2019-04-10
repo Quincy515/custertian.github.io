@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>2.计数二进制子串-696</title>
+    <title>3.电话号码的字母组合</title>
     
 
     <!-- Google Authorship Markup -->
@@ -14,15 +14,15 @@
     <!-- Social: Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@DBTua">
-    <meta name="twitter:title" content="2.计数二进制子串-696">
+    <meta name="twitter:title" content="3.电话号码的字母组合">
     
     
     <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
     
 
     <!-- Social: Facebook / Open Graph -->
-    <meta property="og:url" content="http://localhost:4000/leetcode-696/">
-    <meta property="og:title" content="2.计数二进制子串-696">
+    <meta property="og:url" content="http://localhost:4000/leetcode-17/">
+    <meta property="og:title" content="3.电话号码的字母组合">
     
     <meta property="og:image" content="http://localhost:4000/assets/img/">
     
@@ -30,7 +30,7 @@
     <meta property="og:site_name" content="custer的学习记录">
 
     <!-- Social: Google+ / Schema.org  -->
-    <meta itemprop="name" content="2.计数二进制子串-696"/>
+    <meta itemprop="name" content="3.电话号码的字母组合"/>
     
     <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
 
@@ -57,7 +57,7 @@
     <meta name="theme-color" content="#0562DC">
 
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="http://localhost:4000/leetcode-696/">
+    <link rel="canonical" href="http://localhost:4000/leetcode-17/">
 
     <script>
       var _hmt = _hmt || [];
@@ -88,10 +88,10 @@
         <header class="header-post" role="banner">
     <div class="content">
         
-            <time itemprop="datePublished" datetime="2019-03-29 08:24:06 +0800" class="date">29 Mar 2019</time>
+            <time itemprop="datePublished" datetime="2019-04-10 09:04:52 +0800" class="date">10 Apr 2019</time>
         
-        <h1 class="post-title" itemprop="name">2.计数二进制子串-696</h1>
-        <p itemprop="description" class="subtitle">leetcode-696-count-binary-substrings</p>
+        <h1 class="post-title" itemprop="name">3.电话号码的字母组合</h1>
+        <p itemprop="description" class="subtitle">leetcode-17-letter-combinations-of-a-phone-number</p>
     </div>
      <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
      <div class="search-wrapper">
@@ -142,14 +142,15 @@
 
             <article role="article" id="scroll" class="post-content" itemprop="articleBody">
                 <blockquote>
-  <p>每日一句: The master has failed more times than the beginner has even tried.</p>
+  <p>每日一句: Persistence guarantees that results are inevitable.</p>
+
+  <p>– Paramahansa Yogananda, Meditation Teacher</p>
 </blockquote>
 
 <h4 id="part-1-题目"><a href="#part1">Part 1: 题目</a></h4>
 
 <h4 id="part-2-思考"><a href="#part2">Part 2: 思考</a></h4>
 <ol>
-  <li><a href="#processing">算法的思考过程</a></li>
   <li><a href="#find">从输入和输出找规律</a></li>
   <li><a href="#achieve">伪代码实现思路</a></li>
 </ol>
@@ -160,220 +161,170 @@
   <li><a href="#test">JS测试</a></li>
 </ol>
 
-<h4 id="js第二种思路"><a href="#part4">JS第二种思路</a></h4>
-
-<h4 id="part-4-总结"><a href="#think">Part 4: 总结</a></h4>
-<ol>
-  <li><a href="#knowelage">知识点-字符串</a></li>
-  <li><a href="#thinking">思维方法</a></li>
-</ol>
-
 <h2 id="题目"><a name="part1"></a>题目</h2>
 
-<p>给定一个字符串 s，计算具有相同数量0和1的非空(连续)子字符串的数量，并且这些子字符串中的所有0和所有1都是组合在一起的。</p>
+<p>给定一个仅包含数字 <code class="highlighter-rouge">2-9</code> 的字符串，返回所有它能表示的字母组合。</p>
 
-<p>重复出现的子串要计算它们出现的次数。</p>
-
-<p><strong>示例 1 :</strong></p>
-
-<blockquote>
-  <p><strong>输入</strong>: “00110011”</p>
-
-  <p><strong>输出</strong>: 6</p>
-
-  <p><strong>解释</strong>: 有6个子串具有相同数量的连续1和0：“0011”，“01”，“1100”，“10”，“0011” 和 “01”。</p>
-
-  <p><em>请注意，一些重复出现的子串要计算它们出现的次数。</em></p>
-
-  <p><em>另外，“00110011”不是有效的子串，因为所有的0（和1）没有组合在一起。</em></p>
-</blockquote>
-
-<p><strong>示例 2 :</strong></p>
-
-<blockquote>
-  <p><strong>输入</strong>: “10101”</p>
-
-  <p><strong>输出</strong>: 4</p>
-
-  <p><strong>解释</strong>: 有4个子串：“10”，“01”，“10”，“01”，它们具有相同数量的连续1和0。</p>
-</blockquote>
-
-<p><strong>注意：</strong></p>
-
-<ul>
-  <li><code class="highlighter-rouge">s.length</code> 在1到50,000之间。</li>
-  <li><code class="highlighter-rouge">s</code> 只包含“0”或“1”字符。</li>
-</ul>
-
-<h2 id="思考"><a name="part2"></a>思考</h2>
-
-<h3 id="算法的思考过程"><a name="processing"></a>算法的思考过程</h3>
-
-<p>字符串：</p>
-
-<ul>
-  <li>难度大的算法题目如何解？
-    <blockquote>
-      <p>算法的本质是寻找规律并实现</p>
-    </blockquote>
-  </li>
-  <li>如何找到规律？
-    <blockquote>
-      <p>发现输入和输出的关系，寻找突破点</p>
-    </blockquote>
-  </li>
-  <li>复杂的实现怎么办？
-    <blockquote>
-      <p>实现是程序+数据结构的结合体</p>
-    </blockquote>
-  </li>
-</ul>
-
-<h3 id="从输入和输出找规律"><a name="find"></a>从输入和输出找规律</h3>
-
-<blockquote>
-  <p><strong>输入</strong>: “00110011”</p>
-
-  <p><strong>输出</strong>: 6</p>
-
-  <p><strong>解释</strong>: 有6个子串具有相同数量的连续1和0：“0011”，“01”，“1100”，“10”，“0011” 和 “01”。</p>
-</blockquote>
+<p>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
 
 <table>
   <thead>
     <tr>
-      <th>输入</th>
-      <th>输出</th>
+      <th>电话按键</th>
+      <th>字母</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>第0位开始</td>
-      <td><a href="#find">0011</a>0011</td>
+      <td>2</td>
+      <td>abc</td>
     </tr>
     <tr>
-      <td>第1位开始</td>
-      <td>0<a href="#find">01</a>10011</td>
+      <td>3</td>
+      <td>def</td>
     </tr>
     <tr>
-      <td>第2位开始</td>
-      <td>00<a href="#find">1100</a>11</td>
+      <td>4</td>
+      <td>ghi</td>
     </tr>
     <tr>
-      <td>第3位开始</td>
-      <td>001<a href="#find">10</a>011</td>
+      <td>5</td>
+      <td>jkl</td>
     </tr>
     <tr>
-      <td>第4位开始</td>
-      <td>0011<a href="#find">0011</a></td>
+      <td>6</td>
+      <td>mno</td>
     </tr>
     <tr>
-      <td>第5位开始</td>
-      <td>00110<a href="#find">01</a>1</td>
+      <td>7</td>
+      <td>pqrs</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>tuv</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>wxyz</td>
     </tr>
   </tbody>
 </table>
 
-<p>从输入第0位开始寻找是否符合条件</p>
+<p>示例:</p>
 
-<p>找到就向下一位，作为子串开始寻找（作为子输入）</p>
+<blockquote>
+  <p><strong>输入</strong>：<code class="highlighter-rouge">"23"</code></p>
 
-<p>这里面是有<strong>重复找</strong>的过程</p>
+  <p><strong>输出</strong>：<code class="highlighter-rouge">["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].</code></p>
+</blockquote>
+
+<p>说明:
+尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。</p>
+
+<h2 id="思考"><a name="part2"></a>思考</h2>
+
+<h3 id="从输入和输出找规律"><a name="find"></a>从输入和输出找规律</h3>
+
+<p>输入 <code class="highlighter-rouge">2-9</code> 任意的数组组成的字符串</p>
+
+<p>输出 它表示的字母的组合</p>
+
+<p><img src="/assets/img/post/1.list-phone-number.png" alt="" /></p>
 
 <h3 id="伪代码实现思路"><a name="achieve"></a>伪代码实现思路</h3>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span>
-    <span class="nx">r</span> <span class="o">=</span> <span class="nx">match</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nx">r</span>
-      <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">j</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span><span class="nx">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">])</span>
+
+<span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="nx">result</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span>
+    <span class="err">递归</span>
+<span class="k">else</span>
+    <span class="k">return</span> <span class="nx">result</span>
 </code></pre></div></div>
-
-<p>对于程序本身使用for循环来控制运行流程，使用数据结构来保存数据和调度</p>
-
-<p>通过伪代码抓住程序结构和数据结构</p>
 
 <h2 id="javascript解题"><a name="part3"></a>JavaScript解题</h2>
 
 <h3 id="js代码"><a name="code"></a>JS代码</h3>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="c1">// 建立数结构，只做入不出，所以堆栈队列都可以，用来保存数据</span>
-  <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="c1">// 给定任意子输入都返回第一个符合条件的子串</span>
-  <span class="kd">let</span> <span class="nx">match</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="c1">// 使用正则表达式获取字符串开头的字符</span>
-    <span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^</span><span class="se">(</span><span class="sr">0+|1+</span><span class="se">)</span><span class="sr">/</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="c1">// 利用“异或”运算将字符反转并复制相同个数</span>
-    <span class="kd">let</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">(</span><span class="nx">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="mi">1</span><span class="p">).</span><span class="nx">toString</span><span class="p">().</span><span class="nx">repeat</span><span class="p">(</span><span class="nx">j</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// 长度相等并取反</span>
-    <span class="c1">// 合并上面两个字符串，创建正则表达式</span>
-    <span class="kd">let</span> <span class="nx">reg</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">`^(</span><span class="p">${</span><span class="nx">j</span><span class="p">}${</span><span class="nx">o</span><span class="p">}</span><span class="s2">)`</span><span class="p">)</span> <span class="c1">// 使用正则对象生成动态规则的正则</span>
-    <span class="c1">// 与传入的字符串进行比对，返回第一个比对成功的子串</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">reg</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">str</span><span class="p">))</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nb">RegExp</span><span class="p">.</span><span class="nx">$1</span>
+  <span class="c1">// 建立电话号码键盘映射-电话号码的数字对应的字母与输入的下标对应</span>
+  <span class="kd">let</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">[</span><span class="s1">''</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'abc'</span><span class="p">,</span> <span class="s1">'def'</span><span class="p">,</span> <span class="s1">'ghi'</span><span class="p">,</span> <span class="s1">'jkl'</span><span class="p">,</span> <span class="s1">'mno'</span><span class="p">,</span> <span class="s1">'pqrs'</span><span class="p">,</span> <span class="s1">'tuv'</span><span class="p">,</span> <span class="s1">'wxyz'</span><span class="p">]</span>
+  <span class="c1">// 把输入字符串按单字符分隔变成数组 234=&gt;[2,3,4]</span>
+  <span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span> <span class="c1">// 输入的字符串分隔成数组</span>
+  <span class="c1">// 保存键盘映射后的字母内容，如23=&gt;['abc','def']</span>
+  <span class="kd">let</span> <span class="nx">code</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="nx">num</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">map</span><span class="p">[</span><span class="nx">item</span><span class="p">])</span> <span class="p">{</span>
+      <span class="nx">code</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">map</span><span class="p">[</span><span class="nx">item</span><span class="p">])</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+  <span class="c1">// 第一步完成了把输入的字符串变成映射后的数组</span>
+  <span class="c1">// 第二步做组合运算</span>
+  <span class="kd">let</span> <span class="nx">comb</span> <span class="o">=</span> <span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// 临时变量用来保存两个组合的结果</span>
+    <span class="kd">let</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">// 最外层的循环是遍历第一个元素，里层的循环是遍历第二个元素</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">il</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">il</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">jl</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">jl</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">tmp</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">i</span><span class="p">]}${</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="nx">j</span><span class="p">]}</span><span class="s2">`</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">arr</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">comb</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="s1">''</span>
+      <span class="k">return</span> <span class="nx">tmp</span>
     <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   <span class="p">}</span>
-  <span class="c1">// for 控制程序运行流程</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">sub</span> <span class="o">=</span> <span class="nx">match</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">sub</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">r</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">sub</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="k">return</span> <span class="nx">r</span>
+  <span class="k">return</span> <span class="nx">comb</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>使用一个<code class="highlighter-rouge">for</code>循环，将字符串从第一个开始传入<code class="highlighter-rouge">match</code>函数中，在<code class="highlighter-rouge">match</code>函数中利用<code class="highlighter-rouge">正则表达式</code>获取到字符串开头的字符（或是多个0或是多个1），再使用<code class="highlighter-rouge">repeat</code>方法，将开头获取到的多个0或1利用<code class="highlighter-rouge">异或运算</code>反转重复相同次数（举个例子：获取到了‘00’，那么反转之后就是‘11’），然后再建立一个正则表达式，将获取到的字符和反转后的字符拼接，使用<code class="highlighter-rouge">test</code>方法与传入的字符串进行比对，返回第一个比对成功的字符串，保存到数组<code class="highlighter-rouge">r</code>中。以此类推，剃掉原字符串的第一个字符后再调用一次<code class="highlighter-rouge">match</code>方法，直到原字符串只剩下1个字符，返回数组<code class="highlighter-rouge">r</code></p>
-
 <h3 id="js测试"><a name="test"></a>JS测试</h3>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">subStr</span> <span class="k">from</span> <span class="s1">'../../code/string/696'</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">telComb</span> <span class="k">from</span> <span class="s1">'../../code/array/17'</span>
 
-<span class="nx">test</span><span class="p">(</span><span class="s1">'subStr(00110011)'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">expect</span><span class="p">(</span><span class="nx">subStr</span><span class="p">(</span><span class="s1">'00110011'</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'0011'</span><span class="p">,</span> <span class="s1">'01'</span><span class="p">,</span> <span class="s1">'1100'</span><span class="p">,</span> <span class="s1">'10'</span><span class="p">,</span> <span class="s1">'0011'</span><span class="p">,</span> <span class="s1">'01'</span><span class="p">])</span>
-<span class="p">})</span>
-
-<span class="nx">test</span><span class="p">(</span><span class="s1">'subStr(10101)'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">expect</span><span class="p">(</span><span class="nx">subStr</span><span class="p">(</span><span class="s1">'10101'</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'10'</span><span class="p">,</span> <span class="s1">'01'</span><span class="p">,</span> <span class="s1">'10'</span><span class="p">,</span> <span class="s1">'01'</span><span class="p">])</span>
+<span class="nx">test</span><span class="p">(</span><span class="s1">'telComb:23'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">telComb</span><span class="p">(</span><span class="s1">'23'</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span><span class="s1">'ad'</span><span class="p">,</span> <span class="s1">'ae'</span><span class="p">,</span> <span class="s1">'af'</span><span class="p">,</span> <span class="s1">'bd'</span><span class="p">,</span> <span class="s1">'be'</span><span class="p">,</span> <span class="s1">'bf'</span><span class="p">,</span> <span class="s1">'cd'</span><span class="p">,</span> <span class="s1">'ce'</span><span class="p">,</span> <span class="s1">'cf'</span><span class="p">])</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">telComb</span><span class="p">(</span><span class="s1">'234'</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">([</span>
+    <span class="s1">'adg'</span><span class="p">,</span> <span class="s1">'adh'</span><span class="p">,</span> <span class="s1">'adi'</span><span class="p">,</span>
+    <span class="s1">'aeg'</span><span class="p">,</span> <span class="s1">'aeh'</span><span class="p">,</span> <span class="s1">'aei'</span><span class="p">,</span>
+    <span class="s1">'afg'</span><span class="p">,</span> <span class="s1">'afh'</span><span class="p">,</span> <span class="s1">'afi'</span><span class="p">,</span>
+    <span class="s1">'bdg'</span><span class="p">,</span> <span class="s1">'bdh'</span><span class="p">,</span> <span class="s1">'bdi'</span><span class="p">,</span>
+    <span class="s1">'beg'</span><span class="p">,</span> <span class="s1">'beh'</span><span class="p">,</span> <span class="s1">'bei'</span><span class="p">,</span>
+    <span class="s1">'bfg'</span><span class="p">,</span> <span class="s1">'bfh'</span><span class="p">,</span> <span class="s1">'bfi'</span><span class="p">,</span>
+    <span class="s1">'cdg'</span><span class="p">,</span> <span class="s1">'cdh'</span><span class="p">,</span> <span class="s1">'cdi'</span><span class="p">,</span>
+    <span class="s1">'ceg'</span><span class="p">,</span> <span class="s1">'ceh'</span><span class="p">,</span> <span class="s1">'cei'</span><span class="p">,</span>
+    <span class="s1">'cfg'</span><span class="p">,</span> <span class="s1">'cfh'</span><span class="p">,</span> <span class="s1">'cfi'</span>
+  <span class="p">])</span>
 <span class="p">})</span>
 </code></pre></div></div>
 
 <h2 id="总结"><a name="think"></a>总结</h2>
 
-<h3 id="知识点-字符串"><a name="knowelage"></a>知识点-字符串</h3>
+<h3 id="知识点-数组"><a name="knowelage"></a>知识点-数组</h3>
 
 <ul>
-  <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/slice">String.prototype.slice</a></li>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match">String.prototype.match</a></li>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat">String.prototype.repeat</a></li>
-  <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push">Array.prototype.push</a></li>
-  <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></li>
-</ul>
-
-<h3 id="思维方法"><a name="thinking"></a>思维方法</h3>
-
-<ul>
-  <li>找出输出和输入的关联</li>
-  <li>控制程序运行流程</li>
-  <li>建立数结构，用来保存数据</li>
-  <li>本题解题思路为: 找到传入<code class="highlighter-rouge">match</code>方法的字符串开头进行解析，含有一个或多个0或1，然后再取反，找到相同个数，拼接为正则表达式，然后将正则表达式与传入的字符串进行比对，返回第一个比对成功的字符串</li>
+  <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice">Array.prototype.splice</a></li>
 </ul>
 
             </article>
 
             <section class="share">
     <h3>Share</h3>
-    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;leetcode-696-count-binary-substrings&quot;%20http://localhost:4000/leetcode-696/%20via%20&#64;DBTua&hashtags=ARTS,leetcode,"
+    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;leetcode-17-letter-combinations-of-a-phone-number&quot;%20http://localhost:4000/leetcode-17/%20via%20&#64;DBTua&hashtags=ARTS,leetcode,"
     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Share on Twitter">
         <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
     </a>
-    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/leetcode-696/"
+    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/leetcode-17/"
     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook">
         <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
     </a>
-    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/leetcode-696/"
+    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/leetcode-17/"
     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+">
         <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
     </a>
@@ -404,7 +355,7 @@
     repo: 'custertian.github.io',
     owner: 'custertian',
     admin: 'custertian',
-    id: location.pathname,      // Ensure uniqueness and length less than 502.计数二进制子串-696
+    id: location.pathname,      // Ensure uniqueness and length less than 503.电话号码的字母组合
     distractionFreeMode: 'true'  // Facebook-like distraction free mode
   })
 

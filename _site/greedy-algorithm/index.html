@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>How to use</title>
+    <title>2.算法设计常用思想之贪婪法</title>
     
 
     <!-- Google Authorship Markup -->
@@ -14,15 +14,15 @@
     <!-- Social: Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@DBTua">
-    <meta name="twitter:title" content="How to use">
+    <meta name="twitter:title" content="2.算法设计常用思想之贪婪法">
     
     
     <meta property="twitter:image:src" content="http://localhost:4000/assets/img/">
     
 
     <!-- Social: Facebook / Open Graph -->
-    <meta property="og:url" content="http://localhost:4000/how-to-use/">
-    <meta property="og:title" content="How to use">
+    <meta property="og:url" content="http://localhost:4000/greedy-algorithm/">
+    <meta property="og:title" content="2.算法设计常用思想之贪婪法">
     
     <meta property="og:image" content="http://localhost:4000/assets/img/">
     
@@ -30,7 +30,7 @@
     <meta property="og:site_name" content="custer的学习记录">
 
     <!-- Social: Google+ / Schema.org  -->
-    <meta itemprop="name" content="How to use"/>
+    <meta itemprop="name" content="2.算法设计常用思想之贪婪法"/>
     
     <meta itemprop="image" content="http://localhost:4000/assets/img/blog-image.png"/>
 
@@ -57,7 +57,7 @@
     <meta name="theme-color" content="#0562DC">
 
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="canonical" href="http://localhost:4000/how-to-use/">
+    <link rel="canonical" href="http://localhost:4000/greedy-algorithm/">
 
     <script>
       var _hmt = _hmt || [];
@@ -88,10 +88,10 @@
         <header class="header-post" role="banner">
     <div class="content">
         
-            <time itemprop="datePublished" datetime="2015-08-03 11:32:44 +0800" class="date">03 Aug 2015</time>
+            <time itemprop="datePublished" datetime="2019-04-01 08:12:02 +0800" class="date">01 Apr 2019</time>
         
-        <h1 class="post-title" itemprop="name">How to use</h1>
-        <p itemprop="description" class="subtitle">First steps to use this template</p>
+        <h1 class="post-title" itemprop="name">2.算法设计常用思想之贪婪法</h1>
+        <p itemprop="description" class="subtitle">贪婪法（Greedy Algorithm），又称贪心算法，是寻找最优解问题的常用方法</p>
     </div>
      <a class="down" data-scroll href="#scroll"><svg class="icon icon-angle-down"><use xlink:href="#icon-angle-down"></use></svg></a>
      <div class="search-wrapper">
@@ -141,125 +141,46 @@
         <section class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
             <article role="article" id="scroll" class="post-content" itemprop="articleBody">
-                <blockquote>
-  <p>每日一句: You will do foolish things, but do them with enthusiasm.</p>
+                <h4 id="part-1-贪婪法的基本思想"><a href="#part1">Part 1: 贪婪法的基本思想</a></h4>
+
+<blockquote>
+  <p><code class="highlighter-rouge">贪婪法</code>（Greedy Algorithm），又称<code class="highlighter-rouge">贪心算法</code>，是寻找<code class="highlighter-rouge">最优解</code>问题的常用方法，这种方法模式一般将<code class="highlighter-rouge">求解过程</code>分成<code class="highlighter-rouge">若干</code>个<code class="highlighter-rouge">步骤</code>，但每个步骤都应用<code class="highlighter-rouge">贪心原则</code>，选取当前状态下最好的或最优的选择（<code class="highlighter-rouge">局部最有利的选择</code>），并以此希望最后堆叠出的结果也是最好或最优的解。</p>
+
+  <p>贪婪法的每次决策都以当前情况为基础并根据某个最优原则进行选择，不从整体上考虑其他各种可能的情况。</p>
 </blockquote>
 
-<p>This is a simple and minimalist template for Jekyll designed for developers that want to write blog posts but don’t want to care about frontend stuff.</p>
-
-<p>The Theme features:</p>
-
-<ul>
-  <li>Gulp</li>
-  <li>Stylus (Jeet, Rupture, Kouto Swiss)</li>
-  <li>Smoothscroll</li>
-  <li>Live Search</li>
-  <li>Offcanvas Menu</li>
-  <li>SVG icons</li>
-  <li>Shell Script to create posts</li>
-  <li>Tags page</li>
-  <li>Series page</li>
-  <li>About Me page</li>
-  <li>Feed RSS</li>
-  <li>Sitemap.xml</li>
-  <li>Color Customization</li>
-  <li>Info Customization</li>
-</ul>
-
-<h2 id="basic-setup">Basic Setup</h2>
+<p>注意：</p>
 
 <ol>
-  <li><a href="http://jekyllrb.com">Install Jekyll</a></li>
-  <li>Fork the <a href="https://github.com/willianjusten/will-jekyll-template/fork">Will Jekyll Template</a></li>
-  <li>Clone the repo you just forked.</li>
-  <li>Edit <code class="highlighter-rouge">_config.yml</code> to personalize your site.</li>
-  <li>Check out the sample posts in <code class="highlighter-rouge">_posts</code> to see examples for assigning categories and tags, and other YAML data.</li>
-  <li>Read the documentation below for further customization pointers and documentation.</li>
+  <li>每一个步骤的<code class="highlighter-rouge">局部最优解</code>确定以后，就不再修改，直到算法结束</li>
+  <li>所以贪婪法只在很少的情况下可以得到<code class="highlighter-rouge">真正的最优解</code>，比如<code class="highlighter-rouge">最短路径问题</code>、<code class="highlighter-rouge">图的最小生成树</code>问题</li>
+  <li><code class="highlighter-rouge">简单</code>、<code class="highlighter-rouge">高效</code>，省去了为找最优解可能需要的<code class="highlighter-rouge">穷举操作</code></li>
+  <li>得到与最优解比较接近的<code class="highlighter-rouge">近似最优解</code>，通常作为其他算法的<code class="highlighter-rouge">辅助算法</code>来使用。</li>
 </ol>
 
-<h2 id="site-and-user-settings">Site and User Settings</h2>
+<p>贪婪法的基本设计思想有以下三个步骤：</p>
 
-<p>You have to fill some informations on <code class="highlighter-rouge">_config.yml</code> to customize your site.</p>
+<ol>
+  <li>建立对问题精确描述的<code class="highlighter-rouge">数学模型</code>，包括<code class="highlighter-rouge">定义最优解的模型</code>；</li>
+  <li>将问题分解为一系列的<code class="highlighter-rouge">子问题</code>，同时定义子问题的<code class="highlighter-rouge">最优解结构</code>；</li>
+  <li>应用<code class="highlighter-rouge">贪心原则</code>确定每个子问题的<code class="highlighter-rouge">局部最优解</code>，并根据<code class="highlighter-rouge">最优解的模型</code>，用<code class="highlighter-rouge">子问题</code>的<code class="highlighter-rouge">局部最优解</code>堆叠出<code class="highlighter-rouge">全局最优解</code>。</li>
+</ol>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Site settings</span>
-<span class="ss">description: </span><span class="no">A</span> <span class="n">blog</span> <span class="n">about</span> <span class="n">lorem</span> <span class="n">ipsum</span> <span class="n">dolor</span> <span class="n">sit</span> <span class="n">amet</span>
-<span class="ss">baseurl: </span><span class="s2">""</span> <span class="c1"># the subpath of your site, e.g. /blog/</span>
-<span class="ss">url: </span><span class="s2">"http://localhost:3000"</span> <span class="c1"># the base hostname &amp; protocol for your site </span>
-
-<span class="c1"># User settings</span>
-<span class="ss">username: </span><span class="no">Lorem</span> <span class="no">Ipsum</span>
-<span class="ss">user_description: </span><span class="no">Anon</span> <span class="no">Developer</span> <span class="n">at</span> <span class="no">Lorem</span> <span class="no">Ipsum</span> <span class="no">Dolor</span>
-<span class="ss">user_title: </span><span class="no">Anon</span> <span class="no">Developer</span>
-<span class="ss">email: </span><span class="n">anon</span><span class="vi">@anon</span><span class="p">.</span><span class="nf">com</span>
-<span class="ss">twitter_username: </span><span class="n">lorem_ipsum</span>
-<span class="ss">github_username:  </span><span class="n">lorem_ipsum</span>
-<span class="ss">gplus_username:  </span><span class="n">lorem_ipsum</span>
-<span class="ss">disqus_username: </span><span class="n">lorem_ipsum</span></code></pre></figure>
-
-<h2 id="color-customization">Color customization</h2>
-
-<p>All color variables are in <code class="highlighter-rouge">src/styl/variable</code>. To change the main color, just set the new value at <code class="highlighter-rouge">main</code> assignment. Another colors are for texts and the code background color.</p>
-
-<h2 id="creating-posts">Creating posts</h2>
-
-<p>You can use the <code class="highlighter-rouge">initpost.sh</code> to create your new posts. Just follow the command:</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">./initpost.sh <span class="nt">-c</span> Post Title</code></pre></figure>
-
-<p>The new file will be created at <code class="highlighter-rouge">_posts</code> with this format <code class="highlighter-rouge">date-title.md</code>.</p>
-
-<h2 id="front-matter">Front-matter</h2>
-
-<p>When you create a new post, you need to fill the post information in the front-matter, follow this example:</p>
-
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">---</span>
-<span class="ss">layout: </span><span class="n">post</span>
-<span class="ss">title: </span><span class="s2">"How to use"</span>
-<span class="ss">date: </span><span class="mi">2015</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mo">03</span> <span class="mo">03</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mi">44</span>
-<span class="ss">image: </span><span class="s1">'/assets/img/post-image.png'</span>
-<span class="ss">description: </span><span class="s1">'First steps to use this template'</span>
-<span class="ss">tags:
-</span><span class="o">-</span> <span class="n">jekyll</span> 
-<span class="o">-</span> <span class="n">template</span> 
-<span class="ss">categories:
-</span><span class="o">-</span> <span class="no">I</span> <span class="n">love</span> <span class="no">Jekyll</span>
-<span class="ss">twitter_text: </span><span class="s1">'How to install and use this template'</span>
-<span class="o">---</span></code></pre></figure>
-
-<h2 id="running-the-blog-in-local">Running the blog in local</h2>
-
-<p>In order to compile the assets and run Jekyll on local you need to follow those steps:</p>
-
-<ul>
-  <li>Install <a href="https://nodejs.org/">NodeJS</a></li>
-  <li>Run <code class="highlighter-rouge">npm install</code></li>
-  <li>Run <code class="highlighter-rouge">gulp</code></li>
-</ul>
-
-<h2 id="questions">Questions</h2>
-
-<p>Having a problem getting something to work or want to know why I setup something in a certain way? Ping me on Twitter <a href="https://twitter.com/willian_justen">@willian_justen</a> or file a <a href="https://github.com/willianjusten/will-jekyll-template/issues/new">GitHub Issue</a>.</p>
-
-<h2 id="license">License</h2>
-
-<p>This theme is free and open source software, distributed under the The MIT License. So feel free to use this Jekyll theme on your site without linking back to me or using a disclaimer.</p>
-
-<p>If you’d like to give me credit somewhere on your blog or tweet a shout out to <a href="https://twitter.com/willian_justen">@willian_justen</a>, that would be pretty sweet.</p>
-
+<h4 id="part-2-贪婪法的例子0-1-背包问题"><a href="#part2">Part 2: 贪婪法的例子：0-1 背包问题</a></h4>
 
             </article>
 
             <section class="share">
     <h3>Share</h3>
-    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;How to install and use this template&quot;%20http://localhost:4000/how-to-use/%20via%20&#64;DBTua&hashtags=jekyll,template,"
+    <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?text=&quot;28天玩转算法-1-2-算法设计常用思想之贪婪法&quot;%20http://localhost:4000/greedy-algorithm/%20via%20&#64;DBTua&hashtags=算法的乐趣,Algorithms,"
     onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" title="Share on Twitter">
         <svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
     </a>
-    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/how-to-use/"
+    <a aria-label="Share on Facebook"href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/greedy-algorithm/"
     onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;" title="Share on Facebook">
         <svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
     </a>
-    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/how-to-use/"
+    <a aria-label="Share on Google Plus" href="https://plus.google.com/share?url=http://localhost:4000/greedy-algorithm/"
     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;" title="Share on Google+">
         <svg class="icon icon-google-plus"><use xlink:href="#icon-google-plus"></use></svg>
     </a>
@@ -290,7 +211,7 @@
     repo: 'custertian.github.io',
     owner: 'custertian',
     admin: 'custertian',
-    id: location.pathname,      // Ensure uniqueness and length less than 50How to use
+    id: location.pathname,      // Ensure uniqueness and length less than 502.算法设计常用思想之贪婪法
     distractionFreeMode: 'true'  // Facebook-like distraction free mode
   })
 

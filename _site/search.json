@@ -1,6 +1,30 @@
 [
   
     {
+      "title"    : "3.电话号码的字母组合",
+      "category" : "LeetCode",
+      "tags"     : "ARTS and leetcode",
+      "url"      : "/leetcode-17/",
+      "date"     : "10 Apr 2019"
+    } ,
+  
+    {
+      "title"    : "2.算法设计常用思想之贪婪法",
+      "category" : "玩转算法",
+      "tags"     : "算法的乐趣 and Algorithms",
+      "url"      : "/greedy-algorithm/",
+      "date"     : "01 Apr 2019"
+    } ,
+  
+    {
+      "title"    : "1.如何“玩”算法",
+      "category" : "玩转算法",
+      "tags"     : "算法的乐趣 and Algorithms",
+      "url"      : "/how-to-play-algorithms/",
+      "date"     : "30 Mar 2019"
+    } ,
+  
+    {
       "title"    : "1.编写第一个Go程序",
       "category" : "Go入门",
       "tags"     : "Go",
