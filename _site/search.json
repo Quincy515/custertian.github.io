@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "2.Go语言基本数据类型",
+      "category" : "Go入门",
+      "tags"     : "Go",
+      "url"      : "/type_go/",
+      "date"     : "11 Apr 2019"
+    } ,
+  
+    {
       "title"    : "3.电话号码的字母组合",
       "category" : "LeetCode",
       "tags"     : "ARTS and leetcode",

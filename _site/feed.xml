@@ -5,9 +5,23 @@
     <description>custer的学习记录</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 10 Apr 2019 21:59:48 +0800</pubDate>
-    <lastBuildDate>Wed, 10 Apr 2019 21:59:48 +0800</lastBuildDate>
+    <pubDate>Thu, 11 Apr 2019 23:34:12 +0800</pubDate>
+    <lastBuildDate>Thu, 11 Apr 2019 23:34:12 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>2.Go语言基本数据类型</title>
+        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: Either you run the day, or the day runs you.&lt;/p&gt; &lt;p&gt;– Jim Rohn, Author&lt;/p&gt; &lt;p&gt;若要如何，全凭自己。主动的控制一天该做什么，而不是被动的被所发生的事情左右。&lt;/p&gt; &lt;/blockquote&gt; &lt;h4 id=&quot;part-1-基本数据结构&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 基本数据结构&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-类型转换&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 类型转换&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-3-类型的预定义值&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: 类型的预定义值&lt;/a&gt;&lt;/h4&gt; &lt;h2 id=&quot;基本数据结构&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;基本数据结构&lt;/h2&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bool&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;string&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;int8&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;int16&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;int32&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;int64&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;uint&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;uint8&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;uint16&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;uint32&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;uint64&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;uintptr&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;byte&lt;/code&gt; // alias for uint8&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rune&lt;/code&gt; // alias for int32, represents a Unicode code point&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;float32&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;float64&lt;/code&gt;&lt;/p&gt; &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;complex64&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;complex128&lt;/code&gt;&lt;/p&gt; &lt;h2 id=&quot;类型转换&quot;&gt;&lt;a name=&quot;part2&quot;&gt;&lt;/a&gt;类型转换&lt;/h2&gt; &lt;p&gt;与其他主要编程语言的差异&lt;/p&gt; &lt;ol&gt; &lt;li&gt;Go语言&lt;strong&gt;不允许&lt;/strong&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;隐式类型转换&lt;/code&gt;&lt;/li&gt; &lt;li&gt;&lt;strong&gt;别名&lt;/strong&gt;和&lt;strong&gt;原有类型&lt;/strong&gt;也不能进行&lt;code class=&quot;highlighter-rouge&quot;&gt;隐式类型转换&lt;/code&gt;&lt;/li&gt; &lt;/ol&gt; &lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div...</description>
+        <pubDate>Thu, 11 Apr 2019 10:14:51 +0800</pubDate>
+        <link>http://localhost:4000/type_go/</link>
+        <guid isPermaLink="true">http://localhost:4000/type_go/</guid>
+        
+        <category>Go</category>
+        
+        
+        <category>Go入门</category>
+        
+      </item>
     
       <item>
         <title>3.电话号码的字母组合</title>
@@ -171,22 +185,6 @@
         <category>kubernetes</category>
         
         <category>flannel</category>
-        
-        
-        <category>kubernetes</category>
-        
-      </item>
-    
-      <item>
-        <title>1.k8s部署-etcd使用二进制部署集群</title>
-        <description>&lt;blockquote&gt; &lt;p&gt;每日一句: Those who cannot change their minds cannot change anything.&lt;/p&gt; &lt;/blockquote&gt; &lt;h4 id=&quot;part-1-部署平台规划-&quot;&gt;&lt;a href=&quot;#part1&quot;&gt;Part 1: 部署平台规划 &lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-2-准备工作&quot;&gt;&lt;a href=&quot;#part2&quot;&gt;Part 2: 准备工作&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-3-自签ssl证书&quot;&gt;&lt;a href=&quot;#part3&quot;&gt;Part 3: 自签SSL证书&lt;/a&gt;&lt;/h4&gt; &lt;h4 id=&quot;part-4-etcd数据库集群部署&quot;&gt;&lt;a href=&quot;#part4&quot;&gt;Part 4: Etcd数据库集群部署&lt;/a&gt;&lt;/h4&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;#etcd&quot;&gt;颁发etcd证书&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-bin&quot;&gt;下载二进制包&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-cfg&quot;&gt;etcd配置文件&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-node&quot;&gt;其他节点加入&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;#etcd-start&quot;&gt;启动并查看集群状态&lt;/a&gt;&lt;/li&gt; &lt;/ol&gt; &lt;h4 id=&quot;kubernetes二进制部署系列&quot;&gt;&lt;a href=&quot;#serial&quot;&gt;kubernetes二进制部署系列&lt;/a&gt;&lt;/h4&gt; &lt;h2 id=&quot;部署平台规划&quot;&gt;&lt;a name=&quot;part1&quot;&gt;&lt;/a&gt;部署平台规划&lt;/h2&gt; &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;主机名&lt;/th&gt; &lt;th&gt;名称&lt;/th&gt; &lt;th&gt;ip地址&lt;/th&gt; &lt;th&gt;用户名&lt;/th&gt; &lt;th&gt;密码&lt;/th&gt; &lt;th&gt;角色&lt;/th&gt; &lt;th&gt;组件&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;k8s-master01&lt;/td&gt; &lt;td&gt;k8s-centos-1&lt;/td&gt; &lt;td&gt;10.211.55.10&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;master1&lt;/td&gt; &lt;td&gt;kube-apiserver&lt;br /&gt;kuber-controller-manager&lt;br /&gt;kuber-scheduler&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;/td&gt; &lt;td&gt;k8s-centos-11&lt;/td&gt; &lt;td&gt;10.211.55.11&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;master2&lt;/td&gt; &lt;td&gt;kube-apiserver&lt;br /&gt;kuber-controller-manager&lt;br /&gt;kuber-scheduler&lt;br /&gt;etcd&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;k8s-node01&lt;/td&gt; &lt;td&gt;k8s-centos-12&lt;/td&gt; &lt;td&gt;10.211.55.12&lt;/td&gt; &lt;td&gt;k8s&lt;/td&gt; &lt;td&gt;Root1234&lt;/td&gt; &lt;td&gt;node1&lt;/td&gt; &lt;td&gt;kubelet&lt;br /&gt;kube-proxy&lt;br /&gt;docker&lt;br /&gt;flannel&lt;br /&gt;etcd&lt;/td&gt;...</description>
-        <pubDate>Mon, 25 Mar 2019 08:45:55 +0800</pubDate>
-        <link>http://localhost:4000/etcd-bin-install/</link>
-        <guid isPermaLink="true">http://localhost:4000/etcd-bin-install/</guid>
-        
-        <category>kubernetes</category>
-        
-        <category>etcd</category>
         
         
         <category>kubernetes</category>
