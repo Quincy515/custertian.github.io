@@ -1,6 +1,14 @@
 [
   
     {
+      "title"    : "3.Go语言运算符",
+      "category" : "Go入门",
+      "tags"     : "Go",
+      "url"      : "/operator_go/",
+      "date"     : "13 Apr 2019"
+    } ,
+  
+    {
       "title"    : "2.Go语言基本数据类型",
       "category" : "Go入门",
       "tags"     : "Go",
